@@ -1,0 +1,109 @@
+body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.sidebar-nav ul li ul{padding-left: 18px;}
+
+.sticky-conent{  position: sticky;
+    position: -webkit-sticky;
+    top: 70px; }
+/*custom switch*/
+table .custom-switch label {
+    margin: -8px auto;
+}
+.upload-info{color:red;font-size: 12px;}
+.border{border: 1px solid #e8e8e8;}
+.floating-labels .form-control{font-size: 12px;font-weight: inherit;}
+
+.note-toolbar{z-index: inherit !important;}
+
+.ajaxError{font-size: 14px; color: red;}
+table .dropdown-item {padding: .3rem .7rem !important}
+.custom-control.custom-switch{margin:0 20px;}
+.head-label .custom-control-label::before {
+    left: -3.25rem;
+    height: 2rem;
+    width: 3.75rem;
+    pointer-events: all;
+    border-radius: .5rem;
+}
+.status-btn .custom-control-label{padding: 0px 15px !important;}
+
+.head-label{margin: 7px 30px 25px !important}
+
+input, select{border: 1px solid #afababad !important;}
+.custom-switch .custom-control-input:checked~.custom-control-label::after {
+    background-color: #fff;
+    padding: 5px;
+    content: '';
+    transform: translateX(1.75rem);
+}
+.custom-switch .custom-control-label::after {
+    top: calc(.15625rem + 2px);
+    left: calc(-3.25rem + 2px);
+    width: calc(2rem - 4px) ;
+    height: calc(2rem - 5px);
+    background-color: #adb5bd;
+    content: 'OFF';
+    font-size: 12px;
+    padding: 4px 2px;
+    color: white;
+    transition: transform .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+   
+    border-color: #fb9678;
+    background-color: #fb9678;
+}
+
+.custom-switch .custom-control-label::before {
+    left: -3.25rem;
+    height: 2rem;
+    width: 3.75rem;
+    padding: 5px;
+    content: 'ON';
+    pointer-events: all;
+    border-radius: .5rem;
+}
+/*end custom switch*/
+
+.custom-control{padding-left: 2rem}
+
+/*parsly*/
+
+input.parsley-success,
+select.parsley-success,
+textarea.parsley-success {
+  color: #468847;
+  background-color: #DFF0D8;
+  border: 1px solid #D6E9C6;
+}
+
+input.parsley-error,
+select.parsley-error,
+textarea.parsley-error {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border: 1px solid #EED3D7;
+}
+
+.parsley-errors-list {
+  margin: 2px 0 3px;
+  padding: 0;
+  list-style-type: none;
+  font-size: 0.9em;
+  line-height: 0.9em;
+  opacity: 0;
+
+  transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
+}
+
+.parsley-errors-list.filled {
+  opacity: 1;
+}
+
+.parsley-required, .parsley-type, .invalid-feedback , .parsley-length{
+color:#e3342f;
+}
+/*end parsly*/
