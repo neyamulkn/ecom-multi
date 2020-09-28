@@ -193,11 +193,11 @@
 									
 										<div class="form-group required" style="width: 49%; float: left;">
 											<span>Password</span>
-											<input required type="password" name="password"  data-parsley-required-message= "Password is required" placeholder="Password *" id="userpassword" class="form-control">
+											<input required type="password" name="password"  data-parsley-required-message= "Password is required" placeholder="Password *" minlength="6" id="userpassword" class="form-control">
 										</div>
 										<div class="form-group required" style="width: 49%; float: right;">
 											<span>Confirm Password</span>
-											<input type="password" required placeholder="Retype password" data-parsley-equalto="#userpassword"  name="password_confirmation" id="password2" class="form-control">
+											<input type="password" required placeholder="Retype password" data-parsley-equalto="#userpassword"  name="password_confirmation" minlength="6" id="password2" class="form-control">
 										</div>
 									</div>
 
@@ -221,15 +221,15 @@
 											
 											<div class="form-group input-lastname required" >
 												<span>Full Name</span>
-												<input type="text" value="{{old('shipping_name')}}" name="shipping_name" value="" placeholder="Enter Full Name *" id="shipping_name" class="form-control">
+												<input type="text" value="{{(old('shipping_name')? old('shipping_name') : Auth::user()->name )}}" name="shipping_name" value="" placeholder="Enter Full Name *" id="shipping_name" class="form-control">
 											</div>
 											<div class="form-group required" style="width: 49%; float: left;">
 												<span>Email</span>
-												<input type="text" value="{{old('shipping_email')}}" name="shipping_email" value="" placeholder="E-Mail *" id="input-payment-email" class="form-control">
+												<input type="text" value="{{(old('shipping_email') ? old('shipping_email') : Auth::user()->email)}}" name="shipping_email" value="" placeholder="E-Mail *" id="input-payment-email" class="form-control">
 											</div>
 											<div class="form-group required" style="width: 49%; float: right;">
 												<span>Phone Number</span>
-												<input type="text" value="{{old('shipping_phone')}}" name="shipping_phone" value="" placeholder="Phone Number *" id="shipping_phone" class="form-control">
+												<input type="text" value="{{(old('shipping_phone')? old('shipping_phone') : Auth::user()->mobile)}}" name="shipping_phone" placeholder="Phone Number *" id="shipping_phone" class="form-control">
 											</div>
 											<div class="form-group required">
 											<span>Select Your Rejion</span>

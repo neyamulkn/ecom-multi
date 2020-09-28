@@ -88,7 +88,7 @@
       <div class="container">
           <div class="row">
               <div class="navbar-logo col-lg-3 col-md-12 col-xs-12">
-                  <a href="{{url('/')}}"><img width="200" src="{{asset('frontend')}}/image/logo/logo.png" title="Home" alt="Logo"></a>
+                  <a href="{{url('/')}}"><img width="200" height="50" src="{{asset('frontend/image/logo/'.Config::get('siteSetting.logo'))}}" title="Home" alt="Logo"></a>
               </div>
               <div class="header-center-right col-lg-6 col-md-7 col-sm-7 col-xs-9">
                   <div class="header_search">

@@ -1,3 +1,4 @@
+@yield('css-top')
 <!-- Libs CSS
         ============================================ -->
 <link rel="stylesheet" href="{{asset('frontend')}}/css/bootstrap/css/bootstrap.min.css">
@@ -55,6 +56,14 @@
         width: 100%;
         height: 20px;
         background: url('{{ asset("assets/images/loader.gif")}}') no-repeat center; 
+    }
+    #process
+    {
+        display: none;
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        background: url('{{ asset("assets/images/process.gif")}}') no-repeat center; 
     }
 </style>
 @yield('css')

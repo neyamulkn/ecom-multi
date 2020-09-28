@@ -56,6 +56,8 @@ class Handler extends ExceptionHandler
     }
 
     // add this extra method or link stackoverflow.com/questions/45340855/laravel-5-5-change-unauthenticated-login-redirect-url
+
+    //direct user role login form
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {

@@ -9,7 +9,7 @@
 .main-container.container {
     background: #fff;
 }
-.parsley-required,.parsley-equalto{color: red;}
+.parsley-required,.parsley-equalto,.parsley-type,.parsley-minlength{color: red;}
 .page-builder-ltr{background: #fff;}
 .table > tbody > tr > td{vertical-align: middle !important;}
 .title{font-size: 20px; color: #000;}

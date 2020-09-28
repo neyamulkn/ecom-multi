@@ -23,13 +23,13 @@ class UserLoginController extends Controller
       $input = $request->all();
 
       $this->validate($request, [
-          'usernameOrEmail' => 'required',
+          'emailOrMobile' => 'required',
           'password' => 'required',
       ]);
 
-      $fieldType = filter_var($request->usernameOrEmail, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+      $fieldType = filter_var($request->emailOrMobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
 
-      if(auth()->attempt(array($fieldType => $input['usernameOrEmail'], 'password' => $input['password'])))
+      if(auth()->attempt(array($fieldType => $input['emailOrMobile'], 'password' => $input['password'])))
       {
           Cart::where('user_id', Session::get('user_id'))->update(['user_id' => Auth::id()]);
           //check duplicate records
@@ -45,7 +45,7 @@ class UserLoginController extends Controller
           }
 
           Toastr::success('Logged in success.');
-          return back();
+          return redirect()->intended(route('user.dashboard'));
       }else{
           Toastr::error( $fieldType. ' or password is invalid.');
           return back()->withInput();

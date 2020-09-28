@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb4d6a4b-5c45-455b-8a68-665c617038ea" name="Default Changelist" comment="" />
+    <list default="true" id="fb4d6a4b-5c45-455b-8a68-665c617038ea" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/ecommercemulti.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ecommercemulti.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserLoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserLoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserRegController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserRegController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vendor/RegController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Vendor/VendorLoginController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/frontend/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/css/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/checkout/checkout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/checkout/checkout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/checkout/order-payment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/checkout/order-payment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/partials/frontend/css.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/partials/frontend/css.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/partials/frontend/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/partials/frontend/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/users/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/users/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/dashboard.blade.php" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +32,9 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -134,6 +157,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1hXutNCZm6YWmFsMwNlvlfpdk6p" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -166,6 +190,9 @@
       <workItem from="1600179874861" duration="12251000" />
       <workItem from="1600231815681" duration="3655000" />
       <workItem from="1600245326845" duration="23508000" />
+      <workItem from="1600404699748" duration="173000" />
+      <workItem from="1601198918857" duration="56000" />
+      <workItem from="1601199068457" duration="10383000" />
     </task>
     <servers />
   </component>
@@ -177,17 +204,21 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="175" y="0" key="#Composer/0.0.1366.738@0.0.1366.738" timestamp="1600172116188" />
-    <state x="355" y="67" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600277628014">
+    <state x="355" y="67" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601222063844">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="355" y="67" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1600277628014" />
+    <state x="355" y="67" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.738@0.0.1366.738" timestamp="1601222063844" />
+    <state x="413" y="67" key="FileChooserDialogImpl" timestamp="1601198949321">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="413" y="67" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1601198949321" />
     <state x="404" y="143" key="NewPhpClassDialog" timestamp="1600191474866">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="404" y="143" key="NewPhpClassDialog/0.0.1366.738@0.0.1366.738" timestamp="1600191474866" />
-    <state x="314" y="151" key="com.intellij.ide.util.TipDialog" timestamp="1600245486259">
+    <state x="314" y="151" key="com.intellij.ide.util.TipDialog" timestamp="1601199209042">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="314" y="151" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1600245486259" />
+    <state x="314" y="151" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1601199209042" />
   </component>
 </project>
