@@ -143,22 +143,7 @@
 						</tfoot>
 					</table>
 				</div>
-				<h3>Order History</h3>
-				<table class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<td class="text-left">Date</td>
-							<td class="text-left">Status</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="text-left">20/06/2016</td>
-							<td class="text-left">Processing</td>
-						</tr>
-					
-					</tbody>
-				</table>
+	
 				<div class="buttons clearfix">
 					<div class="pull-right"><a class="btn btn-primary" href="{{url('/')}}">Continue Shop</a>
 					</div>

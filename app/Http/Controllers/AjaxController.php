@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Order;
 use App\Models\Page;
 use App\Models\PredefinedFeature;
 use App\Models\Product;
@@ -211,6 +212,32 @@ class AjaxController extends Controller
             $output = array( 'status' => false,  'message'  => 'Status connot update.!');
         }
         return response()->json($output);
+    }
+
+    // change Order Status function
+    public function changeOrderStatus(Request $request){
+        $status = Order::where('order_id', $request->id)->first();
+        if($status){
+            if($status->status == 1){
+                DB::table($request->table)->where('id', $request->id)->update(['status' => 0]);
+            }else{
+                DB::table($request->table)->where('id', $request->id)->update(['status' => 1]);
+            }
+            $output = array( 'status' => true,  'message'  => 'Status update successful.');
+        }else{
+            $output = array( 'status' => false,  'message'  => 'Status connot update.!');
+        }
+        return response()->json($output);
+    }
+
+    //show order details by order id
+    public function showOrderDetails($orderId){
+        $order = Order::with(['order_details.product:id,title,slug,feature_image','get_country', 'get_state', 'get_city', 'get_area'])
+            ->where('order_id', $orderId)->first();
+        if($order){
+            return view('inc.order-details')->with(compact('order'));
+        }
+        return false;
     }
 
 

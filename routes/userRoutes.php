@@ -34,6 +34,8 @@ route::group(['middleware' => ['auth']], function(){
 	Route::get('order/history', 'OrderController@orderHistory')->name('user.orderHistory');
 	Route::get('order/details/{order_id?}', 'OrderController@orderDetails')->name('user.orderDetails');
 	Route::get('order/return/{order_id?}', 'OrderController@orderReturn')->name('user.orderReturn');
+	
+	Route::get('order/cancel/{order_id?}', 'OrderController@orderCancel')->name('user.orderCancel');
 
 });
 

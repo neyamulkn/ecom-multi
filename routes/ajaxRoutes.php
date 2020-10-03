@@ -21,7 +21,10 @@ Route::get('get/menu/sourch/{type}', 'AjaxController@getMenuSourch')->name('getM
 //get search keyword in header
 Route::get('search/keyword', 'AjaxController@search_keyword')->name('search_keyword');
 
+//change status active/deactive
 Route::get('status/change', 'AjaxController@satusActiveDeactive')->name('statusChange');
+
+Route::get('get/order/details/{order_id}', 'AjaxController@showOrderDetails')->name('getOrderDetails');
 
 
 

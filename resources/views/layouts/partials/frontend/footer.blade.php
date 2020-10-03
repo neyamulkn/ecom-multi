@@ -105,7 +105,7 @@
                       </div>
                       <div class="email">
                         <label><i class="fa fa-envelope"></i></label>
-                        <a href="#">Marketing@magentech.com</a>
+                        <a href="#">info@host.com</a>
                       </div>
                     </div>
                   </div>
@@ -340,7 +340,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-7  col-sm-7 copyright">
-          So TopDeal © 2016 - 2018. All Rights Reserved. Designed by <a href="http://www.opencartworks.com/" target="_blank">OpenCartWorks.Com</a>
+          Copyright  © 2020. All Rights Reserved. Designed by <a href="#" target="_blank">Neyamul</a>
         </div>
         <div class="col-md-5 col-sm-5 paymen">
           <img src="{{asset('frontend')}}/image/catalog/demo/payment/payments-1.png"  alt="imgpayment">

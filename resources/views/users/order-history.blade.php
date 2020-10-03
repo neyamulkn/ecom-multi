@@ -1,6 +1,96 @@
 @extends('layouts.frontend')
 @section('title', 'Order information | '. Config::get('siteSetting.site_name') )
 @section('css')
+<style type="text/css">
+	
+	<style type="text/css">
+    /*delete confirm popup*/
+
+    .modal-confirm {
+        color: #636363;
+        width: 400px;
+    }
+    .modal-confirm .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+        text-align: center;
+        font-size: 14px;
+    }
+    .modal-confirm .modal-header {
+        border-bottom: none;
+        position: relative;
+    }
+    .modal-confirm h4 {
+        text-align: center;
+        font-size: 26px;
+    }
+    .modal-confirm .close {
+        position: absolute;
+        top: -5px;
+        right: -2px;
+    }
+    .modal-confirm .modal-body {
+        color: #999;
+    }
+    .modal-confirm .modal-footer {
+        border: none;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 13px;
+        padding: 10px 15px 25px;
+    }
+    .modal-confirm .modal-footer a {
+        color: #999;
+    }
+    .modal-confirm .icon-box {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border-radius: 50%;
+        z-index: 9;
+        text-align: center;
+        border: 3px solid #f15e5e;
+    }
+    .modal-confirm .icon-box i {
+        color: #f15e5e;
+        font-size: 46px;
+        display: inline-block;
+        margin-top: 13px;
+    }
+    .modal-confirm .btn {
+        color: #fff;
+        border-radius: 4px;
+        background: #60c7c1;
+        text-decoration: none;
+        transition: all 0.4s;
+        line-height: normal;
+        min-width: 120px;
+        border: none;
+        min-height: 40px;
+        border-radius: 3px;
+        margin: 0 5px;
+        outline: none !important;
+    }
+    .modal-confirm .btn-info {
+        background: #c1c1c1;
+    }
+    .modal-confirm .btn-info:hover, .modal-confirm .btn-info:focus {
+        background: #a8a8a8;
+    }
+    .modal-confirm .btn-danger {
+        background: #f15e5e;
+    }
+    .modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
+        background: #ee3535;
+    }
+    .trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }
+
+    /*delete confirm popup*/
+</style>
 
 @endsection
 @section('content')
@@ -19,7 +109,7 @@
 			<!--Middle Part Start-->
 			<div id="content" class="col-md-9 sticky-content">
 				<h2 class="title">Order History</h2>
-				<div class="table-responsive">
+				<div class="table-responsive" style="overflow-x: inherit;">
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -27,40 +117,36 @@
 								<td class="text-left">Order Date</td>
 								<td class="text-center">Qty</td>
 								<td class="text-center">Amount</td>
-								<th>Payment Method</th>
+								<td>Payment Method</td>
 								<td class="text-center">Payment Status</td>
 								<td class="text-center">Shipping Status</td>
 								<td class="text-right">Action</td>
-								<td></td>
+								
 							</tr>
 						</thead>
 						<tbody>
 							@foreach($orders as $order)
-							<tr>
+							<tr >
 								<td class="text-left"> {{$order->order_id}} </td>
 								<td class="text-left">{{Carbon\Carbon::parse($order->order_date)->format('M d, Y')}}</td>
 								<td class="text-center">{{$order->total_qty}}</td>
 								<td class="text-center">{{$order->currency_sign .$order->total_price}}</td>
 								<td class="text-center">{{ ucfirst(str_replace('-', ' ', $order->payment_method))}}</td>
 								<td class="text-center">{{$order->payment_status}}</td>
-								<td class="text-center">{{$order->order_status}}</td>
+								<td class="text-center" id="ship_status{{$order->order_id}}">{{$order->order_status}}</td>
 								
 								<td class="text-center">
 									<div class="btn-group">
-                                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            Action
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item text-inverse" title="View order" data-toggle="tooltip" href=""><i class="ti-eye"></i> View order</a>
-                                                            <a class="dropdown-item" title="Edit order" data-toggle="tooltip" href=""><i class="ti-pencil-alt"></i> Edit</a>
-                                                            <span title="Highlight order (Ex. Best Seller, Top Rated etc.)" data-toggle="tooltip">
-                                                            <a onclick="orderhighlight({{ $order->id }})" data-toggle="modal" data-target="#orderhighlight_modal" class="dropdown-item"  href=""><i class="ti-pin-alt"></i> Highlight</a></span>
-                                                            <span title="Manage Gallery Images" data-toggle="tooltip">
-                                                            <a onclick="setGallerryImage({{ $order->id }})" data-toggle="modal" data-target="#add" class="dropdown-item" href="javascript:void(0)"><i class="ti-image"></i> Gallery Images</a></span>
-                                                            <span title="Delete" data-toggle="tooltip"><button   data-target="#delete"  data-toggle="modal" class="dropdown-item" ><i class="ti-trash"></i> Delete order</button></span>
-                                                        </div>
-                                                    </div>                                                  
-									<a class="btn btn-info" title="" data-toggle="tooltip" href="{{route('user.orderDetails', $order->order_id)}}" data-original-title="View"><i class="fa fa-eye"></i></a>
+                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item text-inverse" title="View order" data-toggle="tooltip" href="{{route('user.orderDetails', $order->order_id)}}" data-original-title="View"><i class="fa fa-eye"></i> View Details</a></li>
+                                            <li><a class="dropdown-item" title="Edit order" data-toggle="tooltip" href=""><i class="ti-pencil-alt"></i> Edit</a></li>
+                                         
+                                            <li><a title="Cancel Order" data-target="#orderCancel" onclick="orderCancelPopup('{{ route("user.orderCancel", $order->order_id ) }}')" data-toggle="modal" class="dropdown-item" ><i class="fa fa-trash"></i> Cancel order</a></li>
+                                        </ul>
+                                    </div> 
 								</td>
 							</tr>
 							@endforeach
@@ -74,4 +160,54 @@
 		</div>
 	</div>
 	<!-- //Main Container -->
+	<!-- canel Modal -->
+	<div id="orderCancel" class="modal fade">
+	    <div class="modal-dialog modal-confirm">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <div class="icon-box">
+	                    <i class="fa fa-times" aria-hidden="true"></i>
+	                </div>
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	            </div>
+	            <div class="modal-body">
+	                <h4 class="modal-title">Are you sure?</h4>
+	                <p>Do you really want to cancel order?</p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+	                <button type="button" value="" id="orderCancelRoute" onclick="orderCancel(this.value)" data-dismiss="modal" class="btn btn-danger">Order Cancel</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
 @endsection		
+@section('js')
+<script type="text/javascript">
+    function orderCancelPopup(route) {
+        document.getElementById('orderCancelRoute').value = route;
+    }
+
+    function orderCancel(route) {
+        //separate id from route
+        var id = route.split("/").pop();
+     
+        $.ajax({
+            url:route,
+            method:"get",
+            success:function(data){
+                if(data.status){
+                    $("#ship_status"+id).html('cancel');
+                    toastr.success(data.msg);
+                }else{
+                    toastr.error(data.msg);
+                }
+            }
+        });
+    }
+
+</script>
+@endsection		
+
+

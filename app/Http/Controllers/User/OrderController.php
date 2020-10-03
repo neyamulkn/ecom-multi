@@ -144,4 +144,24 @@ class OrderController extends Controller
         return view('users.order-return');
     }
 
+    //order cancel
+    public function orderCancel ($order_id)
+    {
+        $order = Order::where('user_id', Auth::id())->where('order_id', $order_id)->first();
+
+        if($order){
+            $order->update(['order_status' => 'cancel']);
+            $output = [
+                'status' => true,
+                'msg' => 'Order cancel successfully.'
+            ];
+        }else{
+            $output = [
+            'status' => false,
+            'msg' => 'Order can\'t cancel.'
+            ];
+        }
+        return response()->json($output);
+    }
+
 }

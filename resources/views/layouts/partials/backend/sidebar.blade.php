@@ -30,7 +30,7 @@
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-shipping-fast"></i><span class="hide-menu">Orders</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="#">All Orders</a></li>
+                        <li><a href="{{route('admin.orderList')}}">All Orders</a></li>
                         <li><a href="#">Pending Orders</a></li>
                         <li><a href="#">Accepted Orders</a></li>
                         <li><a href="#">Processing Orders</a></li>

@@ -217,6 +217,15 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('payment/gateway/mode/change', 'PaymentGatewayController@paymentModeChange')->name('paymentModeChange');
 
 
+	Route::get('order/{status?}', 'AdminOrderController@orderHistory')->name('admin.orderList');
+	Route::get('order/search/{status?}', 'AdminOrderController@orderHistory')->name('orderSearch');
+	Route::get('order/invoice/{order_id?}', 'AdminOrderController@orderInvoice')->name('admin.orderInvoice');
+	Route::get('order/return/{order_id?}', 'AdminOrderController@orderReturn')->name('admin.orderReturn');
+	//change order status
+	Route::get('order/status/change', 'AdminOrderController@changeOrderStatus')->name('admin.changeOrderStatus');
+	Route::get('order/cancel/{order_id?}', 'AdminOrderController@orderCancel')->name('admin.orderCancel');
+
+
 });
 
 

@@ -107,3 +107,9 @@ textarea.parsley-error {
 color:#e3342f;
 }
 /*end parsly*/
+
+
+.table td, .table th {
+    vertical-align: middle;
+    padding: 8px;
+}

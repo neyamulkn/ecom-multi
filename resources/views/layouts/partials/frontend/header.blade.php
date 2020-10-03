@@ -39,7 +39,7 @@
                                           </button>
                                           <ul class="dropdown-menu">
                                               <li>
-                                                  <button class="btn-block language-select" type="button" name="ar-ar"><img src="{{asset('frontend')}}/image/catalog/flags/ar.png" alt="Arabic" title="Arabic"> Arabic</button>
+                                                  <button class="btn-block language-select" type="button" name="ar-ar"><img src="{{asset('frontend')}}/image/catalog/flags/bd.png" alt="Arabic" title="Bangla"> Bangla</button>
                                               </li>
                                               <li>
                                                   <button class="btn-block language-select" type="button" name="en-gb"><img src="{{asset('frontend')}}/image/catalog/flags/gb.png" alt="English" title="English"> English</button>
@@ -380,7 +380,7 @@
                                                     <p class="close-menu"></p>
                                                     <a href="#" class="clearfix">
                                                     <strong>
-                                                    <img src="{{asset('frontend')}}/image/catalog/demo/menu/hot-block.png" alt="">Buy This Theme!
+                                                    <img src="{{asset('frontend')}}/image/catalog/demo/menu/hot-block.png" alt="">Top Sales
                                                     </strong>
                                                     </a>
                                                   </li>
