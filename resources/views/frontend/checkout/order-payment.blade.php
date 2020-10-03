@@ -1,12 +1,12 @@
 @extends('layouts.frontend')
 @section('title', 'Order Payment')
 @section('css')
-    <link href="{{asset('frontend')}}/css/themecss/so_onepagecheckout.css" rel="stylesheet">
-    <style type="text/css">
-        .nav-tabs{background: #f1f1f1;}
-        .nav-tabs li a{height: 65px; min-width: 95px;}
-       
-    </style>
+  <link href="{{asset('frontend')}}/css/themecss/so_onepagecheckout.css" rel="stylesheet">
+  <style type="text/css">
+      .nav-tabs{background: #f1f1f1;}
+      .nav-tabs li a{height: 65px; min-width: 95px;}
+      .box-inner {padding: 15px 8px!important }
+  </style>
 @endsection
 @section('content')
 	<div class="breadcrumbs">
@@ -28,29 +28,51 @@
 				</div>
 				@endif
 				<div class="so-onepagecheckout layout1 row">
-					<div class="col-left col-lg-7 col-md-7 col-sm-6 col-xs-12 sticky-content">
-					
+					<div class="col-left col-lg-8 col-md-8 col-sm-6 col-xs-12 sticky-content">
 						<div class="checkout-content checkout-register">
-
 							<fieldset>
 								<h2 class="secondary-title"><i class="fa fa-map-marker"></i>Select Payment Method</h2>
 								<div class="checkout-shipping-form">
 
 									<div class="box-inner">          
                    <div id="process"></div>            
-                    <ul class="nav nav-tabs">
-                          <li><a data-toggle="tab" href="#home"><img src="{{asset('assets/images/icon/cash.png')}}"></a></li>
-                          <li><a data-toggle="tab" href="#paypalPayment"><img src="{{asset('assets/images/icon/paypal.png')}}"></a></li>
-                          <li><a data-toggle="tab" href="#menu2"><img src="{{asset('assets/images/icon/mastercard.png')}}"></a></li>
-                          <li><a data-toggle="tab" href="#menu3"><img src="{{asset('assets/images/icon/bkash-rocket.png')}}"></a></li>
-                         
+                      <ul class="nav nav-tabs">
+                          @foreach($paymentgateways as $method)
+                          <li><a data-toggle="tab" href="#paymentgateway{{$method->id}}"><img src="{{asset('upload/images/payment/'.$method->method_logo)}}"></a></li>
+                          @endforeach
                       </ul>
 
                       <div class="tab-content">
-
-                          <div id="home" class="tab-pane fade">
-                            
-                             <div class="">
+                        @foreach($paymentgateways as $method)
+                          @if($method->is_default == 1)
+                          <div id="paymentgateway{{$method->id}}" class="tab-pane fade">
+                               {!! $method->method_info !!}
+                              <form action="{{route('order.payment', [$order['order_id']])}}" method="post"  @if($method->method_slug == 'masterCard') class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{$method->public_key}}"  @endif >
+                                  @csrf
+                                  <input type="hidden"  name="payment_method" value="{{$method->method_slug}}">
+                                  @if($method->method_slug == 'masterCard')
+                                     <div class="form-row">                                    
+                                        <div id="card-element" style="width: 100%">
+                                             <div class="display-td" >                            
+                                                <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                                              </div>
+                                           
+                                              <div class="row">
+                                                <div class="col-lg-8 col-md-8">
+                                                <div class='col-lg-12 col-md-12 col-xs-12 card required'> <span class='control-label'>Card Number</span> <input  autocomplete='off' placeholder='Enter card number' class='form-control card-number' size='20' type='text'> </div> <div class='col-xs-3  cvc required'> <span class='control-label'>CVC</span> <input autocomplete='off' class='form-control card-cvc' maxlength="3" placeholder='ex. 311' size='4' type='text'> </div> <div class='col-xs-4 expiration required'> <span class='control-label'>Month</span>  <input maxlength="2" class='form-control card-expiry-month' placeholder='MM' size='2' type='text'> </div> <div class='col-xs-5 expiration required'> <span class='control-label'>Expiration Year</span> <input class='form-control card-expiry-year' placeholder='YYYY'  size='4' maxlength="4" type='text'> </div>
+                                              </div>
+                                            </div>
+                      
+                                            <div class='row'>
+                                                <div class='col-md-12 error form-group hide'>
+                                                    <div style="padding: 5px;margin-top: 10px;" class='alert-danger alert'>Please correct the errors and try again.</div>
+                                                </div>
+                                            </div>          
+                                        </div>
+                                      <!-- Used to display Element errors. -->
+                                      <div id="card-errors" role="alert"></div>
+                                  </div>
+                                @endif
                                 <div class="text-left">
                                   <span class="secure-checkout-banner1">
                                     <i class="fa fa-lock"></i>
@@ -59,109 +81,89 @@
                                 </div>
 
                                 <div class="text-right">
-                                  <form action="{{url('/')}}" method="post">
-                                      <button style="width: 40%" class="btn  btn-default"><span><i class="fa fa-money" aria-hidden="true"></i> Pay Cash</span></button>
-                                  </form>
+                                    <button  style="width: 40%" class="btn btn-default"><span><i class="fa fa-money" aria-hidden="true"></i> Pay {{$method->method_name}}</span></button>
                                 </div>
+                              </form>
+                          </div>
+                          @else
+                          <div id="paymentgateway{{$method->id}}" class="tab-pane fade">
+                              {!! $method->method_info !!}
+                              <hr>
+                              <i>Write Your Payment Information below.</i>
+                              <textarea style="width: 50%; margin: 0;" rows="1" class="form-control"></textarea></td>
+                              
+                              <div class="text-left">
+                                <span class="secure-checkout-banner1">
+                                  <i class="fa fa-lock"></i>
+                                  Secure checkout
+                                </span>
+                              </div>
+
+                              <div class="text-right">
+                                <form action="{{route('order.payment', [$order['order_id']])}}" method="post">
+                                  @csrf
+                                    <button name="payment_method" value="{{$method->method_slug}}" style="width: 40%" class="btn btn-default"><span><i class="fa fa-money" aria-hidden="true"></i> Pay {{$method->method_name}}</span></button>
+                                </form>
                               </div>
                           </div>
-
-                          <div id="paypalPayment" class="tab-pane fade">
-                            <div class="">
-                                <div class="text-left">
-                                  <span class="secure-checkout-banner1">
-                                    <i class="fa fa-lock"></i>
-                                    Secure checkout
-                                  </span>
-                                </div>
-
-                                <div class="text-right">
-                                  <form action="{{route('paypalPayment',[ $order['order_id']])}}" method="post">
-                                      @csrf
-                                      <button id="payButton" style="width: 40%" class="btn  btn-default"><span><i class="fa fa-paypal" aria-hidden="true"></i> Pay with PayPal</span></button>
-                                  </form>
-                                </div>
+                          @endif
+                        @endforeach
+                          <div id="wallet" class="active tab-pane fade in">
+                              Your wallet balance: {{ Auth::user()->wallet_balance }}
+                              <div class="text-left">
+                                <span class="secure-checkout-banner1">
+                                  <i class="fa fa-lock"></i>
+                                  Secure checkout
+                                </span>
                               </div>
-                          </div>
-                          <div id="menu2" class="tab-pane fade">
-                              <div class="">
-                                    <div class="text-left">
-                                      <span class="secure-checkout-banner1">
-                                        <i class="fa fa-lock"></i>
-                                        Secure checkout
-                                      </span>
-                                    </div>
 
-                                    <div class="text-right">
-                                      <form action="{{url('/')}}" method="post">
-                                          <button id="payButton" style="width: 40%" class="btn  btn-default"><span><i class="fa fa-cc-mastercard" aria-hidden="true"></i> Pay with PayPal</span></button>
-                                      </form>
-                                    </div>
+                              <div class="text-right">
+                                <form action="{{route('order.payment', [$order['order_id']])}}" method="post">
+                                  @csrf
+                                    <button name="payment_method" value="wallet" style="width: 40%" class="btn  btn-default"><span><i class="fa fa-money" aria-hidden="true"></i> Pay </span></button>
+                                </form>
                               </div>
-                          </div>
-                          <div id="menu3" class="tab-pane fade">
-                            <div class="">
-                                <div class="text-left">
-                                  <span class="secure-checkout-banner1">
-                                    <i class="fa fa-lock"></i>
-                                    Secure checkout
-                                  </span>
-                                </div>
-
-
-                                <div class="text-right">
-                                  <form action="{{url('/')}}" method="post">
-                                      <button  id="payButton"style="width: 40%" class="btn  btn-default"><span><i class="fa fa-cc-mastercard" aria-hidden="true"></i> Pay with Bkash</span></button>
-                                  </form>
-                                </div>
                           </div>
                       </div>
-                     
                   </div>
 								</div>
 							</fieldset>
 						</div>
-				
 					</div>
 
-					<div class="col-right col-lg-5 col-md-5 col-sm-6 col-xs-12 sticky-content">
+					<div class="col-right col-lg-4 col-md-4 col-sm-6 col-xs-12 sticky-content">
 						<div class="checkout-content checkout-cart">
 							<h2 class="secondary-title"><i class="fa fa-shopping-cart"></i>Order Details</h2>
 							<div class="box-inner">
 								<div class="table-responsive checkout-product">
 									<table  id="order_summary" class="table table-bordered table-hover">
 										<thead>
-                        <tr>
-                            <th class="text-left name" colspan="2">Product Name</th>
-                            <th class="text-center checkout-price">Price</th>
-                            <th class="text-center quantity">Quantity</th>
-                            <th class="text-right total">Total</th>
-                        </tr>
+                      <tr>
+                        <th class="text-left name" colspan="2">Product Name</th>
+                        <th class="text-center checkout-price">Price</th>
+                        <th class="text-center quantity">Qty</th>
+                        <th class="text-right total">Total</th>
+                      </tr>
                     </thead>
                     <tbody>
-                      
-                        @foreach($order['order_details'] as $item)
-                       
+                      @foreach($order['order_details'] as $item)
                         <tr>
-                          
-                             <td class="text-left name"> 
-                                <a href="{{route('product_details', $item['product']['slug'])}}"><img width="70" src="{{asset('upload/images/product/thumb/'.$item['product']['feature_image'])}}" class="img-thumbnail"></a> 
-                            </td>
-
-                            <td class="text-left attributes">
-                                <a href="{{route('product_details', $item['product']['slug'])}}">{{Str::limit($item['product']['title'], 50)}}</a><br>
-                                @foreach(json_decode($item['attributes']) as $key=>$value)
-                                <small> {{$key}} : {{$value}} </small>
-                                @endforeach
-                            </td>
-
-                            <td class="text-right price">{{$order['currency_sign']}}<span class="amount">{{$item['price']}}</span></td>
-                            <td class="text-left quantity">
-                                <div class="input-group"> {{$item['qty']}} </div>
-                            </td>
-                            <td class="text-right total">{{$order['currency_sign']}}<span id="subtotal">{{$item['price']*$item['qty']}}</td>
+                          <td class="text-left name"> 
+                            <a href="{{route('product_details', $item['product']['slug'])}}"><img width="40" src="{{asset('upload/images/product/thumb/'.$item['product']['feature_image'])}}" class="img-thumbnail"></a> 
+                          </td>
+                          <td class="text-left attributes">
+                            <a href="{{route('product_details', $item['product']['slug'])}}">{{Str::limit($item['product']['title'], 30)}}</a><br>
+                              @foreach(json_decode($item['attributes']) as $key=>$value)
+                              <small> {{$key}} : {{$value}} </small>
+                              @endforeach
+                          </td>
+                          <td class="text-right price">{{$order['currency_sign']}}<span class="amount">{{$item['price']}}</span></td>
+                          <td class="text-left quantity">
+                            <div class="input-group"> {{$item['qty']}} </div>
+                          </td>
+                          <td class="text-right total">{{$order['currency_sign']}}<span id="subtotal">{{$item['price']*$item['qty']}}</td>
                         </tr>
-                        @endforeach
+                      @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
@@ -200,29 +202,71 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{asset('frontend/js/parsley.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('frontend/js/parsley.min.js')}}"></script>
 
-<script type="text/javascript">
-
-
-    function get_shipping_address(id){
-        $("#get_shipping_address").html("<div style='height:135px' class='loadingData-sm'></div>");
-        var  url = '{{route("getShippingAddress", ":id")}}';
-        url = url.replace(':id',id);
-        $.ajax({
-            url:url,
-            method:"get",
-            success:function(data){
-                if(data){
-                    $("#get_shipping_address").html(data);
-                }
-            }
-        });
-    }  
+  <script type="text/javascript">
 
     $('#payButton').on('click', function(){
         document.getElementById('process').style.display = 'block';
     });
+ </script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+
+
+$(function() {
+    var $form         = $(".require-validation");
+  $('form.require-validation').bind('submit', function(e) {
+    var $form         = $(".require-validation"),
+        inputSelector = ['input[type=email]', 'input[type=password]',
+                         'input[type=text]', 'input[type=file]',
+                         'textarea'].join(', '),
+        $inputs       = $form.find('.required').find(inputSelector),
+        $errorMessage = $form.find('div.error'),
+        valid         = true;
+        $errorMessage.addClass('hide');
+ 
+        $('.has-error').removeClass('has-error');
+    $inputs.each(function(i, el) {
+      var $input = $(el);
+      if ($input.val() === '') {
+        $input.parent().addClass('has-error');
+        $errorMessage.removeClass('hide');
+        e.preventDefault();
+      }
+    });
+  
+    if (!$form.data('cc-on-file')) {
+      e.preventDefault();
+      Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+      Stripe.createToken({
+        number: $('.card-number').val(),
+        cvc: $('.card-cvc').val(),
+        exp_month: $('.card-expiry-month').val(),
+        exp_year: $('.card-expiry-year').val()
+      }, stripeResponseHandler);
+    }
+  
+  });
+  
+  function stripeResponseHandler(status, response) {
+        if (response.error) {
+            $('.error')
+                .removeClass('hide')
+                .find('.alert')
+                .text(response.error.message);
+        } else {
+            // token contains id, last4, and card type
+            var token = response['id'];
+            // insert the token into the form so it gets submitted to the server
+            $form.find('input[type=text]').empty();
+            $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+            $form.get(0).submit();
+        }
+    }
+  
+});
+
 
 </script>
 

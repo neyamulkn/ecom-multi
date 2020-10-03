@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Session;
 class OrderController extends Controller
 {
     //Insert order in order table
-    public function placeOrder(Request $request)
+    public function orderConfirm(Request $request)
     {
         $shipping_address = ShippingAddress::with(['get_country','get_state','get_city', 'get_area'])->find($request->confirm_shipping_address);
 
@@ -73,6 +73,7 @@ class OrderController extends Controller
                 $order->currency = Config::get('siteSetting.currency');
                 $order->currency_sign = Config::get('siteSetting.currency_symble');
                 $order->currency_value = Config::get('siteSetting.currency_symble');
+                $order->order_date = now();
                 $order->payment_status = 'pending';
                 $order->order_status = 'pending';
                 $order = $order->save();
@@ -110,31 +111,18 @@ class OrderController extends Controller
                     Cart::whereIn('id', $cart_id)->delete();
                 }
 
-            Toastr::success('Your order has been placed successfully.');
             //redirect payment method page for payment
-            return redirect()->route('order.payment', $order_id);
+            return redirect()->route('order.paymentGateway', $order_id);
         }else{
             Toastr::error('Please select shipping address.');
             return back();
         }
     }
 
-    //order payment gateway list
-    public function orderPayment($orderId)
-    {
-        $order = Order::with('order_details.product:id,title,slug,feature_image')
-            ->where('user_id', Auth::id())
-            ->where('order_id', $orderId)->first();
-        if($order){
-            return view('frontend.checkout.order-payment')->with(compact('order'));
-        }
-        return view('404');
-    }
-
     //get all order by user id
     public function orderHistory()
     {
-        $orders = Order::where('user_id', Auth::id())->get();
+        $orders = Order::with(['order_details.product:id,title,slug,feature_image'])->where('user_id', Auth::id())->get();
         return view('users.order-history')->with(compact('orders'));
     }
 
@@ -151,7 +139,7 @@ class OrderController extends Controller
     }
 
     //order return
-    public function orderReturn ()
+    public function orderReturn ($order_id)
     {
         return view('users.order-return');
     }

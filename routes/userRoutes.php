@@ -21,6 +21,16 @@ Route::get('get/shipping/address/{shipping_id}', 'CheckoutController@getShipping
 
 route::group(['middleware' => ['auth']], function(){
 	Route::get('dashboard', 'UserController@dashboard')->name('user.dashboard');
+	Route::get('checkout/shipping/review', 'CheckoutController@shippingReview')->name('shippingReview');
+	Route::post('checkout/order/confirm', 'OrderController@orderConfirm')->name('orderConfirm');
+	Route::get('checkout/payment/{orderId}', 'PaymentController@orderPaymentGateway')->name('order.paymentGateway');
+	Route::post('checkout/payment/{orderId}', 'PaymentController@orderPayment')->name('order.payment');
+	Route::get('checkout/payment/confirm/{orderId}', 'PaymentController@paymentConfirm')->name('order.paymentConfirm');
+
+
+	// Cash  payment 
+	Route::post('order/cash/payment/{orderId}', 'PaymentController@handCashPayment')->name('handCashPayment');
+
 	Route::get('order/history', 'OrderController@orderHistory')->name('user.orderHistory');
 	Route::get('order/details/{order_id?}', 'OrderController@orderDetails')->name('user.orderDetails');
 	Route::get('order/return/{order_id?}', 'OrderController@orderReturn')->name('user.orderReturn');

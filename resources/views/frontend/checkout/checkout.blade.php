@@ -206,7 +206,7 @@
 							</fieldset>
 							
 							
-							<div class="checkbox">
+							<div class="checkbox" style="padding: 0px 20px;">
 								<label>
 									<input type="checkbox" id="shipping_address" name="shipping_address" value="1" checked="checked"> My billing and shipping addresses are the same.
 								</label>
@@ -221,15 +221,15 @@
 											
 											<div class="form-group input-lastname required" >
 												<span>Full Name</span>
-												<input type="text" value="{{(old('shipping_name')? old('shipping_name') : Auth::user()->name )}}" name="shipping_name" value="" placeholder="Enter Full Name *" id="shipping_name" class="form-control">
+												<input type="text" value="{{( Auth::check() ? Auth::user()->name : '' )}}" name="shipping_name" value="" placeholder="Enter Full Name *" id="shipping_name" class="form-control">
 											</div>
 											<div class="form-group required" style="width: 49%; float: left;">
 												<span>Email</span>
-												<input type="text" value="{{(old('shipping_email') ? old('shipping_email') : Auth::user()->email)}}" name="shipping_email" value="" placeholder="E-Mail *" id="input-payment-email" class="form-control">
+												<input type="text" value="{{(Auth::check() ? Auth::user()->email : '')}}" name="shipping_email" value="" placeholder="E-Mail *" id="input-payment-email" class="form-control">
 											</div>
 											<div class="form-group required" style="width: 49%; float: right;">
 												<span>Phone Number</span>
-												<input type="text" value="{{(old('shipping_phone')? old('shipping_phone') : Auth::user()->mobile)}}" name="shipping_phone" placeholder="Phone Number *" id="shipping_phone" class="form-control">
+												<input type="text" value="{{(Auth::check() ? Auth::user()->mobile : '')}}" name="shipping_phone" placeholder="Phone Number *" id="shipping_phone" class="form-control">
 											</div>
 											<div class="form-group required">
 											<span>Select Your Rejion</span>
@@ -460,6 +460,8 @@
 		$('#email_required').removeAttr('required');
 		$('#userpassword').removeAttr('required');
 		$('#password2').removeAttr('required');
+        $('#submitBtn').removeAttr('disabled');
+        $('#submitBtn').removeAttr('style', 'cursor:not-allowed');
 	});	
 
 	$('#shipping_address').on('click', function(){

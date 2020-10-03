@@ -35,14 +35,11 @@ Route::get('coupon/apply', 'HomeController@couponApply')->name('coupon.apply');
 Route::get('buy/direct', 'HomeController@buyDirect')->name('buyDirect');
 Route::get('checkout/{buy_product_id?}', 'User\CheckoutController@checkout')->name('checkout');
 Route::get('checkout/shipping/{buy_product_id?}', 'User\CheckoutController@shipping')->name('shipping');
-Route::post('checkout/order/confirm', 'User\OrderController@placeOrder')->name('orderConfirm');
-Route::get('checkout/payment/{orderId}', 'User\OrderController@orderPayment')->name('order.payment');
 
 //paypal payment 
-Route::post('order/paypal/payment/{orderId}', 'PaymentController@paypalPayment')->name('paypalPayment');
-Route::get('paypal/payment/status/success', 'PaymentController@paymentSuccess')->name('paypalPaymentSuccess');
-Route::get('paypal/payment/status/cancel', 'PaymentController@paymentCancel')->name('paypalPaymentCancel');
-
+Route::get('order/paypal/payment/{orderId}', 'PaypalController@paypalPayment')->name('paypalPayment');
+Route::get('paypal/payment/status/success', 'PaypalController@paymentSuccess')->name('paypalPaymentSuccess');
+Route::get('paypal/payment/status/cancel', 'PaypalController@paymentCancel')->name('paypalPaymentCancel');
 
 
 Route::get('check/unique/value', 'AjaxController@checkField')->name('checkField');

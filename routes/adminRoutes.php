@@ -208,6 +208,13 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::post('area/update', 'LocationController@area_update')->name('area.update');
 	Route::get('area/delete/{id}', 'LocationController@area_delete')->name('area.delete');
 
+	// payment route
+	Route::get('payment/gateway', 'PaymentGatewayController@index')->name('paymentGateway');
+	Route::post('payment/gateway/store', 'PaymentGatewayController@store')->name('paymentGateway.store');
+	Route::get('payment/gateway/edit/{id}', 'PaymentGatewayController@edit')->name('paymentGateway.edit');
+	Route::post('payment/gateway/update', 'PaymentGatewayController@update')->name('paymentGateway.update');
+	Route::get('payment/gateway/delete/{id}', 'PaymentGatewayController@delete')->name('paymentGateway.delete');
+	Route::get('payment/gateway/mode/change', 'PaymentGatewayController@paymentModeChange')->name('paymentModeChange');
 
 
 });

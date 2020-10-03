@@ -22,7 +22,7 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 
 
-class PaymentController extends Controller
+class oldPaymentController extends Controller
 {
 
     private $_api_context;

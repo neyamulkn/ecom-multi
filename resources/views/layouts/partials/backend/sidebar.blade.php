@@ -58,6 +58,7 @@
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Payment Settings</span></a>
                     <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{route('paymentGateway')}}">Payment Gateway</a></li>
                         <li><a href="{{route('shipping')}}">Shipping</a></li>
                         <li><a href="#">Currencies</a></li>
                         <li><a href="#">SMS Setting</a></li>

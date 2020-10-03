@@ -1,7 +1,11 @@
 @extends('layouts.frontend')
 @section('title', 'Order information | '. Config::get('siteSetting.site_name') )
 @section('css')
-
+	<style type="text/css">
+		.order_success{
+			text-align: center;
+		}
+	</style>
 @endsection
 @section('content')
   <div class="breadcrumbs">
@@ -16,30 +20,34 @@
 	<div class="main-container container">
 		
 		<div class="row">
-			@include('users.sidebar')
+		
 			<!--Middle Part Start-->
-			<div id="content" class="col-md-9 sticky-content">
+			<div id="content" class="col-md-12">
 
+
+				<div class="order_success">
+					<div>
+					<i class="fa fa-check-circle" style="font-size: 125px;color: #16a20d;"></i></div>
+					<h3>Thank you for shopping at {{Config::get('siteSetting.site_name')}}!</h3>
+					We'll email you an order confirmation with details and tracking info.
+				</div>
 				<h2 class="title">Order Information</h2>
 
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
 							<td colspan="2" class="text-left">Order Details</td>
-							
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td style="width: 50%;" class="text-left"> <b>Order ID:</b> #{{$order->order_id}}
+							<td style="width: 50%;" class="text-left"> <b>Order ID:</b> #{{$order['order_id']}}
 								<br>
-								<b>Order Date:</b> {{Carbon\Carbon::parse($order->order_date)->format('M d, Y')}}
-							</td>
-							<td style="width: 50%;" class="text-left"> 
+								<b>Order Date:</b> {{Carbon\Carbon::parse($order['order_date'])->format('M d, Y')}}</td>
+							<td style="width: 50%;" class="text-left">
 								<b>Order Status::</b> {{ $order['order_status'] }} <br>
 								<b>Payment Status:</b> {{$order->payment_status}} <br>
 								<b>Payment Method:</b> {{$order->payment_method}} <br>
-								
 							</td>
 						</tr>
 					</tbody>
@@ -53,25 +61,27 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="text-left">{{$order->billing_name}}
-								<br>{{$order->billing_email}}
-								<br>{{$order->billing_phone}}
+							<td class="text-left">{{$order['billing_name']}}
+								<br>{{$order['billing_email']}}
+								<br>{{$order['billing_phone']}}
 								<br>
-								{{ $order->billing_address }}
-								@if( $order->get_area), {{ $order->get_area->name}} @endif
-								@if($order->get_city), {{$order->get_city->name}}, @endif
-								@if($order->get_state), {{$order->get_state->name}} @endif
+								
+								{{$order['billing_address']}}
+								@if( $order['get_area']), {{ $order['get_area']['name']}} @endif
+								@if($order['get_city']), {{$order['get_city']['name']}}, @endif
+								@if($order['get_state']), {{$order['get_state']['name']}} @endif
+							
 								
 							</td>
-							<td class="text-left">{{$order->shipping_name}}
-								<br>{{$order->shipping_email}}
-								<br>{{$order->shipping_phone}}
+							<td class="text-left">{{$order['shipping_name']}}
+								<br>{{$order['shipping_email']}}
+								<br>{{$order['shipping_phone']}}
 								<br>
 								{{
-									$order->shipping_address. ', '.
-									$order->shipping_area. ', '.
-									$order->shipping_city. ', '.
-									$order->shipping_region
+									$order['shipping_address']. ', '.
+									$order['shipping_area']. ', '.
+									$order['shipping_city']. ', '.
+									$order['shipping_region']
 								
 								}} 
 							</td>
@@ -90,22 +100,20 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($order->order_details as $item)
+							@foreach($order['order_details'] as $item)
                                          
 							<tr>
 								<td class="text-left">
-									 <a href="{{route('product_details', $item->product->slug)}}">{{Str::limit($item->product->title, 50)}}</a><br>
-                                    @foreach(json_decode($item->attributes) as $key=>$value)
+									 <a href="{{route('product_details', $item['product']['slug'])}}">{{Str::limit($item['product']['title'], 50)}}</a><br>
+                                    @foreach(json_decode($item['attributes']) as $key=>$value)
                                     <small> {{$key}} : {{$value}} </small>
                                     @endforeach
 								</td>
 								
-								<td class="text-right">{{$item->qty}}</td>
-								<td class="text-right">{{$order->currency_sign. $item->price}}</td>
-								<td class="text-right">{{$order->currency_sign. $item->price*$item->qty}}</td>
-								<td style="white-space: nowrap;" class="text-right"> <a onclick="addToCart({{$item->product_id}})" class="btn btn-primary" title="" data-toggle="tooltip" data-original-title="Reorder"><i class="fa fa-shopping-cart"></i></a>
-									<a class="btn btn-danger" title="" data-toggle="tooltip" href="{{route('user.orderReturn', $order->order_id)}}" data-original-title="Return"><i class="fa fa-reply"></i></a>
-								</td>
+								<td class="text-right">{{$item['qty']}}</td>
+								<td class="text-right">{{$order['currency_sign']. $item['price']}}</td>
+								<td class="text-right">{{$order['currency_sign']. $item['price']*$item['qty']}}</td>
+								
 							</tr>
 							@endforeach
 						</tbody>
@@ -114,14 +122,14 @@
 								<td colspan="2"></td>
 								<td class="text-right"><b>Sub-Total</b>
 								</td>
-								<td class="text-right">{{$order->currency_sign . $order->total_price}}</td>
+								<td class="text-right">{{$order['currency_sign'] . $order['total_price']}}</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td colspan="2"></td>
 								<td class="text-right"><b>Shipping Cost(+)</b>
 								</td>
-								<td class="text-right">{{$order->currency_sign . $order->shipping_cost}}</td>
+								<td class="text-right">{{$order['currency_sign'] . $order['shipping_cost']}}</td>
 								<td></td>
 							</tr>
 							@if($order['coupon_discount'] != null)
@@ -129,7 +137,7 @@
 								<td colspan="2"></td>
 								<td class="text-right"><b>Coupon Discount(-)</b>
 								</td>
-								<td class="text-right">{{$order->currency_sign . $order->coupon_discount}}</td>
+								<td class="text-right">{{$order['currency_sign'] . $order['coupon_discount']}}</td>
 								<td></td>
 							</tr>
 							@endif
@@ -137,28 +145,13 @@
 								<td colspan="2"></td>
 								<td class="text-right"><b>Total</b>
 								</td>
-								<td class="text-right">{{$order->currency_sign . ($order->total_price + $order->shipping_cost - $order->coupon_discount)  }}</td>
+								<td class="text-right">{{$order['currency_sign'] . ($order['total_price'] + $order['shipping_cost'] - $order['coupon_discount'])  }}</td>
 								<td></td>
 							</tr>
 						</tfoot>
 					</table>
 				</div>
-				<h3>Order History</h3>
-				<table class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<td class="text-left">Date</td>
-							<td class="text-left">Status</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="text-left">20/06/2016</td>
-							<td class="text-left">Processing</td>
-						</tr>
-					
-					</tbody>
-				</table>
+				
 				<div class="buttons clearfix">
 					<div class="pull-right"><a class="btn btn-primary" href="{{url('/')}}">Continue Shop</a>
 					</div>

@@ -79,7 +79,8 @@
                                                 <td>@if($data->top_header == 1) Top Header Menu <br/> @endif
                                                     @if($data->main_header == 1) Main Header Menu<br/> @endif
                                                     @if($data->footer == 1) Footer Menu @endif</td>
-                                                <td><div class="custom-control custom-switch" style="padding-left: 3.25rem;">
+                                                <td>
+                                                    <div class="custom-control custom-switch" style="padding-left: 3.25rem;">
                                                       <input name="status" onclick="satusActiveDeactive('menus', {{$data->id}})"  type="checkbox" {{($data->status == 1) ? 'checked' : ''}} class="custom-control-input" id="status{{$data->id}}">
                                                       <label class="custom-control-label" for="status{{$data->id}}"></label>
                                                     </div>

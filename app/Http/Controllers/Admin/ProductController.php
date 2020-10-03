@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductFeature;
-use App\Models\ProductFeature_detail;
 use App\Models\ProductFeatureDetail;
 use App\Models\ProductImage;
 use App\Models\ProductVideo;
@@ -40,7 +39,6 @@ class ProductController extends Controller
     //store new product
     public function store(Request $request)
     {
-
         $request->validate([
             'title' => 'required',
             'description' => 'required',

@@ -20,14 +20,14 @@ use Illuminate\Support\Facades\Session;
 class CheckoutController extends Controller
 {
     //order checkout
-    public function checkout($buy_product_id=null)
+    public function checkout()
     {
         $user_id = 0;
         if(Auth::check()){
             $user_id = Auth::id();
         }else{
-            if(Session::has('user_id')){
-                $user_id =  Session::get('user_id');
+            if(isset($_COOKIE['user_id'])){
+                $user_id =  $_COOKIE['user_id'];
             }
         }
         $data = [];
@@ -43,7 +43,7 @@ class CheckoutController extends Controller
             $data['get_shipping'] = ShippingAddress::with(['get_state','get_city', 'get_area'])->where('user_id', $user_id)->get();
 
             if(count($data['get_shipping'])>0){
-                return view('frontend.checkout.shipping_review')->with($data);
+                return redirect()->route('shippingReview');
             }
             return view('frontend.checkout.checkout')->with($data);
         }else{
@@ -129,16 +129,16 @@ class CheckoutController extends Controller
 
             $request->validate([
                 'name' => 'required',
-                'email' => 'required|email|max:255|unique:users',
-                'mobile' => 'required|unique:users',
+                'email' => 'required|email|max:255'. ($request->account == 'register') ? '|unique:users' : '',
+                'mobile' => 'required'. ($request->account == 'register') ? '|unique:users' : '',
                 'region' => 'required',
                 'city' => 'required',
                 'area' => 'required',
                 'address' => 'required',
             ]);
 
-            $username = rand(100000, 999999);
-            $password = ($request['password']) ? $request['password'] : 12345678;
+            $username = 'user'.rand(100000, 999999);
+            $password = ($request['password']) ? $request['password'] : rand(100000, 999999);
             $user = new User;
             $user->name = $request->name;
             $user->username = $username;
@@ -201,8 +201,8 @@ class CheckoutController extends Controller
         }
         return redirect()->route('shipping');
     }
-
-    public function shipping($buy_product_id=null){
+    //shipping review & choose one addresss
+    public function shipping(){
 
         $user_id = 0;
         if(Auth::check()){
@@ -234,6 +234,42 @@ class CheckoutController extends Controller
             return redirect('/');
         }
     }
+
+    //order checkout
+    public function shippingReview()
+    {
+        $user_id = 0;
+        if(Auth::check()){
+            $user_id = Auth::id();
+        }else{
+            if(isset($_COOKIE['user_id'])){
+                $user_id =  $_COOKIE['user_id'];
+            }
+        }
+        $data = [];
+        $cartItems = Cart::with('get_product:id,shipping_cost')->where('user_id', $user_id);
+        //check direct checkout
+        if(isset($_COOKIE['direct_checkout_product_id'])){
+            $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+        }
+        $data['cartItems'] =  $cartItems->get();
+
+        if(count($data['cartItems'])>0){
+            $data['states'] = State::where('country_id', 18)->where('status', 1)->get();
+            $data['get_shipping'] = ShippingAddress::with(['get_state','get_city', 'get_area'])->where('user_id', $user_id)->get();
+
+            if(count($data['get_shipping'])>0){
+                return view('frontend.checkout.shipping_review')->with($data);
+            }else{
+                return back();
+            }
+
+        }else{
+            Toastr::error("Your shopping cart is empty. You don\'t have any product to checkout.");
+            return redirect('/');
+        }
+    }
+
     // get shipping address by shipping id
     public function getShippingAddress($shipping_id){
 
