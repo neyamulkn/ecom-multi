@@ -5,9 +5,9 @@
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css"
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
+
     <style type="text/css">
     
-    <style type="text/css">
     /*delete confirm popup*/
 
     .modal-confirm {

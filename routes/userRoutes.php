@@ -8,9 +8,6 @@ Route::get('user/register', 'UserRegController@RegisterForm')->name('userRegiste
 Route::post('user/register', 'UserRegController@register')->name('userRegister');
 Route::get('user/logout', 'UserLoginController@logout')->name('userLogout');
 
-Route::get('my-account', 'UserController@myAccount')->name('user.myAccount');
-Route::get('wishlist', 'UserController@wishlist')->name('user.wishlist');
-Route::get('compare/product', 'UserController@compare')->name('user.productCompare');
 
 Route::get('get/city/{state_id?}', 'CheckoutController@get_city')->name('get_city');
 Route::get('get/area/{city_id?}', 'CheckoutController@get_area')->name('get_area');
@@ -18,9 +15,19 @@ Route::post('user/shipping/register', 'CheckoutController@ShippingRegister')->na
 // get shipping address by shipping id
 Route::get('get/shipping/address/{shipping_id}', 'CheckoutController@getShippingAddress')->name('getShippingAddress');
 
+Route::get('addto/compare/{product_id}', 'CompareController@addToCompare')->name('addToCompare');
+Route::get('compare/product', 'CompareController@compare')->name('productCompare');
+Route::get('compare/product/remove/{product_id}', 'CompareController@remove')->name('productCompareRemove');
+
 
 route::group(['middleware' => ['auth']], function(){
 	Route::get('dashboard', 'UserController@dashboard')->name('user.dashboard');
+
+	Route::get('my-account', 'UserController@myAccount')->name('user.myAccount');
+	Route::get('addto/wishlist', 'WishlistController@store')->name('wishlist.add');
+	Route::get('wishlist', 'WishlistController@index')->name('wishlists');
+	Route::get('wishlist/remove/{id}', 'WishlistController@remove')->name('wishlist.remove');
+	
 	Route::get('checkout/shipping/review', 'CheckoutController@shippingReview')->name('shippingReview');
 	Route::post('checkout/order/confirm', 'OrderController@orderConfirm')->name('orderConfirm');
 	Route::get('checkout/payment/{orderId}', 'PaymentController@orderPaymentGateway')->name('order.paymentGateway');

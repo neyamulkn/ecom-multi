@@ -8,68 +8,72 @@
   <div class="container">
     
     <ul class="breadcrumb-cate">
-        <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="#">wishtlist</a></li>
+        <li><a href="{{url('/')}}"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#">Wishtlist</a></li>
      </ul>
   </div>
 </div>
 <!-- Main Container  -->
 <div class="container">
     <div class="row">
-        @include('users.sidebar')
+        @include('users.inc.sidebar')
         <div id="content" class="col-sm-9 sticky-content">
             <h2>My Wish List</h2>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <td class="text-center">Image</td>
-                            <td class="text-left">Product Name</td>
-                            <td class="text-left">Model</td>
-                            <td class="text-right">Stock</td>
-                            <td class="text-right">Unit Price</td>
-                            <td class="text-right">Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
+            @if(count($wishlists)>0)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <td class="text-center">Image</td>
+                                <td class="text-left">Product Name</td>
+                                <td class="text-right">Stock</td>
+                                <td class="text-right">Unit Price</td>
+                                <td class="text-right">Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($wishlists as $wishlist)
+                            <tr id="item{{$wishlist->id}}">
+                                <td class="text-center">
+                                    <a href="{{route('product_details', $wishlist->get_product->slug)}}"><img src="{{asset('upload/images/product/thumb/'. $wishlist->get_product->feature_image)}}" width="48" height="40" class="img-thumbnail"></a>
+                                </td>
+                                <td class="text-left"><a href="{{route('product_details', $wishlist->get_product->slug)}}">{{Str::limit($wishlist->get_product->title, 30)}}</a></td>
+                               
+                                <td class="text-right">@if($wishlist->get_product->stock>=1)In Stock @else Out Of Stock @endif</td>
+                                <td class="text-right">
+                                    <div class="price"> <b>{{Config::get('siteSetting.currency_symble')}}{{$wishlist->get_product->selling_price-($wishlist->get_product->discount*$wishlist->get_product->selling_price)/100 }}</b>  @if($wishlist->get_product->discount) <s>{{Config::get('siteSetting.currency_symble')}}{{$wishlist->get_product->selling_price}}</s>@endif </div>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" onclick="addToCart({{$wishlist->product_id}})"  data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>
+                                    <a href="#" onclick="deleteConfirmPopup('{{route("wishlist.remove", $wishlist->id)}}')" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></a></td>
+                            </tr>
+                           @endforeach
+                        </tbody>
 
-                        <tr>
-                            <td class="text-center">
-                                <a href="product.html"><img src="image/catalog/demo/product/spa/9.jpg" alt="Burger King Japan debuts Monster  Baby Force Bralette" title="Burger King Japan debuts Monster  Baby Force Bralette" class="img-thumbnail"></a>
-                            </td>
-                            <td class="text-left"><a href="product.html">Burger King Japan debuts Monster  Baby Force Bralette</a></td>
-                            <td class="text-left">Product 3</td>
-                            <td class="text-right">In Stock</td>
-                            <td class="text-right">
-                                <div class="price"> <b>$80.00</b> <s>$100.00</s> </div>
-                            </td>
-                            <td class="text-right">
-                                <button type="button" onclick="cart.add('106');" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>
-                                <a href="#" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></a></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">
-                                <a href="product.html"><img src="image/catalog/demo/product/travel/2.jpg" alt="Canada Travel One or Two European Facials at  Studio" title="Canada Travel One or Two European Facials at  Studio" class="img-thumbnail"></a>
-                            </td>
-                            <td class="text-left"><a href="product.html">Canada Travel One or Two European Facials at  Studio</a></td>
-                            <td class="text-left">Simple Product</td>
-                            <td class="text-right">In Stock</td>
-                            <td class="text-right">
-                                <div class="price"> <b>$70.00</b> <s>$100.00</s> </div>
-                            </td>
-                            <td class="text-right">
-                                <button type="button" onclick="cart.add('108');" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>
-                                <a href="#" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></a></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-            </div>
-            <div class="buttons clearfix">
-                <div class="pull-right"><a href="#" class="btn btn-primary">Continue</a></div>
-            </div>
+                    </table>
+                </div>
+                <div class="buttons clearfix">
+                    <div class="pull-right"><a href="{{url('/')}}" class="btn btn-primary">Continue</a></div>
+                </div>
+            @else
+                
+                <div style="text-align: center;">
+                    <i style="font-size: 80px;" class="fa fa-heart"></i>
+                    <h1>Your wishlist is empty.</h1>
+                    <p>Looks line you have no items in your wishlist list.</p>
+                    Click here <a href="{{url('/')}}">Continue Shopping</a>
+                </div>
+            @endif
         </div>
     </div>
+
 </div>	
+
 <!-- //Main Container -->
 @endsection	   
+
+@section('js')
+    @include('modal.delete-modal')
+@endsection    
+
+

@@ -59,7 +59,7 @@
                     <div class="popup-title page-heading">
                       <i class="fa fa-paper-plane-o"></i> Sign up to Newsletter
                     </div>
-                    <div class="newsletter_promo">And receive <span>$29</span>coupon for first shopping</div>
+                    <div class="newsletter_promo">And receive <span>$1 </span>coupon for first shopping</div>
                   </div>
                   <div class="modcontent block_content">
                     <form method="post" id="signup" name="signup" class="form-group form-inline signup send-mail">
@@ -105,7 +105,7 @@
                       </div>
                       <div class="email">
                         <label><i class="fa fa-envelope"></i></label>
-                        <a href="#">info@host.com</a>
+                        <a href="#">{{ 'info@'.$_SERVER['SERVER_NAME']}}.com</a>
                       </div>
                     </div>
                   </div>

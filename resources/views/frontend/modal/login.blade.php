@@ -10,12 +10,12 @@
                     <fieldset class="fieldset login" data-hasrequired="* Required Fields">
                         <div class="field email required email-input">
                             <div class="control">
-                                <input name="usernameOrEmail" autocomplete="off" id="email" type="text" class="input-text" title="Email" placeholder="Username or E-Mail">
+                                <input required name="emailOrMobile" autocomplete="off" id="email" type="text" class="input-text" title="Email" placeholder="Mobile Number or E-Mail">
                             </div>
                         </div>
                         <div class="field password required pass-input">
                             <div class="control">
-                                <input name="password" type="password" autocomplete="off" class="input-text" id="pass" title="Password" placeholder="Password">
+                                <input required name="password" type="password" autocomplete="off" class="input-text" id="pass" title="Password" placeholder="Password">
                             </div>
                         </div>
                         <div class="actions-toolbar">

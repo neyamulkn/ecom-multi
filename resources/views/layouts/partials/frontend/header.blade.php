@@ -153,8 +153,8 @@
                    </div>
                   <div class="header_custom_link hidden-xs">
                       <ul>
-                          <li class="compare"><a href="{{route('user.productCompare')}}" class="top-link-compare" title="Compare product"></a></li>
-                          <li class="wishlist"><a href="{{route('user.wishlist')}}" class="top-link-wishlist" title="Wish List (0) "></a></li>
+                          <li class="compare"><a href="{{route('productCompare')}}" class="top-link-compare" title="Compare product"></a></li>
+                          <li class="wishlist"><a href="{{route('wishlists')}}" class="top-link-wishlist" title="Wish List  "></a></li>
                       </ul>   
                   </div>
               </div>

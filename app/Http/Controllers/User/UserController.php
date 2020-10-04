@@ -18,15 +18,7 @@ class UserController extends Controller
         return view('users.my-account');
     }
 
-    public function wishlist()
-    {
-        return view('users.wishlist');
-    }
 
-    public function compare()
-    {
-        return view('users.compare');
-    }
 
 
     public function show($id)

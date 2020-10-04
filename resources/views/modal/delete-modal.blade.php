@@ -88,7 +88,7 @@
 </style>
 
 <!-- delete Modal -->
-<div id="delete" class="modal fade">
+<div id="deleteModal" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,6 +111,7 @@
 
 <script type="text/javascript">
     function deleteConfirmPopup(route) {
+        $('#deleteModal').modal('show');
         document.getElementById('deleteItemRoute').value = route;
     }
 

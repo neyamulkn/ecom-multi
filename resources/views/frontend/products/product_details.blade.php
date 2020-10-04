@@ -484,10 +484,10 @@
                              <div class="add-to-links wish_comp">
                               <ul class="blank">
                                <li class="wishlist">
-                                <a onclick="wishlist.add(108);"><i class="fa fa-heart"></i></a>
+                                <a title="Add To Wishlist" onclick="addToWishlist({{$product->id}})" ><i class="fa fa-heart"></i></a>
                                </li>
                                <li class="compare">
-                                <a onclick="compare.add(108);"><i class="fa fa-random"></i></a>
+                                <a title="Add To Compare" onclick="addToCompare({{$product->id}})"  ><i class="fa fa-random"></i></a>
                                </li>
                               </ul>
                              </div>
@@ -563,8 +563,8 @@
                   </div>
                 </div>
            
-                <a href="" class="btn wishlistbtn" > Add To Wishlist </a>
-                <a href="" class="btn buy-now">Add To Compare </a>
+                <a href="javascript:void(0)" title="Add To Wishlist" @if(Auth::check())  onclick="addToWishlist({{$product->id}})" @else data-toggle="modal" data-target="#so_sociallogin" @endif class="btn wishlistbtn" > Add To Wishlist </a>
+                <a  href="javascript:void(0)" title="Add To Compare" onclick="addToCompare({{$product->id}})"  class="btn buy-now">Add To Compare </a>
                 <div class="seller-option">
                   Sold By
                   <div class="seller-header">

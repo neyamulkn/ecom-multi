@@ -34,6 +34,10 @@
             <!--  Footer Area End -->
             </div>
         </div>
+        @if(!Auth::check()) 
+            <!-- login Modal -->
+            @include('users.modal.login')
+        @endif
         <div class="back-to-top"><i class="fa fa-angle-up"></i></div>
         @include('layouts.partials.frontend.scripts')
     </body>

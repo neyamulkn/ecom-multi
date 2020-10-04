@@ -19,7 +19,7 @@
 
 	<div class="row">
 		<!--Right Part Start -->
-		@include('users.sidebar')
+		@include('users.inc.sidebar')
 		<!--Right Part End -->
 		<!--Middle Part Start-->
 		<div class="col-md-9 sticky-conent" id="content">

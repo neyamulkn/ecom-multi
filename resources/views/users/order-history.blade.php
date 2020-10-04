@@ -105,7 +105,7 @@
 	<!-- Main Container  -->
 	<div class="main-container container">
 		<div class="row">
-			@include('users.sidebar')
+			@include('users.inc.sidebar')
 			<!--Middle Part Start-->
 			<div id="content" class="col-md-9 sticky-content">
 				<h2 class="title">Order History</h2>
@@ -138,12 +138,11 @@
 								<td class="text-center">
 									<div class="btn-group">
                                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Action
+                                            Action <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item text-inverse" title="View order" data-toggle="tooltip" href="{{route('user.orderDetails', $order->order_id)}}" data-original-title="View"><i class="fa fa-eye"></i> View Details</a></li>
-                                            <li><a class="dropdown-item" title="Edit order" data-toggle="tooltip" href=""><i class="ti-pencil-alt"></i> Edit</a></li>
-                                         
+                                          
                                             <li><a title="Cancel Order" data-target="#orderCancel" onclick="orderCancelPopup('{{ route("user.orderCancel", $order->order_id ) }}')" data-toggle="modal" class="dropdown-item" ><i class="fa fa-trash"></i> Cancel order</a></li>
                                         </ul>
                                     </div> 
