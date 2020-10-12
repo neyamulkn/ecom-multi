@@ -9,21 +9,46 @@
 .main-container.container {
     background: #fff;
 }
+.products-list .product-layout {
+
+    border: 1px solid #f5f3f3;
+    padding: 4px;
+    margin-top: 10px;
+}
+
+.nav-tabs{ margin: 10px 0; }
+.nav-tabs .moreBtn{float: right;
+    border: 1px solid #faa600;
+    padding: 0px 7px;
+    margin-bottom: 3px;}
+.nav-tabs span a{color: #5e5e86 !important;}
+
+.megamenu-style-dev{z-index: 99999;}
+
 .parsley-required,.parsley-equalto,.parsley-type,.parsley-minlength{color: red;}
-.page-builder-ltr{background: #fff;}
+.homepage .row{background: #fff;
+    margin-bottom: 10px;
+    padding: 10px 0;}
 .table > tbody > tr > td{vertical-align: middle !important;}
-.title{font-size: 20px; color: #000;}
+.title{font-size: 15px; color: #000;}
 .catalog .nav-tabs{margin-bottom: 5px;padding: 5px 0;}
 .desc-listcategoreis {
     position: absolute;
-    left: 25px;
-    top: 45%;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    color: #ffffff;
+    text-align: center;
+    padding: 12% 3px;
+    top: 50%;
+    background: #0000006b;
     -moz-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+.desc-listcategoreis{}
 
 .product-view .product-view-inner{
     padding: 7px;
@@ -31,7 +56,6 @@
 .product-view .content-product-right .title-product h1{font-size: 21px;margin: 0}
 .product-view .content-product-right .box-review{padding: 0px;}
 .desc-listcategoreis .number_product {
-    color: #888;
     font-size: 14px;
     text-transform: capitalize;
     margin-bottom: 5px;
@@ -39,7 +63,7 @@
     display: block;
 }
 .desc-listcategoreis a {
-    color: #0154d0;
+    color: #ffd200;
     font-size: 14px;
     text-transform: capitalize;
     line-height: 1;
@@ -64,7 +88,6 @@
 .cat-border {
 	height: 100px;
     max-height: 100px;
-    padding: 8px;
     margin-bottom: 8px;
     border: 1px solid #ece9e9;
     background: #F8F8F8;

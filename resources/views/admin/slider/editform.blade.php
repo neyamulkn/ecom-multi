@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label class="required" for="title">Slider Title</label>
-            <input name="title" id="title" value="{{$data->title}}" required="" type="text" class="form-control">
+            <input name="title" id="title" value="{{$data->title}}" type="text" class="form-control">
         </div>
     </div>
 

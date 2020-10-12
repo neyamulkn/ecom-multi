@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('layouts.2frontend')
 @section('title', $category->name . ' | '. Config::get('siteSetting.site_name') )
 @section('css')
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.range.css') }}">
@@ -115,7 +115,7 @@
                               </div>
                               
                             </div>
-                            <div class="so-filter-content-opts" style="display: block;padding-left: 10px;">
+                            <div class="so-filter-content-opts" style="display: block;padding-left: 20px;">
                                 <ul class="ratting">
                                     @for($r=5; $r>=1; $r--)
                                     <li>
@@ -146,7 +146,7 @@
                               <ul>
                                
                                 <li>
-                                    <input  type="hidden" id="price-range"  class="price-range-slider tertiary" value="@if(Request::get('price')) {{Request::get('price')}} @else 1000 @endif" form="shop_search_form"><br/>
+                                    <input  type="hidden" id="price-range"  class="price-range-slider tertiary" value="@if(Request::get('price')) {{Request::get('price')}} @else 10000 @endif" form="shop_search_form"><br/>
                                     <button id="+'&price='+price" class="btn btn-info btn-sm common_selector">Update your Search</button>
                                 </li>
                                 
@@ -164,7 +164,7 @@
                               </div>
                               <i class="fa fa-chevron-down"></i>
                             </div>
-                            <div class="so-filter-content-opts" style="display: block;padding-left: 10px;">
+                            <div class="so-filter-content-opts" style="display: block;padding-left: 20px;">
                               <ul>
                                 @foreach($specification->get_attrValues as $attrValue)
                                 <li>
@@ -180,7 +180,7 @@
                         @endforeach
                             
                         </ul>
-                        <div class="clear_filter">
+                        <div class="clear_filter" style="text-align: right;padding: 5px">
                             <button type="reset" id="resetAll" class="btn btn-default inverse">
                                  Reset All
                             </button>
@@ -189,6 +189,7 @@
                 </div>
             </aside>
             <div id="content" class="col-md-9 col-sm-12 col-xs-12 sticky-content" >
+
                 <div id="pageLoading"></div>
                 <a href="javascript:void(0)" class="open-sidebar hidden-lg hidden-md"><i class="fa fa-bars"></i>Filter By</a>
         
@@ -215,7 +216,7 @@
         -----------*/
         $('.price-range-slider').jRange({
             from: 0,
-            to: 1000,
+            to: 10000,
             step: 1,
             format: '$%s',
             width: 220,
@@ -294,9 +295,6 @@
         var  link = '<?php echo URL::to("category");?>/'+category+subcategory+childcategory+concatUrl;
             history.pushState({id: 'category'}, category +' '+subcategory, link);
 
-       
-         alert(link);
-        
         $.ajax({
             url:link,
             method:"get",

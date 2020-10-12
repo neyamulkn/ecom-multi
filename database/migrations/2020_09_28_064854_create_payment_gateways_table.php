@@ -24,6 +24,7 @@ class CreatePaymentGatewaysTable extends Migration
             $table->string('method_info', 255)->nullable();
             $table->enum('method_for', ['both', 'purchase', 'payment']);
             $table->tinyInteger('is_default')->nullable();
+            $table->integer('position')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

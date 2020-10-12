@@ -64,14 +64,19 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead> 
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($sliders as $slider)
                                             <tr id="item{{$slider->id}}">
                                                 
                                                 <td><img src="{{asset('upload/images/slider/'. $slider->phato)}}" width="150"></td>
                                                 <td><span style="color:{{$slider->title_color}}; font-family: {{$slider->title_style}}">{{$slider->title}}</td>
                                                 <td>{{$slider->subtitle}}</span></td>
-                                                <td>{!!($slider->status == 1) ? "<span class='label label-info'>Active</span>" : '<span class="label label-danger">Deactive</span>'!!} 
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                      <input  name="status" onclick="satusActiveDeactive('sliders', {{$slider->id}})"  type="checkbox" {{($slider->status == 1) ? 'checked' : ''}}  type="checkbox" class="custom-control-input" id="status{{$slider->id}}">
+                                                      <label style="padding: 5px 12px" class="custom-control-label" for="status{{$slider->id}}"></label>
+                                                
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <button type="button" onclick="edit('{{$slider->id}}')"  data-toggle="modal" data-target="#edit" class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</button>
@@ -118,7 +123,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="required" for="title">Slider Title</label>
-                                                <input name="title" id="title" value="{{old('title')}}" required="" type="text" class="form-control">
+                                                <input name="title" id="title" value="{{old('title')}}"  type="text" class="form-control">
                                             </div>
                                         </div>
 
@@ -175,7 +180,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group"> 
                                                 <label class="required dropify_image">Slider Image</label>
-                                                <input required="" type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
+                                                <input required type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
                                                 <p style="color:red">Image Size: 1350px*400px</p>
                                             </div>
                                             @if ($errors->has('phato'))
@@ -388,5 +393,26 @@
         })
     });
     </script>
-
+ <script>
+        $(document).ready(function(){
+            $( "#positionSorting" ).sortable({
+                placeholder : "ui-state-highlight",
+                update  : function(event, ui)
+                {
+                    var ids = new Array();
+                    $('#positionSorting tr').each(function(){
+                        ids.push($(this).attr("id"));
+                    });
+                    $.ajax({
+                        url:"{{route('positionSorting')}}",
+                        method:"get",
+                        data:{ids:ids,table:'sliders'},
+                        success:function(data){
+                            toastr.success(data)
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

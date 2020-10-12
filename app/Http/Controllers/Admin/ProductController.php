@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Country;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\HomepageSection;
 use App\Models\Product;
 use App\Models\ProductFeature;
 use App\Models\ProductFeatureDetail;
@@ -167,12 +168,10 @@ class ProductController extends Controller
                 $gallery_image = $request->file('gallery_image');
                 foreach ($gallery_image as $image) {
                     $new_image_name = $this->uniqueImagePath('product_images', 'image_path', $image->getClientOriginalName());
-
                     $image_path = public_path('upload/images/product/gallery/thumb/' . $new_image_name);
                     $image_resize = Image::make($image);
                     $image_resize->resize(200, 200);
                     $image_resize->save($image_path);
-
                     $image->move(public_path('upload/images/product/gallery'), $new_image_name);
 
                     ProductImage::create( [
@@ -189,13 +188,7 @@ class ProductController extends Controller
         }else{
             Toastr::error('Product Cannot Create.!');
         }
-        dd($request->all());
         return back();
-    }
-
-    public function show(Product $product)
-    {
-        //
     }
 
     //edit product
@@ -214,7 +207,6 @@ class ProductController extends Controller
     public function delete($id)
     {
         $delete = Product::where('id', $id)->delete();
-
         if($delete){
             $output = [
                 'status' => true,
@@ -228,8 +220,108 @@ class ProductController extends Controller
         }
         return response()->json($output);
     }
+    //get highlight popup
+    public function highlight($product_id){
+        $product = Product::find($product_id);
 
-    public function highlight(){
-        echo view('admin.product.hightlight');
+        if($product){
+            return view('admin.product.hightlight')->with(compact('product'));
+        }
+        return false;
     }
+    //add remove highlight product
+    public function highlightAddRemove(Request $request){
+
+        $section = HomepageSection::find($request->section_id);
+
+        $products_id =  ($section->product_id) ? explode(',', $section->product_id) : [];
+
+        if(in_array($request->product_id, $products_id)){
+            //remove product id from array
+            unset($products_id[array_search($request->product_id, $products_id)]);
+            $output = [
+                'status' => false,
+                'msg' => 'Product remove successfully.'
+            ];
+
+        }else{
+            //add product id in array
+            array_push($products_id, $request->product_id);
+            $output = [
+                'status' => true,
+                'msg' => 'Product added successfully.'
+            ];
+        }
+        //update hompagesection table
+        $section->update(['product_id' => implode(',', $products_id)]);
+
+        return response()->json($output);
+
+    }
+
+    //insert gallery image
+    public function storeGalleryImage(Request $request)
+    {
+        $request->validate([
+            'gallery_image' => 'required'
+        ]);
+        // gallery Image upload
+        if ($request->hasFile('gallery_image')) {
+            $gallery_image = $request->file('gallery_image');
+            foreach ($gallery_image as $image) {
+                $new_image_name = $this->uniqueImagePath('product_images', 'image_path', $image->getClientOriginalName());
+                $image_path = public_path('upload/images/product/gallery/thumb/' . $new_image_name);
+                $image_resize = Image::make($image);
+                $image_resize->resize(200, 200);
+                $image_resize->save($image_path);
+                $image->move(public_path('upload/images/product/gallery'), $new_image_name);
+                ProductImage::create( [
+                    'product_id' => $request->product_id,
+                    'image_path' => $new_image_name
+                ]);
+            }
+
+            Toastr::success('Product deleted successfully.');
+            return back();
+        }
+        Toastr::error('Product can\'t deleted.');
+        return back();
+    }
+
+    //display gallery image
+    public function getGalleryImage($product_id){
+        $product_images = ProductImage::where('product_id', $product_id)->get();
+        if(count($product_images)>0){
+            return view('admin.product.gallery-images')->with(compact('product_images'));
+        }
+        return false;
+    }
+
+    // delete prouct
+    public function deleteGalleryImage($id)
+    {
+        $find = ProductImage::find($id);
+        if($find){
+            //delete image from folder
+            $thumb_image_path = public_path('upload/images/product/gallery/thumb/'. $find->image_path);
+            $image_path = public_path('upload/images/product/gallery/'. $find->image_path);
+            if(file_exists($image_path) && $find->image_path){
+                unlink($image_path);
+                unlink($thumb_image_path);
+            }
+            $find->delete();
+            $output = [
+                'status' => true,
+                'msg' => 'Payment Gateway deleted successfully.'
+            ];
+        }else{
+            $output = [
+                'status' => false,
+                'msg' => 'Payment Gateway cannot deleted.'
+            ];
+        }
+        return response()->json($output);
+    }
+
+
 }

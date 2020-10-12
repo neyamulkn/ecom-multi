@@ -1,31 +1,14 @@
+<?php  $sections = App\Models\HomepageSection::where('type', 'section')->orderBy('position', 'asc')->get(); ?>
 
-<div class="bt-switch">
-
-    <h4>With Long Text</h4>
-    <p class="text-muted font-13">Just add <code>data-on-text="Long Text"</code> & <code>data-off-text="Long Text"</code> to the <code>&lt;input type="checkbox"...&gt;</code>.</p>
-    <div class="m-b-30">
-        <input type="checkbox" checked data-on-color="warning" data-off-color="danger" data-on-text="Enabled" data-off-text="Disabled"> 
+    <div class="bt-switch">
+        @foreach($sections as $section)
+        <?php $product_id =  explode(',', $section->product_id); ?>
+        <h4>Allow {{$section->title}}</h4>
+        <div class="m-b-30">
+            <input  onchange="highlightAddRemove({{$section->id.', '.$product->id}})" type="checkbox" {{ in_array($product->id, $product_id) ? 'checked' : ''}} data-on-color="warning" data-off-color="danger" data-on-text="Enabled" data-off-text="Disabled"> 
+        </div>
+        @endforeach
     </div>
-
-    <h4>With Long Text</h4>
-    <p class="text-muted font-13">Just add <code>data-on-text="Long Text"</code> & <code>data-off-text="Long Text"</code> to the <code>&lt;input type="checkbox"...&gt;</code>.</p>
-    <div class="m-b-30">
-        <input type="checkbox" checked data-on-color="warning" data-off-color="danger" data-on-text="Enabled" data-off-text="Disabled"> 
-    </div>
-
-    <h4>With Long Text</h4>
-    <p class="text-muted font-13">Just add <code>data-on-text="Long Text"</code> & <code>data-off-text="Long Text"</code> to the <code>&lt;input type="checkbox"...&gt;</code>.</p>
-    <div class="m-b-30">
-        <input type="checkbox" checked data-on-color="warning" data-off-color="danger" data-on-text="Enabled" data-off-text="Disabled"> 
-    </div>
-
-    <h4>With Long Text</h4>
-    <p class="text-muted font-13">Just add <code>data-on-text="Long Text"</code> & <code>data-off-text="Long Text"</code> to the <code>&lt;input type="checkbox"...&gt;</code>.</p>
-    <div class="m-b-30">
-        <input type="checkbox" checked data-on-color="warning" data-off-color="danger" data-on-text="Enabled" data-off-text="Disabled"> 
-    </div>
-    
-</div>
 
     <!-- bt-switch -->
     <script src="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.js"></script>

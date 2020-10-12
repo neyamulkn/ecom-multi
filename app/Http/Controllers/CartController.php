@@ -16,14 +16,14 @@ class CartController extends Controller
     {
         $product = Product::find($request->product_id);
         $qty = 0;
-
+        $user_id = rand(1000000000, 9999999999);
         if(Auth::check()){
             $user_id = Auth::id();
         }else{
             if(Session::has('user_id')){
                 $user_id =  Session::get('user_id');
             }else{
-                $user_id =  Session::put('user_id', rand(1000000000, 9999999999));
+                Session::put('user_id', $user_id );
             }
         }
         setcookie('user_id', $user_id, time() + (86400), "/"); // 86400 = 1 day
@@ -55,9 +55,9 @@ class CartController extends Controller
         }else{
             //check weather have discount
             if ($product->discount) {
-              $price = $product->selling_price - ($product->discount * $product->selling_price) / 100;
+                $price = $product->selling_price - ($product->discount * $product->selling_price) / 100;
             } else {
-              $price = $product->selling_price;
+                $price = $product->selling_price;
             }
             $data = [
                 'user_id' => $user_id,
@@ -85,14 +85,12 @@ class CartController extends Controller
 
     public function cartView()
     {
-        setcookie('direct_checkout_product_id', '', time() - 3600);
+        Session::forget('direct_checkout_product_id');
         $user_id = 0;
         if(Auth::check()){
             $user_id = Auth::id();
         }else{
-            if(isset($_COOKIE['user_id'])){
-                $user_id =  $_COOKIE['user_id'];
-            }
+            $user_id =  Session::get('user_id');
         }
         $cartItems = Cart::with('get_product')->where('user_id', $user_id)->get();
         return view('frontend.carts.cart')->with(compact('cartItems'));
@@ -120,8 +118,8 @@ class CartController extends Controller
             $cart->update(['qty' => $request->qty]);
             $cartItems = Cart::with('get_product')->where('user_id', $user_id);
             //check direct checkout
-            if(isset($_COOKIE['direct_checkout_product_id'])){
-                  $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+            if(Session::has('direct_checkout_product_id')){
+                $cartItems = $cartItems->where('product_id', Session::get('direct_checkout_product_id'));
             }
             $cartItems = $cartItems->get();
 
@@ -150,21 +148,21 @@ class CartController extends Controller
         }
 
         $cartItems = Cart::where('user_id', $user_id)->where('id', $id)->delete();
-       if($cartItems){
+        if($cartItems){
 
-           $cartItems = Cart::with('get_product')->where('user_id', $user_id)->get();
-           if($request->page == 'checkout'){
-               return view('frontend.checkout.order_summery')->with(compact('cartItems'));
-           }
-           return view('frontend.carts.cart_summary')->with(compact('cartItems'));
+            $cartItems = Cart::with('get_product')->where('user_id', $user_id)->get();
+            if($request->page == 'checkout'){
+                return view('frontend.checkout.order_summery')->with(compact('cartItems'));
+            }
+            return view('frontend.carts.cart_summary')->with(compact('cartItems'));
 
-       }else{
-           $output = array(
-               'status' => 'error',
-               'msg' => 'Cart item cannot delete.'
-           );
-       }
-       return response()->json($output);
+        }else{
+            $output = array(
+                'status' => 'error',
+                'msg' => 'Cart item cannot delete.'
+            );
+        }
+        return response()->json($output);
     }
 
     public function clearCart(){

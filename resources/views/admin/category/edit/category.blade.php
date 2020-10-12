@@ -17,7 +17,7 @@
 <div class="col-md-12">
     <div class="form-group"> 
         <label class="dropify_image">Feature Image</label>
-        <input data-default-file="{{asset('upload/images/category/'.$data->image)}}" type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
+        <input data-default-file="{{asset('upload/images/category/'.$data->image)}}" type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
     </div>
     @if ($errors->has('phato'))
         <span class="invalid-feedback" role="alert">

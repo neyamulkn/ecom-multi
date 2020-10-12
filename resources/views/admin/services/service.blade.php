@@ -64,7 +64,7 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead> 
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($services as $service)
                                             <tr id="item{{$service->id}}">
                                                 <td>{{$service->title}}</td>
@@ -249,5 +249,26 @@
         $('.dropify').dropify();
     });
     </script>
-
+ <script>
+        $(document).ready(function(){
+            $( "#positionSorting" ).sortable({
+                placeholder : "ui-state-highlight",
+                update  : function(event, ui)
+                {
+                    var ids = new Array();
+                    $('#positionSorting tr').each(function(){
+                        ids.push($(this).attr("id"));
+                    });
+                    $.ajax({
+                        url:"{{route('positionSorting')}}",
+                        method:"get",
+                        data:{ids:ids,table:'services'},
+                        success:function(data){
+                            toastr.success(data)
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

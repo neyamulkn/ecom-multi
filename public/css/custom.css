@@ -11,7 +11,12 @@ table .custom-switch label {
 .upload-info{color:red;font-size: 12px;}
 .border{border: 1px solid #e8e8e8;}
 .floating-labels .form-control{font-size: 12px;font-weight: inherit;}
-
+.drag-drop-info{color: black;
+    background: #ffffc9;
+    width: 100%;
+    padding: 8px;
+    display: inline-block;
+    margin: 0;}
 .note-toolbar{z-index: inherit !important;}
 
 .ajaxError{font-size: 14px; color: red;}

@@ -142,7 +142,7 @@
                               <ul>
                                
                                 <li>
-                                    <input  type="hidden" id="price-range"  class="price-range-slider tertiary" value="@if(Request::get('price')) {{Request::get('price')}} @else 1000 @endif" form="shop_search_form"><br/>
+                                    <input  type="hidden" id="price-range"  class="price-range-slider tertiary" value="@if(Request::get('price')) {{Request::get('price')}} @else 10000 @endif" form="shop_search_form"><br/>
                                     <button id="+'&price='+price" class="btn btn-info btn-sm common_selector">Update your Search</button>
                                 </li>
                                 </ul>
@@ -175,7 +175,7 @@
                         @endforeach
                             
                         </ul>
-                        <div class="clear_filter">
+                        <div class="clear_filter" style="text-align: right;padding: 5px">
                             <button type="reset" id="resetAll" class="btn btn-default inverse">
                                  Reset All
                             </button>
@@ -210,7 +210,7 @@
         -----------*/
         $('.price-range-slider').jRange({
             from: 0,
-            to: 1000,
+            to: 10000,
             step: 1,
             format: '$%s',
             width: 220,

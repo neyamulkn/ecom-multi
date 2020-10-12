@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Coupon;
+use App\Models\HomepageSection;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductAttribute;
@@ -33,12 +34,15 @@ class HomeController extends Controller
     public function index()
     {
         $data = [];
-        $data['sliders'] = Slider::where('status', 1)->orderBy('orderBy', 'asc')->get();
-        $data['services'] = Services::where('status', 1)->orderBy('orderBy', 'asc')->get();
-        $data['brands'] = Brand::where('status', 1)->orderBy('name', 'asc')->get();
-        $data['categories'] = Category::where('papular', 1)->where('status', 1)->orderBy('orderBy', 'asc')->get();
-        $data['products'] = Product::get();
-        return view('frontend.home')->with($data);
+        $data['sections'] = HomepageSection::where('status', 1)->orderBy('position', 'asc')->get();
+        $data['sliders'] = Slider::where('status', 1)->orderBy('position', 'asc')->get();
+
+
+        $data['categories'] = Category::with('products')->where('parent_id', '=' , null)->where('popular', 1)->where('status', 1)->orderBy('orderBy', 'asc')->take(12)->get();
+        $data['features'] = Product::where('featured', 1)->where('status', 1)->orderBy('id', 'desc')->get();
+        $data['newArrivals'] = Product::where('status', 1)->orderBy('id', 'desc')->get();
+
+        return view('frontend.home2')->with($data);
     }
 
     //product showby category
@@ -100,7 +104,7 @@ class HomeController extends Controller
                 }
                 $products = $products->whereIn('brand_id', $brand);
             }
-
+            $field = 'id'; $value = 'desc';
             if (isset($request->sortby) && $request->sortby) {
                 try {
                     $sort = explode('-', $request->sortby);
@@ -115,8 +119,9 @@ class HomeController extends Controller
                     }
                     $value = ($sort[1] == 'a' || $sort[1] == 'l') ? 'asc' : 'desc';
                     $products = $products->orderBy($field, $value);
-                }catch (Exception $exception){}
+                }catch (\Exception $exception){}
             }
+            $products = $products->orderBy($field, $value);
 
             //check price keyword
             if ($request->price) {
@@ -169,11 +174,23 @@ class HomeController extends Controller
     public function search(Request $request)
     {
 
-        $search = Product::where('title', 'like', '%' . $request->q . '%');
-        if ($request->cat){
-            $search->join('categories', 'products.category_id', 'categories.id');
-            $search->where('categories.slug', $request->cat);
-        }
+        $search = Product::where('status', 1);
+            if($request->q) {
+                $search->where('title', 'like', '%' . $request->q . '%');
+            }
+            //check brand
+            if ($request->brand) {
+                if (!is_array($request->brand)) { // direct url tags
+                    $brand = explode(',', $request->brand);
+                } else { // filter by ajax
+                    $brand = implode(',', $request->brand);
+                }
+                $search->whereIn('brand_id', $brand);
+            }
+            if ($request->cat){
+                $search->join('categories', 'products.category_id', 'categories.id');
+                $search->where('categories.slug', $request->cat);
+            }
         $search = $search->first();
         $data['products'] = $data['specifications'] = $data['category'] = $data['filterCategories'] = $data['brands'] = [];
         //dd($get_products);
@@ -219,15 +236,6 @@ class HomeController extends Controller
                 $products = $products->where('avg_ratting', $request->ratting);
             }
 
-            //check brand
-            if ($request->brand) {
-                if (!is_array($request->brand)) { // direct url tags
-                    $brand = explode(',', $request->brand);
-                } else { // filter by ajax
-                    $brand = implode(',', $request->brand);
-                }
-                $products = $products->whereIn('brand_id', $brand);
-            }
             //check orderby
             if (isset($request->sortby) && $request->sortby) {
                 try {
@@ -276,7 +284,7 @@ class HomeController extends Controller
             if (isset($request->perPage) && $request->perPage) {
                 $perPage = $request->perPage;
             }
-            $data['products'] = $products->where('status', 1)->paginate($perPage);
+            $data['products'] = $products->paginate($perPage);
             $data['brands'] = Brand::where('category_id', $data['category']->id)->where('status', 1)->get();
         }
         if($request->filter){
@@ -297,10 +305,9 @@ class HomeController extends Controller
 
             return view('frontend.products.product_details')->with($data);
         }else{
-            return view('frontend.404');
+            return view('404');
         }
     }
-
 
     // apply coupon code in cart & checkout page
     public function couponApply(Request $request){
@@ -343,8 +350,8 @@ class HomeController extends Controller
             }
             $cartItems = Cart::join('products', 'carts.product_id', 'products.id')->where('user_id', $user_id);
             //check direct checkout
-            if(isset($_COOKIE['direct_checkout_product_id'])){
-                $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+            if(Session::has('direct_checkout_product_id')){
+                $cartItems = $cartItems->where('product_id', Session::get('direct_checkout_product_id'));
             }
             $cartItems = $cartItems->selectRaw('sum(qty*price) total_price, shipping_method, ship_region_id, shipping_cost, other_region_cost')->groupBy('product_id')->get();
             $total_shipping_cost = 0;
@@ -449,7 +456,7 @@ class HomeController extends Controller
         }
         //cookie set & retrive;
         setcookie('direct_checkout_product_id', $cart_user->product_id, time() + (86400), "/"); // 86400 = 1 day
-//      isset($_COOKIE['direct_checkout_product_id']) ? $_COOKIE['direct_checkout_product_id'] : '';
+//      Session::has('direct_checkout_product_id') ? Session::get('direct_checkout_product_id') : '';
         Session::put('direct_checkout_product_id' , $cart_user->product_id);
         $output = array(
             'status' => 'success',
@@ -459,6 +466,16 @@ class HomeController extends Controller
         return response()->json($output);
     }
 
+    public function moreProducts($slug)
+    {
+        $data['section'] = HomepageSection::where('slug', $slug)->where('status', 1)->first();
+        if($data['section']){
+            $data['products'] = Product::whereIn('id', explode(',', $data['section']->product_id))->orderBy('id', 'desc')->paginate(15);
+            return view('frontend.homepage.moreProducts')->with($data);
+        }
+        return view('frontend.404');
+    }
+
     public function page($slug)
     {
         $page = Page::where('slug', $slug)->where('status', 1)->first();
@@ -466,5 +483,16 @@ class HomeController extends Controller
             return view('frontend.page')->with(compact('page'));
         }
         return view('frontend.404');
+    }
+
+    public function quickview($product_id){
+        $data['product'] = Product::with('user:id,name','get_category:id,name','get_features')->where('id', $product_id)->first();
+
+        if($data['product']) {
+            $data['product']->increment('views'); // news view count
+            return view('frontend.products.quickview')->with($data);
+        }else{
+            return view('frontend.404');
+        }
     }
 }

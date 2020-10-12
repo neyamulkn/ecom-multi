@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\GeneralSetting;
+use App\Models\Notification;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,6 +51,14 @@ class UserRegController extends Controller
         $success = $user->save();
         if($success) {
             if (Auth::attempt(['mobile' => $request->mobile, 'password' => $request->password,])) {
+                //insert notification in database
+                Notification::create([
+                    'type' => 'register',
+                    'fromUser' => Auth::id(),
+                    'toUser' => 0,
+                    'item_id' => Auth::id(),
+                    'notify' => 'register new user',
+                ]);
                 Toastr::success('Registration in success.');
                 return redirect()->intended(route('user.dashboard'));
             }

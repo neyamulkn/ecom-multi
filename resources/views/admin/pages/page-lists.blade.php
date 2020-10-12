@@ -56,7 +56,7 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead> 
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($pages as $data)
                                             <tr id="item{{$data->id}}">
                                                 <td>{{$data->title}}</td>
@@ -68,7 +68,7 @@
                                                
                                                 <td>
                                                     <div class="custom-control custom-switch" style="padding-left: 3.25rem;">
-                                                      <input name="status" onclick="satusActiveDeactive({{$data->id}})"  type="checkbox" {{($data->status == 1) ? 'checked' : ''}} class="custom-control-input" id="status{{$data->id}}">
+                                                      <input name="status" onclick="satusActiveDeactive('pages', {{$data->id}})"  type="checkbox" {{($data->status == 1) ? 'checked' : ''}} class="custom-control-input" id="status{{$data->id}}">
                                                       <label class="custom-control-label" for="status{{$data->id}}"></label>
                                                     </div>
                                                 </td>
@@ -111,43 +111,34 @@
     <script src="{{asset('assets')}}/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
    <script>
         $(function () {
-            $('#myTable').DataTable();
+           $('#myTable').dataTable({
+                "ordering": false
+            });
         });
         
-         function satusActiveDeactive(id){
-
-            var  url = '{{route("page.status", ":id")}}';
-            url = url.replace(':id',id);
-            $.ajax({
-                url:url,
-                method:"get",
-                success:function(data){
-                    if(data.status == 'publish'){
-                        toastr.success(data.message);
-                    }else{
-                        toastr.error(data.message);
-                    }
-                }
-            });
-        }
-        function menuStatus(id, status, type){
-
-            var  url = '{{route("page.menuStatus", ":id")}}';
-            url = url.replace(':id',id);
-            $.ajax({
-                url:url,
-                method:"get",
-                data:{id:id,status:status,type:type},
-                success:function(data){
-                    if(data.status == 'added'){
-                        toastr.success(data.message);
-                    }else{
-                        toastr.error(data.message);
-                    }
-                }
-            });
-        }
+       
     </script>
-
+    <script>
+        $(document).ready(function(){
+            $( "#positionSorting" ).sortable({
+                placeholder : "ui-state-highlight",
+                update  : function(event, ui)
+                {
+                    var ids = new Array();
+                    $('#positionSorting tr').each(function(){
+                        ids.push($(this).attr("id"));
+                    });
+                    $.ajax({
+                        url:"{{route('positionSorting')}}",
+                        method:"get",
+                        data:{ids:ids,table:'pages'},
+                        success:function(data){
+                            toastr.success(data)
+                        }
+                    });
+                }
+            });
+        });
+    </script>
    
 @endsection

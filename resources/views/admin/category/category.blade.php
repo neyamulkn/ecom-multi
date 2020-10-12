@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css"
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
     <link href="{{asset('assets')}}/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="{{asset('css')}}/pages/bootstrap-switch.css" rel="stylesheet">
+
     <style type="text/css">
         .dropify_image{
             position: absolute;top: -12px!important;left: 12px !important; z-index: 9; background:#fff!important;padding: 3px;
@@ -52,7 +55,7 @@
 
                         <div class="card ">
                             <div class="card-body">
-
+                                 <i class="drag-drop-info">Drag & drop sorting position</i>
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
@@ -60,17 +63,29 @@
                                                 <th>Category Name</th>
                                                 <th>Feature Image</th>
                                                 <th>Notes</th>
+                                                <th>Popular</th>
                                                 <th>Status</th>
+                                                
                                                 <th>Action</th>
                                             </tr>
                                         </thead> 
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($get_data as $data)
                                             <tr id="item{{$data->id}}">
                                                 <td>{{$data->name}}</td>
                                                 <td><img src="{{asset('upload/images/category/thumb/'. $data->image)}}" width="50"></td>
                                                 <td>{{$data->notes}}</td>
-                                                <td>{!!($data->status == 1) ? "<span class='label label-info'>Active</span>" : '<span class="label label-danger">Deactive</span>'!!} 
+                                                <td>
+                                                    <div class="bt-switch">
+                                                        <input  onchange="satusActiveDeactive('categories', '{{$data->id}}', 'popular')" type="checkbox" {{($data->popular == 1) ? 'checked' : ''}} data-on-color="warning" data-off-color="danger" data-on-text="Enabled" data-off-text="Disabled"> 
+                                                   
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                      <input  name="status" onclick="satusActiveDeactive('categories', {{$data->id}})"  type="checkbox" {{($data->status == 1) ? 'checked' : ''}}  type="checkbox" class="custom-control-input" id="status{{$data->id}}">
+                                                      <label style="padding: 5px 12px" class="custom-control-label" for="status{{$data->id}}"></label>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <button type="button" onclick="edit('{{$data->id}}')"  data-toggle="modal" data-target="#edit" class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</button>
@@ -126,7 +141,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group"> 
                                                 <label class="dropify_image">Feature Image</label>
-                                                <input  type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
+                                                <input  type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
                                             </div>
                                             @if ($errors->has('phato'))
                                                 <span class="invalid-feedback" role="alert">
@@ -171,8 +186,8 @@
         <!-- update Modal -->
         <div class="modal fade" id="edit" role="dialog"  tabindex="-1" aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
-                <form action="{{route('category.update')}}"  method="post">
-                      {{ csrf_field() }}
+                <form action="{{route('category.update')}}" enctype="multipart/form-data" method="post">
+                {{ csrf_field() }}
                   <!-- Modal content-->
                   <div class="modal-content">
                     <div class="modal-header">
@@ -198,11 +213,36 @@
     <!-- This is data table -->
     <script src="{{asset('assets')}}/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{asset('assets')}}/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+
+        <!-- bt-switch -->
+    <script src="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.js"></script>
+    <script type="text/javascript">
+    $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+    var radioswitch = function() {
+        var bt = function() {
+            $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioState")
+            }), $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+            }), $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+            })
+        };
+        return {
+            init: function() {
+                bt()
+            }
+        }
+    }();
+    $(document).ready(function() {
+        radioswitch.init()
+    });
+    </script>
    <script>
         $(function () {
-            $('#myTable').DataTable();
-            
-
+            $('#myTable').dataTable({
+                "ordering": false
+            });
 
         });
 
@@ -274,5 +314,31 @@
         })
     });
     </script>
+ 
+    <script>
+        $(document).ready(function(){
+         $( "#positionSorting" ).sortable({
+          placeholder : "ui-state-highlight",
+          update  : function(event, ui)
+          {
 
+           var ids = new Array();
+           $('#positionSorting tr').each(function(){
+            ids.push($(this).attr("id"));
+           });
+
+           $.ajax({
+            url:"{{route('positionSorting')}}",
+            method:"get",
+            data:{ids:ids,operator:'=',operator2:'='},
+            success:function(data)
+            {
+             toastr.success(data)
+            }
+           });
+          }
+         });
+
+        });
+    </script>
 @endsection

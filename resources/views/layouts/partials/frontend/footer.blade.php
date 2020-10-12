@@ -1,89 +1,9 @@
 <footer class="footer-container typefooter-2">
   <div class="footer-has-toggle collapse" id="collapse-footer"  >
     <div class="so-page-builder">
-      <section class="section_1  section-color ">
-        <div class="container">
-          <div class="row row_m1ch  row-style  row-color ">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col_itqc  col-style">
-              <div class="clearfix bonus-menus">
-                <ul class="row">
-                  <li class="item free col-md-3">
-                    <div class="icon">
-                      <img src="{{asset('frontend')}}/image/catalog/demo/banners/home2/icon-1.png" alt="Static Image">
-                    </div>
-                    <div class="text">
-                      <h5><a href="#">Free shipping</a></h5>
-                      <p>Free shipping oder $100</p>
-                    </div>
-                  </li>
-                  <li class="item secure col-md-3">
-                    <div class="icon">
-                      <img src="{{asset('frontend')}}/image/catalog/demo/banners/home2/icon-2.png" alt="Static Image">
-                    </div>
-                    <div class="text">
-                      <h5><a href="#">Secure Payment</a></h5>
-                      <p>We value your security</p>
-                    </div>
-                  </li>
-                  <li class="item support col-md-3">
-                    <div class="icon">
-                      <img src="{{asset('frontend')}}/image/catalog/demo/banners/home2/icon-3.png" alt="Static Image">
-                    </div>
-                    <div class="text">
-                      <h5><a href="#">Online support</a></h5>
-                      <p>We have support 24/7</p>
-                    </div>
-                  </li>
-                  <li class="item payment col-md-3">
-                    <div class="icon">
-                      <img src="{{asset('frontend')}}/image/catalog/demo/banners/home2/icon-4.png" alt="Static Image">
-                    </div>
-                    <div class="text">
-                      <h5><a href="#">Payment on Delivery</a></h5>
-                      <p>Cash on delivery option</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="section_2  section-color ">
-        <div class="container">
-          <div class="row row_34bo  row-style ">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col_9jik  col-style">
-              <div class="module news-letter">
-                <div class="so-custom newsletter" style="width:100%     ; background-color: #f0f0f0 ; ">
-                  <div class="btn-group title-block">
-                    <div class="popup-title page-heading">
-                      <i class="fa fa-paper-plane-o"></i> Sign up to Newsletter
-                    </div>
-                    <div class="newsletter_promo">And receive <span>$1 </span>coupon for first shopping</div>
-                  </div>
-                  <div class="modcontent block_content">
-                    <form method="post" id="signup" name="signup" class="form-group form-inline signup send-mail">
-                      <div class="input-group form-group required">
-                        <div class="input-box">
-                          <input type="email" placeholder="Your email address..." value="" class="form-control" id="txtemail" name="txtemail" size="55">
-                        </div>
-                        <div class="input-group-btn subcribe">
-                          <button class="btn btn-primary" type="submit" onclick="return subscribe_newsletter();" name="submit">
-                          <i class="fa fa-envelope hidden"></i>
-                          <span>Subscribe</span>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <!--/.modcontent-->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="section_3 ">
+      
+      @include('frontend.newsletters')
+      <section class="section_3">
         <div class="container">
           <div class="row row_bh6y  row-style ">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col_mehx  col-style">
@@ -92,20 +12,20 @@
                   <div class="contactinfo">
                     <img width="200" src="{{asset('frontend')}}/image/catalog/demo/logo/logo-home6.png" title="Your Store - Layout 6" alt="Your Store - Layout 6">
                     
-                    <p>They key is to have every key, the key to open every door. We don’t see them we will</p>
+                    <p>Plaza Jacinto Benavente 08950 Esplugues de LLobregat (Barcelona)</p>
                     <div class="content-footer">
 
                       <div class="address">
                         <label><i class="fa fa-map-marker" aria-hidden="true"></i></label>
-                        <span>100 S Manhattan St, Amarillo, TX 79104, North America</span>
+                        <span>Eco Sayan Tex, S.L.B 67162776</span>
                       </div>
                       <div class="phone">
                         <label><i class="fa fa-phone" aria-hidden="true"></i></label>
-                        <span>( +123 )4 567 890  -  ( +123 )4 567 899</span>
+                        <span>+34640691007 (Whatsapp)</span>
                       </div>
                       <div class="email">
                         <label><i class="fa fa-envelope"></i></label>
-                        <a href="#">{{ 'info@'.$_SERVER['SERVER_NAME']}}.com</a>
+                        <a href="#">{{ 'contact@'.$_SERVER['SERVER_NAME']}}.com</a>
                       </div>
                     </div>
                   </div>
@@ -144,19 +64,17 @@
                     </h4>
                     <ul class="links">
                       <li>
-                        <a title="My Account" href="my-account-2.html">My Account</a>
+                        <a title="My Account" href="{{route('user.myAccount')}}">My Account</a>
+                      </li>
+                     
+                      <li>
+                        <a title="Checkout" href="{{route('checkout')}}">Checkout</a>
                       </li>
                       <li>
-                        <a title="Account Downloads" href="#">Account Downloads</a>
+                        <a href="{{route('wishlists')}}"> Wishlist</a>
                       </li>
                       <li>
-                        <a title="Checkout" href="checkout-2.html">Checkout</a>
-                      </li>
-                      <li>
-                        <a href="#"> Wishlist</a>
-                      </li>
-                      <li>
-                        <a title="Order History" href="order-history-2.html">Order History</a>
+                        <a title="Order History" href="{{route('user.orderHistory')}}">Order History</a>
                       </li>
                       <li>
                         <a title="Your Transactions" href="#">Your Transactions</a>

@@ -77,15 +77,11 @@
                         @csrf
 
                         <div class="form-body">
-                            
                             <div class="row" style="align-items: flex-start; overflow: visible;">
-                                
                                 <div class="col-md-9 divrigth_border sticky-conent">
                                     <div class="row">
                                         <div class="col-md-12 title_head">
-                                           
                                             Product Basic Information
-                                           
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -353,7 +349,7 @@
                                     	<div class="col-md-12">
                                             <div class="form-group"> 
                                                 <label class="dropify_image required">Feature Image</label>
-                                                <input type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="feature_image" id="input-file-events">
+                                                <input type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="feature_image" id="input-file-events">
                                             </div>
                                             @if ($errors->has('feature_image'))
                                                 <span class="invalid-feedback" role="alert">
@@ -365,7 +361,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group"> 
                                                 <label class="dropify_image">Gallery Image</label>
-                                                <input  type="file" multiple class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="gallery_image[]" id="input-file-events">
+                                                <input  type="file" multiple class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="gallery_image[]" id="input-file-events">
                                             </div>
                                             @if ($errors->has('gallery_image'))
                                                 <span class="invalid-feedback" role="alert">
@@ -397,7 +393,7 @@
                                                 <label class="switch-box" style="top:-12px;">Status</label>
                                                 
                                                     <div class="custom-control custom-switch">
-                                                      <input name="status" {{ (old('status') == 'on') ? 'checked' : '' }} type="checkbox" class="custom-control-input" id="status">
+                                                      <input name="status" {{ (old('status') == 'on') ? 'checked' : '' }} checked type="checkbox" class="custom-control-input" id="status">
                                                       <label style="padding: 5px 12px" class="custom-control-label" for="status">Publish/Unpublish</label>
                                                 </div>
                                             </div>
@@ -408,7 +404,7 @@
                             </div>
                     
                         </div><hr>
-                        <div class="form-actions pull-right">
+                        <div class="form-actions pull-right" style="float: right;">
                             <button type="submit"  name="submit" value="save" class="btn btn-success"> <i class="fa fa-save"></i> Save Product </button>
                             
                             <button type="reset" class="btn waves-effect waves-light btn-secondary">Reset</button>

@@ -14,7 +14,8 @@ class AdminOrderController extends Controller
     {
         $orders = Order::orderBy('id', 'desc')->where('payment_method', '!=', 'pending');
         if($status){
-            $orders = $orders->where('order_status', $status);
+            $orders = $orders->where('order_status', $status)->get();
+            return view('admin.order.order-status')->with(compact('orders'));
         }
         $orders = $orders->get();
         return view('admin.order.orders')->with(compact('orders'));

@@ -45,7 +45,7 @@ class UserLoginController extends Controller
           }
 
           Toastr::success('Logged in success.');
-          return redirect()->intended(route('user.dashboard'));
+          return redirect()->back();
       }else{
           Toastr::error( $fieldType. ' or password is invalid.');
           return back()->withInput();

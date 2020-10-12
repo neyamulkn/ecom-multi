@@ -542,10 +542,10 @@
                           </div>
                           <div class="location_address"> 
                             <p>Home Delivery</p>
-                            <i>Shipping Time: 5-7 days</i>
+                            <i>Shipping Time: {{$product->shipping_time}}</i>
                            </div>
                           <div class="location_link">
-                             <a class="rate">$ 60</a>
+                             <a class="rate">@if($product->shipping_cost){{Config::get('siteSetting.currency_symble')}}{{$product->shipping_cost}}@endif</a>
                           </div>
                       </div> 
                   </div>
@@ -807,7 +807,7 @@
                       <div class="review-wrapper">
                           <div class="single-review">
                               <div class="review-img">
-                                  <img width="50" src="{{asset('frontend')}}/{{asset("frontend")}}/image/catalog/demo/product/electronic/7.jpg" alt="" />
+                                  <img width="50" src="{{asset('frontend')}}/image/catalog/demo/product/electronic/7.jpg" alt="" />
                               </div>
                               <div class="review-content">
                                   <div class="review-top-wrap">
@@ -879,7 +879,7 @@
                                 <div class="box-label">
                                 </div>
                                 <a class="lt-image" data-product="104" href="#" target="_self" title="Toshiba Pro 21&quot;(21:9) FHD  IPS LED 1920X1080 HDMI(2)">
-                                <img src="{{asset('frontend')}}/{{asset("frontend")}}/image/catalog/demo/product/electronic/25.jpg" alt="Toshiba Pro 21&quot;(21:9) FHD  IPS LED 1920X1080 HDMI(2)">
+                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/25.jpg" alt="Toshiba Pro 21&quot;(21:9) FHD  IPS LED 1920X1080 HDMI(2)">
                                 </a>
                                </div>
                             </div>
@@ -920,7 +920,7 @@
                                 <div class="box-label">
                                 </div>
                                 <a class="lt-image" data-product="66" href="#" title="Compact Portable Charger (Power Bank) with Premium">
-                                <img src="{{asset('frontend')}}/{{asset("frontend")}}/image/catalog/demo/product/electronic/19.jpg" alt="Compact Portable Charger (Power Bank) with Premium">
+                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/19.jpg" alt="Compact Portable Charger (Power Bank) with Premium">
                                 </a>
                                </div>
                             </div>
@@ -960,7 +960,7 @@
                                 <div class="box-label">
                                 </div>
                                 <a class="lt-image" data-product="66" href="#" title="Compact Portable Charger (Power Bank) with Premium">
-                                <img src="{{asset('frontend')}}/{{asset("frontend")}}/image/catalog/demo/product/electronic/19.jpg" alt="Compact Portable Charger (Power Bank) with Premium">
+                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/19.jpg" alt="Compact Portable Charger (Power Bank) with Premium">
                                 </a>
                                </div>
                             </div>
@@ -1000,7 +1000,7 @@
                                 <div class="box-label">
                                 </div>
                                 <a class="lt-image" target="_self" title="Philipin Tour Group Manila/ Pattaya / Mactan ">
-                                <img src="{{asset('frontend')}}/{{asset("frontend")}}/image/catalog/demo/product/travel/8.jpg" alt="Philipin Tour Group Manila/ Pattaya / Mactan ">
+                                <img src="{{asset('frontend')}}/image/catalog/demo/product/travel/8.jpg" alt="Philipin Tour Group Manila/ Pattaya / Mactan ">
                                 </a>
                                </div>
                             </div>
@@ -1041,7 +1041,7 @@
                                 <div class="box-label">
                                 </div>
                                 <a class="lt-image" data-product="78" href="#">
-                                <img src="{{asset('frontend')}}/{{asset("frontend")}}/image/catalog/demo/product/electronic/4.jpg" alt="Portable  Compact Charger (External Battery) t45">
+                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/4.jpg" alt="Portable  Compact Charger (External Battery) t45">
                                 </a>
                                </div>
                             </div>
@@ -1091,28 +1091,28 @@
 @section('js')
 
   <script>
-    $('.large-image').magnificPopup({
-      items: [
-        {src: '{{asset("upload/images/product/". $product->feature_image)}}' },
-      @foreach($product->get_galleryImages as $image)
-        {src: '{{asset("upload/images/product/gallery/". $image->image_path)}}' },
-      @endforeach
-      ],
-      gallery: { enabled: true, preload: [0,2] },
-      type: 'image',
-      mainClass: 'mfp-fade',
-      callbacks: {
-        open: function() {
-          
-          var activeIndex = parseInt($('#thumb-slider .img.active').attr('data-index'));
-          var magnificPopup = $.magnificPopup.instance;
-          magnificPopup.goTo(activeIndex);
+      $('.large-image').magnificPopup({
+        items: [
+          {src: '{{asset("upload/images/product/". $product->feature_image)}}' },
+        @foreach($product->get_galleryImages as $image)
+          {src: '{{asset("upload/images/product/gallery/". $image->image_path)}}' },
+        @endforeach
+        ],
+        gallery: { enabled: true, preload: [0,2] },
+        type: 'image',
+        mainClass: 'mfp-fade',
+        callbacks: {
+          open: function() {
+            
+            var activeIndex = parseInt($('#thumb-slider .img.active').attr('data-index'));
+            var magnificPopup = $.magnificPopup.instance;
+            magnificPopup.goTo(activeIndex);
+          }
         }
-      }
-    });
-</script>
+      });
+  </script>
    
-    <script type="text/javascript">
+  <script type="text/javascript">
       function changeColor(name, id){
        
         $('.'+name+' label').click(function() {

@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 
 	Route::post('subchild/category/update', 'CategoryController@subchildcategory_update')->name('subchildcategory.update');
 	Route::get('subchild/category/delete/{id}', 'CategoryController@subchildcategory_delete')->name('subchildcategory.delete');
+
+	Route::get('category/sorting', 'CategoryController@categorySorting')->name('categorySorting');
 	
 		// productAttribute routes
 	Route::get('product/attribute', 'ProductAttributeController@attribute_create')->name('productAttribute');
@@ -86,11 +88,14 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('product/edit/{id}', 'ProductController@edit')->name('product.edit');
 	Route::post('product/update', 'ProductController@update')->name('product.update');
 	Route::get('product/delete/{id}', 'ProductController@delete')->name('product.delete');
-	
-	Route::get('product/highlight{id}', 'ProductController@highlight')->name('product.highlight');
-
-
-
+	//get highlight popup
+	Route::get('product/highlight//popup/{id}', 'ProductController@highlight')->name('product.highlight');
+ 	//add/remove highlight product
+	Route::get('product/highlight/addRemove', 'ProductController@highlightAddRemove')->name('highlightAddRemove');
+	//upload product gallery image
+	Route::get('product/gallery/image/{product_id}', 'ProductController@getGalleryImage')->name('product.getGalleryImage');
+	Route::post('product/gallery/image', 'ProductController@storeGalleryImage')->name('product.storeGalleryImage');
+	Route::get('product/gallery/image/delete/{id}', 'ProductController@deleteGalleryImage')->name('product.deleteGalleryImage');
 
 	// slider routes
 	Route::get('slider/create', 'SliderController@index')->name('slider.create');
@@ -100,6 +105,16 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::post('slider/update', 'SliderController@update')->name('slider.update');
 	Route::get('slider/delete/{id}', 'SliderController@delete')->name('slider.delete');
 
+	// homepage routes
+	Route::get('homepage/section', 'HomepageSectionController@index')->name('admin.homepageSection');
+	Route::post('homepage/section/store', 'HomepageSectionController@store')->name('admin.homepageSection.store');
+	Route::get('homepage/section/edit/{id}', 'HomepageSectionController@edit')->name('admin.homepageSection.edit');
+	Route::post('homepage/section/update', 'HomepageSectionController@update')->name('admin.homepageSection.update');
+	Route::get('homepage/section/delete/{id}', 'HomepageSectionController@delete')->name('admin.homepageSection.delete');
+	Route::get('homepage/section/get/all-products', 'HomepageSectionController@getAllProducts')->name('admin.getAllProducts');
+	Route::get('homepage/section/get/single-product', 'HomepageSectionController@getSingleProduct')->name('admin.getSingleProduct');
+	
+	Route::get('homepage/section/sorting', 'HomepageSectionController@homepageSectionSorting')->name('admin.homepageSectionSorting');
 
 	// menu routes
 	Route::get('menu', 'MenuController@index')->name('menu');
@@ -109,7 +124,6 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::post('menu/update', 'MenuController@update')->name('menu.update');
 	Route::get('menu/delete/{id}', 'MenuController@delete')->name('menu.delete');
 
-	
 	// page routes
 	Route::get('page/create', 'PageController@create')->name('page.create');
 	Route::post('page/store', 'PageController@store')->name('page.store');
@@ -120,7 +134,7 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('page/slug/create', 'PageController@getSlug')->name('page.slug');
 
 	Route::get('page/status/{id}', 'PageController@status')->name('page.status');	
-	Route::get('page/menu-status/{id}', 'PageController@MenuStatus')->name('page.menuStatus');	
+	Route::get('page/homepage-status/{id}', 'PageController@homepageStatus')->name('page.homepageStatus');	
 
 	// user routes
 	Route::get('user/create', 'UserController@create')->name('user.create');

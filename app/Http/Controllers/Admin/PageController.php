@@ -30,7 +30,7 @@ class PageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'page_title' => 'required',
+            'page_title' => 'required|unique:pages',
             'page_dsc' => 'required',
         ]);
 

@@ -1,6 +1,6 @@
 @if(count($products)>0)
 <div class="product-filter filters-panel">
-    <div class="row">
+    <div class="row" >
         <div class="col-sm-5 col-md-5 col-xs-12">({{ ($products) ?  $products->total() : '0' }}) products found for {{Request::get('q')}}</div>
     
         <div class="short-by-show form-inline text-right hidden-sm hidden-xs col-xs-8 col-md-5 col-sm-5">
@@ -32,13 +32,13 @@
         </div>
         <div class="col-sm-2 view-mode hidden-sm hidden-xs">
           <div class="list-view" style="float: right;">
-            <button class="btn btn-default grid active" data-view="grid" data-toggle="tooltip"  data-original-title="Grid"><i class="fa fa-th"></i></button>
-            <button class="btn btn-default list" data-view="list" data-toggle="tooltip" data-original-title="List"><i class="fa fa-th-list"></i></button>
+            <button data-view="grid" data-toggle="tooltip" data-original-title="Grid" class="btn btn-default grid active"><i class="fa fa-th"></i></button>
+            <button data-view="list" data-toggle="tooltip" data-original-title="List" class="btn btn-default list"><i class="fa fa-th-list"></i></button>
           </div>
         </div>         
     </div>
 </div>
-<div class="products-list grid row number-col-4 so-filter-gird">
+<div class="products-list grid row number-col-4 so-filter-gird" style="margin-left: 0px;">
     @foreach($products as $product)
     <div class="product-layout col-lg-3 col-md-3 col-sm-4 col-xs-6">
         @include('frontend.products.products')

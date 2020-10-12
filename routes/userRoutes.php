@@ -19,7 +19,6 @@ Route::get('addto/compare/{product_id}', 'CompareController@addToCompare')->name
 Route::get('compare/product', 'CompareController@compare')->name('productCompare');
 Route::get('compare/product/remove/{product_id}', 'CompareController@remove')->name('productCompareRemove');
 
-
 route::group(['middleware' => ['auth']], function(){
 	Route::get('dashboard', 'UserController@dashboard')->name('user.dashboard');
 

@@ -46,8 +46,8 @@
 								<b>Order Date:</b> {{Carbon\Carbon::parse($order['order_date'])->format('M d, Y')}}</td>
 							<td style="width: 50%;" class="text-left">
 								<b>Order Status::</b> {{ $order['order_status'] }} <br>
-								<b>Payment Status:</b> {{$order->payment_status}} <br>
-								<b>Payment Method:</b> {{$order->payment_method}} <br>
+								<b>Payment Status:</b> {{$order['payment_status']}} <br>
+								<b>Payment Method:</b> {{$order['payment_method']}} <br>
 							</td>
 						</tr>
 					</tbody>

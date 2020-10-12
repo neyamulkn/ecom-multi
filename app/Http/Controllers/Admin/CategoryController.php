@@ -23,7 +23,7 @@ class CategoryController extends Controller
     {
         $get_data = new Category();
         $get_data = $get_data->where('parent_id', '=' , null);
-        $get_data = $get_data->orderBy('id', 'desc')->get();
+        $get_data = $get_data->orderBy('orderBy', 'asc')->get();
 
         return view('admin.category.category')->with(compact('get_data'));
     }
@@ -55,7 +55,7 @@ class CategoryController extends Controller
 
             $image_path = public_path('upload/images/category/thumb/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(250, 200);
+            $image_resize->resize(170, 100);
             $image_resize->save($image_path);
 
             $image->move(public_path('upload/images/category'), $new_image_name);
@@ -88,7 +88,6 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-
         $data = Category::find($request->id);
         $data->name = $request->name;
         $data->notes = $request->notes;
@@ -108,7 +107,7 @@ class CategoryController extends Controller
 
             $image_path = public_path('upload/images/category/thumb/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(250, 200);
+            $image_resize->resize(170, 100);
             $image_resize->save($image_path);
 
             $image->move(public_path('upload/images/category'), $new_image_name);
@@ -131,7 +130,7 @@ class CategoryController extends Controller
 
         if($category){
             $image_path = public_path('upload/images/category/'. $category->phato);
-            if(file_exists($image_path)){
+            if(file_exists($image_path) && $category->phato){
                 unlink($image_path);
                 unlink(public_path('upload/images/category/thumb/'. $category->phato));
             }
@@ -155,9 +154,9 @@ class CategoryController extends Controller
      */
     public function subcategory()
     {
-        $data['get_category'] = Category::where('parent_id', '=' , null)->orderBy('name', 'asc')->get();
+        $data['get_category'] = Category::where('parent_id', '=' , null)->orderBy('orderBy', 'asc')->get();
 
-        $data['get_data'] = Category::where('parent_id', '!=' , null)->where('subcategory_id', '=' , null)->orderBy('id', 'desc')->get();
+        $data['get_data'] = Category::where('parent_id', '!=' , null)->where('subcategory_id', '=' , null)->orderBy('orderBy', 'asc')->get();
         return view('admin.category.subcategory')->with($data);
     }
 
@@ -185,7 +184,7 @@ class CategoryController extends Controller
 
             $image_path = public_path('upload/images/category/thumb/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(250, 200);
+            $image_resize->resize(170, 100);
             $image_resize->save($image_path);
 
             $image->move(public_path('upload/images/category'), $new_image_name);
@@ -243,7 +242,7 @@ class CategoryController extends Controller
 
             $image_path = public_path('upload/images/category/thumb/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(250, 200);
+            $image_resize->resize(170, 100);
             $image_resize->save($image_path);
 
             $image->move(public_path('upload/images/category'), $new_image_name);
@@ -267,7 +266,7 @@ class CategoryController extends Controller
 
         if($category){
             $image_path = public_path('upload/images/category/'. $category->phato);
-            if(file_exists($image_path)){
+            if(file_exists($image_path) && $category->phato){
                 unlink($image_path);
                 unlink(public_path('upload/images/category/thumb/'. $category->phato));
             }
@@ -290,9 +289,9 @@ class CategoryController extends Controller
      */
     public function subchildcategory()
     {
-        $data['get_category'] = Category::where('parent_id', '=' , null)->orderBy('name', 'asc')->get();
+        $data['get_category'] = Category::where('parent_id', '=' , null)->orderBy('orderBy', 'asc')->get();
 
-        $data['get_data'] = Category::where('subcategory_id', '!=' , null)->orderBy('id', 'desc')->get();
+        $data['get_data'] = Category::where('subcategory_id', '!=' , null)->orderBy('orderBy', 'asc')->get();
         return view('admin.category.sub-childcategory')->with($data);
     }
 
@@ -322,7 +321,7 @@ class CategoryController extends Controller
 
             $image_path = public_path('upload/images/category/thumb/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(250, 200);
+            $image_resize->resize(170, 100);
             $image_resize->save($image_path);
 
             $image->move(public_path('upload/images/category'), $new_image_name);
@@ -377,7 +376,7 @@ class CategoryController extends Controller
 
             $image_path = public_path('upload/images/category/thumb/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(250, 200);
+            $image_resize->resize(170, 100);
             $image_resize->save($image_path);
 
             $image->move(public_path('upload/images/category'), $new_image_name);
@@ -400,7 +399,7 @@ class CategoryController extends Controller
 
         if($category){
             $image_path = public_path('upload/images/category/'. $category->phato);
-            if(file_exists($image_path)){
+            if(file_exists($image_path) && $category->phato){
                 unlink($image_path);
                 unlink(public_path('upload/images/category/thumb/'. $category->phato));
             }
@@ -416,5 +415,16 @@ class CategoryController extends Controller
             ];
         }
         return response()->json($output);
+    }
+
+    public function categorySorting (Request $request){
+        $operator = $request->operator;
+        $operator2 = $request->operator2;
+
+        for($i=0; $i<count($request->ids); $i++)
+        {
+            Category::where('id', str_replace('item', '', $request->ids[$i]))->where('parent_id', $operator, null)->where('subcategory_id', $operator2, null)->update(['orderBy' => $i]);
+        }
+        echo 'Section Order has been updated';
     }
 }

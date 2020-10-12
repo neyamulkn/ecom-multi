@@ -17,7 +17,7 @@ class SliderController extends Controller
     // Slider list
     public function index()
     {
-        $sliders = Slider::orderBy('orderBy', 'desc')->get();
+        $sliders = Slider::orderBy('position', 'desc')->get();
         return view('admin.slider.slider')->with(compact('sliders'));
     }
 
@@ -26,7 +26,6 @@ class SliderController extends Controller
     {
 
         $request->validate([
-            'title' => 'required',
             'phato' => 'required|mimes:jpeg,jpg,png,gif'
         ]);
 
@@ -84,9 +83,6 @@ class SliderController extends Controller
      */
     public function update(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-        ]);
 
         $data = Slider::find($request->id);
         $data->title = $request->title;

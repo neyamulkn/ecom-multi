@@ -44,19 +44,19 @@
 
                         <div class="card">
                             <div class="card-body">
-
+                                 <i class="drag-drop-info">Drag & drop sorting position</i>
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Brand Name</th>
-                                                <th>Logo
+                                                <th>Logo</th>
                                                 <th>Category</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead> 
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($get_data as $data)
                                             <tr id="item{{$data->id}}">
                                                 <td>{{$data->name}}</td>
@@ -287,7 +287,28 @@
         $("#{{Session::get('submitType')}}").modal('show');
     @endif
 </script>
-  
+<script>
+$(document).ready(function(){
+    $( "#positionSorting" ).sortable({
+        placeholder : "ui-state-highlight",
+        update  : function(event, ui)
+        {
+            var ids = new Array();
+            $('#positionSorting tr').each(function(){
+                ids.push($(this).attr("id"));
+            });
+            $.ajax({
+                url:"{{route('positionSorting')}}",
+                method:"get",
+                data:{ids:ids},
+                success:function(data){
+                    toastr.success(data)
+                }
+            });
+        }
+    });
+});
+</script>
 
 
 @endsection

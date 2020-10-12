@@ -29,4 +29,7 @@ class Category extends Model
     public function get_subchild_category(){
         return $this->hasMany(Category::class, 'subcategory_id')->where('status', 1);
     }
+    public function products(){
+        return $this->hasMany(Product::class, 'category_id');
+    }
 }

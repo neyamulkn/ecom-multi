@@ -40,10 +40,7 @@ class WishlistController extends Controller
                 'msg' => Config::get('siteSetting.wish_error')
             );
         }
-
         return response()->json($output);
-
-
     }
 
     //remove product

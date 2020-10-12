@@ -15,7 +15,7 @@ class PaymentGatewayController extends Controller
     use CreateSlug;
     public function index()
     {
-        $paymentgateways = PaymentGateway::orderBy('id', 'asc')->get();
+        $paymentgateways = PaymentGateway::orderBy('position', 'asc')->get();
         return view('admin.payments.payment-gateway')->with(compact('paymentgateways'));
     }
 

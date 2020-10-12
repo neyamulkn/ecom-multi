@@ -1448,37 +1448,3 @@ function subscribe_newsletter()
 	}
 }
 
-
-// Magnific Popup Quick View*//
-
-$(function ($) {
-    $('.products-list').magnificPopup({
-        delegate: '.quickview',
-        preloader: true,
-        tLoading: '',
-        type: 'iframe',
-        mainClass: 'my-mfp-zoom-in',
-        removalDelay: 200,
-        gallery: {enabled: true},
-        callbacks: {
-        open: function() {
-          // Will fire when this exact popup is opened
-          // this - is Magnific Popup object
-        },
-        beforeOpen: function() {
-
-            $('[data-toggle=\'tooltip\']').hover(
-                function() {
-                },
-                function(e) {
-                  $('[data-toggle=\'tooltip\']').tooltip('hide');
-                }
-            );
-        },
-        afterClose: function() {
-            $('[data-toggle=\'tooltip\']').tooltip('hide');
-        },
-        
-      }
-    });
-});

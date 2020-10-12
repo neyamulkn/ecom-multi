@@ -62,7 +62,7 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead> 
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($menus as $data)
                                             <tr id="item{{$data->id}}">
                                                 <td>{{$data->name}}</td>
@@ -253,6 +253,7 @@
             success:function(data){
                 if(data){
                     $("#edit_form").html(data);
+                    $(".select2").select2();
                 }
             }
         });
@@ -271,6 +272,7 @@
                 
                 if(data){
                     $("#showMenuSourch").html(data);
+                    $(".select2").select2();
                 }else{
                     $("#showMenuSourch").html('<option>'+type+' not found</option>');
                 }
@@ -278,29 +280,32 @@
         });
     }   
 
-
-    function satusActiveDeactive(table, id){
-
-        var  url = '{{route("statusChange")}}';
-       
-        $.ajax({
-            url:url,
-            method:"get",
-            data:{table:table,id:id},
-            success:function(data){
-                if(data.status){
-                    toastr.success(data.message);
-                }else{
-                    toastr.error(data.message);
-                }
-            }
-        });
-    }
     
 // if occur error open model
     @if($errors->any())
         $("#{{Session::get('submitType')}}").modal('show');
     @endif
 </script>
-
+    <script>
+        $(document).ready(function(){
+            $( "#positionSorting" ).sortable({
+                placeholder : "ui-state-highlight",
+                update  : function(event, ui)
+                {
+                    var ids = new Array();
+                    $('#positionSorting tr').each(function(){
+                        ids.push($(this).attr("id"));
+                    });
+                    $.ajax({
+                        url:"{{route('positionSorting')}}",
+                        method:"get",
+                        data:{ids:ids,table:'menus'},
+                        success:function(data){
+                            toastr.success(data)
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

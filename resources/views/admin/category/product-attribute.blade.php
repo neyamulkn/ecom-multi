@@ -140,7 +140,7 @@
 
                                                                     <!-- get sub childcategory -->
                                                                     @if(count($subcategory->get_subcategory)>0)
-                                                                      <optgroup label="&nbsp;&nbsp; ---Sub child category---">
+                                                                      <optgroup label="---Sub child category---">
                                                                         @foreach($subcategory->get_subcategory as $subchildcategory)
 
                                                                             <option @if(Session::get('autoSelectId') == $subchildcategory->id) selected @endif value="{{$subchildcategory->id}}"> &nbsp;---{{$subchildcategory->name}}</option>
@@ -257,7 +257,7 @@
                         <h4 class="modal-title">Set Attribute Value</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <form action="{{route('productAttributeValue.store')}}" enctype="multipart/form-data" method="POST">
+                    <form action="{{route('productAttributeValue.store')}}"  method="POST">
                         {{csrf_field()}}
                         <input type="hidden" value="" id="setValueId" name="attribute_id">
                         <div class="modal-body form-row">

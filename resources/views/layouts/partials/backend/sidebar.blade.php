@@ -31,21 +31,14 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-shipping-fast"></i><span class="hide-menu">Orders</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{route('admin.orderList')}}">All Orders</a></li>
-                        <li><a href="#">Pending Orders</a></li>
-                        <li><a href="#">Accepted Orders</a></li>
-                        <li><a href="#">Processing Orders</a></li>
-                        <li><a href="#">Rejected Orders</a></li>
-                        <li><a href="#">Completed Orders</a></li>
+                        <li><a href="{{route('admin.orderList', 'pending')}}">Pending Orders</a></li>
+                        <li><a href="{{route('admin.orderList', 'accepted')}}">Accepted Orders</a></li>
+                        <li><a href="{{route('admin.orderList', 'on-review')}}">Processing Orders</a></li>
+                        <li><a href="{{route('admin.orderList', 'delivered')}}">Completed Orders</a></li>
+                        <li><a href="{{route('admin.orderList', 'cancel')}}">Cancel Orders</a></li>
                     </ul>
                 </li>
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Settings</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="#">General Setting</a></li>
-                        <li><a href="#">Menu Setting</a></li>
-                        <li><a href="#">SMS Setting</a></li>
-                        <li><a href="#">Footer Setting</a></li>
-                    </ul>
-                </li>
+
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Location</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -59,7 +52,7 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Payment Settings</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{route('paymentGateway')}}">Payment Gateway</a></li>
-                        <li><a href="{{route('shipping')}}">Shipping</a></li>
+                        <li><a href="#">Shipping</a></li>
                         <li><a href="#">Currencies</a></li>
                         <li><a href="#">SMS Setting</a></li>
                         <li><a href="#">Footer Setting</a></li>
@@ -69,6 +62,7 @@
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-align-left"></i><span class="hide-menu">Home Page Setting</span></a>
                     <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{route('admin.homepageSection')}}">Homepage</a></li>
                         <li><a href="{{route('menu')}}">Menus</a></li>
                         <li><a href="{{route('slider.create')}}">Sliders</a></li>
                         <li><a href="{{route('service.list')}}">Services</a></li>
@@ -89,13 +83,19 @@
                         <li><a href="javascript:void(0)">Category Section</a></li>
                         <li><a href="javascript:void(0)">Customer Reviews</a></li>
                         <li><a href="javascript:void(0)">Patners</a></li>
+                        <li><a href="#">Footer Setting</a></li>
                     </ul>
                 </li>
 
-                <li> <a class="has-arrow waves-effect waves-dark @if(Request::route('attribute_slug')) active @endif" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Email Setting</span></a>
-                    <ul aria-expanded="false" class="collapse @if(Request::route('attribute_slug')) in @endif">
+            
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Settings</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="#">General Setting</a></li>
+                        <li><a href="#">SMS Setting</a></li>
                         <li><a href="{{route('category')}}">Email Template</a></li>
                         <li><a href="{{route('subcategory')}}">Email Configuration</a></li>
+                        
                     </ul>
                 </li>
 

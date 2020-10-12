@@ -28,17 +28,18 @@
 <link href="{{ asset('frontend/css/toastr.css') }}"  rel="stylesheet">
 
 <style type="text/css">
+  
     #pageLoading
     {
         z-index: 999999; 
         width: 100%;
         height: 100%;
-        top: 10%;
-        left: 10%;
+        top: 0;
+        left: 0;
         text-align: center;
         min-height: 200px;
         position: fixed;
-        background: url('{{ asset("assets/images/loading.gif")}}') no-repeat center; 
+        background: #ffffffe0 url('{{ asset("assets/images/loading.gif")}}') no-repeat center; 
     }
     #loadingData
     {

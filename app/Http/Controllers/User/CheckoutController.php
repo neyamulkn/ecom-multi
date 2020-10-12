@@ -26,15 +26,15 @@ class CheckoutController extends Controller
         if(Auth::check()){
             $user_id = Auth::id();
         }else{
-            if(isset($_COOKIE['user_id'])){
-                $user_id =  $_COOKIE['user_id'];
-            }
+
+            $user_id =  Session::get('user_id');
+
         }
         $data = [];
         $cartItems = Cart::with('get_product:id,shipping_cost')->where('user_id', $user_id);
         //check direct checkout
-        if(isset($_COOKIE['direct_checkout_product_id'])){
-            $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+        if( Session::has('direct_checkout_product_id')){
+            $cartItems = $cartItems->where('product_id', Session::get('direct_checkout_product_id'));
         }
         $data['cartItems'] =  $cartItems->get();
 
@@ -58,8 +58,8 @@ class CheckoutController extends Controller
         if(Auth::check()){
             $user_id = Auth::id();
         }else{
-            if(isset($_COOKIE['user_id'])){
-                $user_id =  $_COOKIE['user_id'];
+            if(Session::has('user_id')){
+                $user_id =  Session::get('user_id');
             }
         }
         $data = [];
@@ -69,8 +69,8 @@ class CheckoutController extends Controller
             ->selectRaw('sum(qty*price) total_price, shipping_method, ship_region_id, shipping_cost, other_region_cost')
             ->groupBy('product_id');
             //check direct checkout
-            if(isset($_COOKIE['direct_checkout_product_id'])){
-                $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+            if(Session::has('direct_checkout_product_id')){
+                $cartItems = $cartItems->where('product_id', Session::get('direct_checkout_product_id'));
             }
             $cartItems =  $cartItems->get();
 
@@ -215,8 +215,8 @@ class CheckoutController extends Controller
         $data = [];
         $cartItems = Cart::with('get_product:id,shipping_cost')->where('user_id', $user_id);
         //check direct checkout
-        if(isset($_COOKIE['direct_checkout_product_id'])){
-            $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+        if(Session::has('direct_checkout_product_id')){
+            $cartItems = $cartItems->where('product_id', Session::get('direct_checkout_product_id'));
         }
         $data['cartItems'] =  $cartItems->get();
 
@@ -242,15 +242,13 @@ class CheckoutController extends Controller
         if(Auth::check()){
             $user_id = Auth::id();
         }else{
-            if(isset($_COOKIE['user_id'])){
-                $user_id =  $_COOKIE['user_id'];
-            }
+            $user_id = Session::get('user_id');
         }
         $data = [];
         $cartItems = Cart::with('get_product:id,shipping_cost')->where('user_id', $user_id);
         //check direct checkout
-        if(isset($_COOKIE['direct_checkout_product_id'])){
-            $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+        if(Session::has('direct_checkout_product_id')){
+            $cartItems = $cartItems->where('product_id', Session::get('direct_checkout_product_id'));
         }
         $data['cartItems'] =  $cartItems->get();
 
@@ -292,8 +290,8 @@ class CheckoutController extends Controller
             if (Auth::check()) {
                 $user_id = Auth::id();
             } else {
-                if (isset($_COOKIE['user_id'])) {
-                    $user_id = $_COOKIE['user_id'];
+                if (Session::has('user_id')) {
+                    $user_id = Session::get('user_id');
                 }
             }
             $cartItems = Cart::join('products', 'carts.product_id', 'products.id')
@@ -301,8 +299,8 @@ class CheckoutController extends Controller
                 ->selectRaw('sum(qty*price) total_price, shipping_method, ship_region_id, shipping_cost, other_region_cost')
                 ->groupBy('product_id');
                 //check direct checkout
-                if (isset($_COOKIE['direct_checkout_product_id'])) {
-                    $cartItems = $cartItems->where('product_id', $_COOKIE['direct_checkout_product_id']);
+                if (Session::has('direct_checkout_product_id')) {
+                    $cartItems = $cartItems->where('product_id', Session::get('direct_checkout_product_id'));
                 }
                 $cartItems = $cartItems->get();
             $total_amount = array_sum(array_column($cartItems->toArray(), 'total_price'));

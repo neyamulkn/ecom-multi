@@ -29,7 +29,7 @@
                             <h5 class="card-title">Total Products</h5>
                             <div class="d-flex  no-block align-items-center">
                                 <span class="display-5 text-purple"><i class="fa fa-cart-plus"></i></span>
-                                <a href="javscript:void(0)" class="link display-5 ml-auto">32</a>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$products}}</a>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             <h5 class="card-title">Total Orders</h5>
                             <div class="d-flex no-block align-items-center">
                                 <span class="display-5 text-danger"><i class="fa fa-shipping-fast"></i></span>
-                                <a href="javscript:void(0)" class="link display-5 ml-auto">3</a>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$orders}}</a>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                                 <h5 class="card-title">Vendor Request</h5>
                                 <div class="d-flex  no-block align-items-center">
                                     <span class="display-5 text-info"><i class="fa fa-user-plus"></i></span>
-                                    <a href="javscript:void(0)" class="link display-5 ml-auto">3</a>
+                                    <a href="javscript:void(0)" class="link display-5 ml-auto">0</a>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 <div class="d-flex flex-row">
                                     <div class="round align-self-center round-success"><i class="fa fa-shopping-cart"></i></div>
                                     <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">32</h3>
+                                        <h3 class="m-b-0">{{$pendinOorders}}</h3>
                                         <h5 class="text-muted m-b-0">Pending Orders</h5></div>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                 <div class="d-flex flex-row">
                                     <div class="round align-self-center round-info"><i class="fa fa-dollar-sign"></i></div>
                                     <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">90</h3>
+                                        <h3 class="m-b-0">0</h3>
                                         <h5 class="text-muted m-b-0">Today Orders</h5></div>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
                                 <div class="d-flex flex-row">
                                     <div class="round align-self-center round-danger"><i class="fa fa-handshake"></i></div>
                                     <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">$20</h3>
+                                        <h3 class="m-b-0">0</h3>
                                         <h5 class="text-muted m-b-0">Reviews</h5></div>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                                 <div class="d-flex flex-row">
                                     <div class="round align-self-center round-success"><i class="fa fa-money-bill-alt"></i></div>
                                     <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">40</h3>
+                                        <h3 class="m-b-0">10</h3>
                                         <h5 class="text-muted m-b-0">Subscribers</h5></div>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                                 <div class="p-10 bg-inverse">
                                     <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0">20</h3>
+                                    <h3 class="m-b-0">{{$categories}}</h3>
                                     <h5 class="text-muted m-b-0">Total Categories</h5></div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                                 <div class="p-10 bg-primary">
                                     <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-primary">7</h3>
+                                    <h3 class="m-b-0 text-primary">{{$brands}}</h3>
                                     <h5 class="text-muted m-b-0">Total Brands</h5></div>
                             </div>
                         </div>

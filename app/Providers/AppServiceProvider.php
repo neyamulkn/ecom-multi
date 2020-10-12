@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\GeneralSetting;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
         $siteSetting = GeneralSetting::first();
 
         Config::set('siteSetting', $siteSetting);

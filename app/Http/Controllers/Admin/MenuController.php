@@ -15,7 +15,7 @@ class MenuController extends Controller
 
     public function index()
     {
-        $data['menus'] = Menu::orderBy('priority', 'desc')->get();
+        $data['menus'] = Menu::orderBy('position', 'asc')->get();
         return view('admin.menu.menu')->with($data);
     }
 
@@ -63,15 +63,59 @@ class MenuController extends Controller
     }
 
 
-    public function edit(Menu $menu)
+    public function edit($id)
     {
-        //
+        $data['data'] = Menu::find($id);
+
+        if ($data['data']->menu_source == 'category'){
+            $data['getSources'] = Category::where('parent_id', '!=', null)->where('subcategory_id', null)->where('status', 1)->get();
+        }
+        if ($data['data']->menu_source == 'page') {
+            $data['getSources'] = Page::where('status', 1)->get();
+        }
+        echo view('admin.menu.menu-edit')->with($data);
     }
 
 
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'source_id' => 'required',
+            'name' => 'required',
+        ]);
+        $data = Menu::find($request->id);
+        $data->name = $request->name;
+        $data->menu_source = $request->menu_type;
+        $data->source_id = implode(',', $request->source_id);
+        $data->top_header = ($request->top_header ? 1 : null);
+        $data->main_header = ($request->main_header ? 1 : null);
+        $data->footer = ($request->footer ? 1 : null);
+        $data->status = ($request->status ? 1 : 0);
+
+        $store = $data->save();
+        if($store){
+            if($request->menu_type == 'category'){
+                foreach ($request->source_id as $id){
+                    $category = Category::find($id);
+                    $category->menu_id = $data->id;
+                    $category->save();
+                }
+
+            }elseif($request->menu_type == 'page'){
+                foreach ($request->source_id as $id){
+                    $category = Page::find($id);
+                    $category->menu_id = $data->id;
+                    $category->save();
+                }
+            }else{
+                echo '';
+            }
+            Toastr::success('Menu Update Successfully.');
+        }else{
+            Toastr::error('Menu Cannot Update.!');
+        }
+
+        return back();
     }
 
     public function delete($id)

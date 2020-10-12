@@ -78,25 +78,23 @@
                                             <input type="checkbox" class="custom-control-input" id="Remember"> 
                                             <label style="margin: 0 5px;" class="custom-control-label" for="Remember"> Remember me</label>
                                         </div> 
-                                        <div class="ml-auto" style="margin-left: auto!important;">
-                                            <a href="javascript:void(0)" id="to-recover" class="text-muted"><i class="fa fa-lock"></i> Forgot pwd?</a> 
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                         
                             <div class="form-group text-center">
                                 <div class="col-xs-12 p-b-20">
-                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Log In</button>
+                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Sign Up</button>
                                 </div>
                             </div> 
                             <div id="column-login" style="margin:15px 0" class="col-sm-8 pull-right">
                                 <div class="row">
                                     <div class="social_login pull-right" id="so_sociallogin">
-                                      <a href="#" class="btn btn-social-icon btn-sm btn-facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></a>
-                                      <a href="#" class="btn btn-social-icon btn-sm btn-twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></a>
-                                      <a href="#" class="btn btn-social-icon btn-sm btn-google-plus"><i class="fa fa-google fa-fw" aria-hidden="true"></i></a>
-                                      <a href="#" class="btn btn-social-icon btn-sm btn-linkdin"><i class="fa fa-linkedin fa-fw" aria-hidden="true"></i></a>
+                                      <a href="{{route('social.login', 'facebook')}}" class="btn btn-social-icon btn-sm btn-facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></a>
+                                     <!--  <a href="#" class="btn btn-social-icon btn-sm btn-twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></a> -->
+                                      <a href="{{route('social.login', 'google')}}" class="btn btn-social-icon btn-sm btn-google-plus"><i class="fa fa-google fa-fw" aria-hidden="true"></i></a>
+                                      <!-- <a href="#" class="btn btn-social-icon btn-sm btn-linkdin"><i class="fa fa-linkedin fa-fw" aria-hidden="true"></i></a> -->
                                     </div>
                                 </div>
                             </div>                            

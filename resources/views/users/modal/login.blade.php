@@ -10,7 +10,7 @@
                     <fieldset class="fieldset login" data-hasrequired="* Required Fields">
                         <div class="field email required email-input">
                             <div class="control">
-                                <input name="usernameOrEmail" autocomplete="off" id="email" type="text" class="input-text" title="Email" placeholder="Username or E-Mail">
+                                <input name="emailOrMobile" autocomplete="off" id="email" type="text" class="input-text" title="Email" placeholder="Username or E-Mail">
                             </div>
                         </div>
                         <div class="field password required pass-input">
@@ -27,14 +27,14 @@
                             <label class="control-label">Login with your social account</label>
                             <div>
 
-                                <a href="#" class="btn btn-social-icon btn-sm btn-google-plus"><i class="fa fa-google fa-fw" aria-hidden="true"></i></a>
+                                <a href="{{route('social.login', 'facebook')}}" class="btn btn-social-icon btn-sm btn-google-plus"><i class="fa fa-google fa-fw" aria-hidden="true"></i></a>
 
-                                <a href="#" class="btn btn-social-icon btn-sm btn-facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></a>
-
+                                <a href="{{route('social.login', 'facebook')}}" class="btn btn-social-icon btn-sm btn-facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></a>
+<!-- 
                                 <a href="#" class="btn btn-social-icon btn-sm btn-twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></a>
 
                                 <a href="#" class="btn btn-social-icon btn-sm btn-linkdin"><i class="fa fa-linkedin fa-fw" aria-hidden="true"></i></a>
-
+ -->
                             </div>
                         </div>
 

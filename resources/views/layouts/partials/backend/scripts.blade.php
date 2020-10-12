@@ -2,8 +2,27 @@
    
     <script src="{{ mix('js/laravel-echo.js') }}"></script>
     <script src="{{ asset('js/parsley.min.js') }}"></script>
-    
+    <script src="{{asset('assets/node_modules/jqueryui/jquery-ui.min.js')}}"></script>
     @yield('js')
+
+    <script type="text/javascript">
+        //change status by id
+        function satusActiveDeactive(table, id, field = null){
+            var  url = '{{route("statusChange")}}';
+            $.ajax({
+                url:url,
+                method:"get",
+                data:{table:table,field:field,id:id},
+                success:function(data){
+                    if(data.status){
+                        toastr.success(data.message);
+                    }else{
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
+    </script>
 
     {!! Toastr::message() !!}
     <script>
@@ -23,6 +42,8 @@
             @endforeach
         @endif
     </script>
+
+
 <!--     <script>
         
         Echo.channel('postBroadcast')

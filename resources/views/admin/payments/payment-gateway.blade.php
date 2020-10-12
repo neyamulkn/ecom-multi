@@ -70,7 +70,7 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead> 
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($paymentgateways as $gateway)
                                             <tr id="item{{$gateway->id}}">
                                                 <td><img src="{{asset('upload/images/payment/'. $gateway->method_logo)}}" width="90" height="45"></td>
@@ -373,5 +373,26 @@
     }
 
     </script>
-
+ <script>
+        $(document).ready(function(){
+            $( "#positionSorting" ).sortable({
+                placeholder : "ui-state-highlight",
+                update  : function(event, ui)
+                {
+                    var ids = new Array();
+                    $('#positionSorting tr').each(function(){
+                        ids.push($(this).attr("id"));
+                    });
+                    $.ajax({
+                        url:"{{route('positionSorting')}}",
+                        method:"get",
+                        data:{ids:ids,table:'payment_gateways'},
+                        success:function(data){
+                            toastr.success(data)
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

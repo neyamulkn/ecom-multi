@@ -2498,56 +2498,7 @@ div.required .control-label:before {
       position: relative;
       top: -10px;
       width: 100%; }
-/*============ BREADCRUMB ==================*/
-.breadcrumbs {
-  /* background-color: #efefef;
-   margin-bottom: 60px;*/
-  /*ul.breadcrumb{
-   float: $right;
-   width: auto;
-   }*/ }
-  .breadcrumbs .current-name {
-    font-size: 18px;
-    color: #222;
-    text-transform: uppercase;
-    float: left;
-    font-weight: 700;
-    margin: 25px 0;
-    display: none; }
 
-ul.breadcrumb {
-  margin: 23px 0;
-  background-color: transparent;
-  padding: 0;
-  display: inline-block;
-  width: 100%;
-  line-height: 100%; }
-  ul.breadcrumb li {
-    display: inline-block;
-    padding: 0 17px 0 8px;
-    margin-right: 7px;
-    position: relative; }
-  ul.breadcrumb li:before {
-    display: none; }
-  ul.breadcrumb li:not(:last-child):after {
-    font-family: 'FontAwesome';
-    content: '\f105';
-    font-size: 13px;
-    top: 0px;
-    right: 0;
-    position: absolute; }
-  ul.breadcrumb li a {
-    display: block;
-    padding: 0;
-    color: #999;
-    text-decoration: none;
-    font-size: 14px; }
-  ul.breadcrumb li:last-child {
-    padding: 5px 0px; }
-  ul.breadcrumb li:last-child a {
-    color: #ff5e00; }
-  ul.breadcrumb li:hover a {
-    color: #ff5e00; }
 /*=========== BLOCK SIDEBAR ==================*/
 .content-aside .product-simple {
   position: relative; }

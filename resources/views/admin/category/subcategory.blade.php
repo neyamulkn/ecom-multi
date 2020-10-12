@@ -1,5 +1,5 @@
 @extends('layouts.admin-master')
-@section('title', 'subcategory list')
+@section('title', 'Subcategory list')
 @section('css')
     <link rel="stylesheet" type="text/css"
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
@@ -28,12 +28,12 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">subcategory List</h4>
+                        <h4 class="text-themecolor">Subcategory List</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0)">subcategory</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Subcategory</a></li>
                                 <li class="breadcrumb-item active">list</li>
                             </ol>
                             <button data-toggle="modal" data-target="#add" class="btn btn-info d-none d-lg-block m-l-15"><i
@@ -52,7 +52,7 @@
 
                         <div class="card">
                             <div class="card-body">
-
+                                <i class="drag-drop-info">Drag & drop sorting position</i>
                                 <div class="table-responsive">
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
@@ -64,13 +64,16 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="positionSorting">
                                             @foreach($get_data as $data)
                                             <tr id="item{{$data->id}}">
                                                 <td>{{$data->name}}</td>
                                                 <td><img src="{{asset('upload/images/category/thumb/'. $data->image)}}" width="50"></td>
                                                 <td>{{$data->notes}}</td>
-                                                <td>{!!($data->status == 1) ? "<span class='label label-info'>Active</span>" : '<span class="label label-danger">Deactive</span>'!!}
+                                                <td> <div class="custom-control custom-switch">
+                                                      <input  name="status" onclick="satusActiveDeactive('categories', {{$data->id}})"  type="checkbox" {{($data->status == 1) ? 'checked' : ''}}  type="checkbox" class="custom-control-input" id="status{{$data->id}}">
+                                                      <label style="padding: 5px 12px" class="custom-control-label" for="status{{$data->id}}"></label>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <button type="button" onclick="edit('{{$data->id}}')"  data-toggle="modal" data-target="#edit" class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</button>
@@ -232,13 +235,12 @@
     <script src="{{asset('assets')}}/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{asset('assets')}}/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
    <script>
-        $(function () {
-            $('#myTable').DataTable();
-
-
+       $(function () {
+            $('#myTable').dataTable({
+                "ordering": false
+            });
 
         });
-
     </script>
 
     <script type="text/javascript">
@@ -334,5 +336,28 @@
         })
     });
     </script>
-
+     
+    <script>
+        $(document).ready(function(){
+            $( "#positionSorting" ).sortable({
+                placeholder : "ui-state-highlight",
+                update  : function(event, ui)
+                {
+                    var ids = new Array();
+                    $('#positionSorting tr').each(function(){
+                        ids.push($(this).attr("id"));
+                    });
+                    $.ajax({
+                        url:"{{route('positionSorting')}}",
+                        method:"get",
+                        data:{ids:ids,operator:'!=',operator2:'='},
+                        success:function(data){
+                            toastr.success(data)
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    
 @endsection

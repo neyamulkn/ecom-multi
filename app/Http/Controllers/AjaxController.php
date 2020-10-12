@@ -70,7 +70,6 @@ class AjaxController extends Controller
     }
 
 
-
     // check unique fielde
     public function checkField(Request $request){
 
@@ -175,9 +174,7 @@ class AjaxController extends Controller
         if(Auth::check()){
             $user_id = Auth::id();
         }else{
-            if(isset($_COOKIE['user_id'])){
-                $user_id = $_COOKIE['user_id'];
-            }
+            $user_id = Session::get('user_id');
         }
         $getCart = Cart::where('user_id', $user_id)->get();
 
@@ -201,15 +198,16 @@ class AjaxController extends Controller
     // Status change function
     public function satusActiveDeactive(Request $request){
         $status = DB::table($request->table)->where('id', $request->id)->first();
+        $field =  ($request->field) ? $request->field : 'status';
         if($status){
-            if($status->status == 1){
-                DB::table($request->table)->where('id', $request->id)->update(['status' => 0]);
+            if($status->$field == 1){
+                DB::table($request->table)->where('id', $request->id)->update([$field => 0]);
             }else{
-                DB::table($request->table)->where('id', $request->id)->update(['status' => 1]);
+                DB::table($request->table)->where('id', $request->id)->update([$field => 1]);
             }
             $output = array( 'status' => true,  'message'  => 'Status update successful.');
         }else{
-            $output = array( 'status' => false,  'message'  => 'Status connot update.!');
+            $output = array( 'status' => false,  'message'  => 'Status can\'t update.!');
         }
         return response()->json($output);
     }
@@ -225,7 +223,7 @@ class AjaxController extends Controller
             }
             $output = array( 'status' => true,  'message'  => 'Status update successful.');
         }else{
-            $output = array( 'status' => false,  'message'  => 'Status connot update.!');
+            $output = array( 'status' => false,  'message'  => 'Status can\'t update.!');
         }
         return response()->json($output);
     }
@@ -239,6 +237,21 @@ class AjaxController extends Controller
         }
         return false;
     }
+
+    public function positionSorting(Request $request){
+
+        for($i=0; $i<count($request->ids); $i++)
+        {
+            $sorting = DB::table($request->table);
+            if(isset($request->field)){
+                $sorting->where($request->field, $request->value);
+            }
+            $sorting->where('id', str_replace('item', '', $request->ids[$i]))->update(['position' => $i]);
+        }
+        echo 'Position sorting has been updated';
+    }
+
+
 
 
 }

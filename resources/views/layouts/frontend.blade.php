@@ -25,15 +25,33 @@
     <body class="common-home res layout-4">
         <div id="wrapper" class="wrapper-fluid banners-effect-3">
             <div id="app">
+
             <!-- Header Start -->
             @include('layouts.partials.frontend.header')
+             @if(Request::is('/'))
+            <div style="width: 100%;height: 100%;display: block;position: relative;">
+            <div id="pageLoading"></div>
+            @endif
             <!-- Header End -->
             @yield('content')
+            </div>
             <!-- Footer Area start -->
             @include('layouts.partials.frontend.footer')
             <!--  Footer Area End -->
             </div>
         </div>
+        <div class="modal fade" id="quickviewModal" role="dialog"  tabindex="-1" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" id="modalClose" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body form-row" id="quickviewProduct"></div>
+                    
+                </div>
+            </div>
+          </div>
         @if(!Auth::check()) 
             <!-- login Modal -->
             @include('users.modal.login')

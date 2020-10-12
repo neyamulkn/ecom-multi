@@ -26,6 +26,7 @@ Route::get('status/change', 'AjaxController@satusActiveDeactive')->name('statusC
 
 Route::get('get/order/details/{order_id}', 'AjaxController@showOrderDetails')->name('getOrderDetails');
 
-
+//position sorting
+Route::get('position/sorting', 'AjaxController@positionSorting')->name('positionSorting');
 
 
