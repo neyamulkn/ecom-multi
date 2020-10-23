@@ -17,9 +17,9 @@ class BrandController extends Controller
 
     public function index()
     {
-        $data['get_category'] = Category::where('parent_id', '=' , null)->orderBy('name', 'asc')->get();
+        $data['get_category'] = Category::where('parent_id', '=' , null)->orderBy('orderBy', 'asc')->get();
 
-        $data['get_data'] = Brand::orderBy('id', 'desc')->get();
+        $data['get_data'] = Brand::orderBy('position', 'asc')->get();
         return view('admin.brand')->with($data);
     }
     // store brand

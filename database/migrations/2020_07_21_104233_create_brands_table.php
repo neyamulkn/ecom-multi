@@ -21,6 +21,7 @@ class CreateBrandsTable extends Migration
             $table->char('slug', 30);
             $table->char('logo', 30)->nullable();
             $table->integer('position')->nullable();
+            $table->integer('top')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->tinyInteger('status')->default(1);

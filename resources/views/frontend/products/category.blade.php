@@ -1,4 +1,4 @@
-@extends('layouts.2frontend')
+@extends('layouts.frontend')
 @section('title', $category->name . ' | '. Config::get('siteSetting.site_name') )
 @section('css')
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.range.css') }}">
@@ -190,7 +190,7 @@
             </aside>
             <div id="content" class="col-md-9 col-sm-12 col-xs-12 sticky-content" >
 
-                <div id="pageLoading"></div>
+                <div id="dataLoading"></div>
                 <a href="javascript:void(0)" class="open-sidebar hidden-lg hidden-md"><i class="fa fa-bars"></i>Filter By</a>
         
                 <div id="filter_product" class="products-category">
@@ -232,7 +232,7 @@
     function filter_data(page)
     {
         //enable loader
-        document.getElementById('pageLoading').style.display ='block';
+        document.getElementById('dataLoading').style.display ='block';
         
         var category = "{!! str_replace(' ', '', Request::route('catslug')) !!}" ;
         var subcategory = "{!! (Request::route('subslug')) ? '/'. str_replace(' ', '', Request::route('subslug')) : '' !!}";
@@ -302,7 +302,7 @@
                 filter:'filter',perPage:showItem
             },
             success:function(data){
-                document.getElementById('pageLoading').style.display ='none';
+                document.getElementById('dataLoading').style.display ='none';
         
                 if(data){
                     $('#filter_product').html(data);
@@ -311,7 +311,7 @@
                }
             },
             error: function() {
-                document.getElementById('pageLoading').style.display ='none';
+                document.getElementById('dataLoading').style.display ='none';
                 $('#filter_product').html('<span class="ajaxError">Internal server error.!</span>');
             }
 

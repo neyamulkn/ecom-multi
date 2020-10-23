@@ -18,6 +18,9 @@ Route::get('get/feature/{cat_id}', 'AjaxController@getFeature')->name('getFeatur
 //get menu source
 Route::get('get/menu/sourch/{type}', 'AjaxController@getMenuSourch')->name('getMenuSourch');
 
+//get products by anyone field
+Route::get('get/products/by/{field}', 'AjaxController@getProductsByField')->name('admin.getProductsByField');
+
 //get search keyword in header
 Route::get('search/keyword', 'AjaxController@search_keyword')->name('search_keyword');
 
@@ -30,3 +33,5 @@ Route::get('get/order/details/{order_id}', 'AjaxController@showOrderDetails')->n
 Route::get('position/sorting', 'AjaxController@positionSorting')->name('positionSorting');
 
 
+Route::get('get/city/{state_id?}', 'AjaxController@get_city')->name('get_city');
+Route::get('get/area/{city_id?}', 'AjaxController@get_area')->name('get_area');

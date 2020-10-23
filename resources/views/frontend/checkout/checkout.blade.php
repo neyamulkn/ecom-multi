@@ -402,7 +402,7 @@
 
     function get_city(id, type=''){
        
-        var  url = '{{route("get_city", ":id")}}';
+        var  url = '{{route("checkout.get_city", ":id")}}';
         url = url.replace(':id',id);
         $.ajax({
             url:url,

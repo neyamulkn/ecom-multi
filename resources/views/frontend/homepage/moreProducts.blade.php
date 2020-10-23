@@ -1,4 +1,4 @@
-@extends('layouts.2frontend')
+@extends('layouts.frontend')
 @section('title', $section->title)
 
 @section('content')

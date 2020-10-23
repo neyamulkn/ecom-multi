@@ -39,6 +39,8 @@
                     </ul>
                 </li>
 
+                <li> <a class="waves-effect waves-dark" href="{{route('admin.offer')}}" aria-expanded="false"><i class="fa fa-people-carry"></i><span class="hide-menu">Manage Offers</span></a></li>
+
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Location</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -69,7 +71,7 @@
                       
                         <li> <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Banner Section</a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('banner.create')}}">Large Banner</a></li>
+                                <li><a href="{{route('banner')}}">All Banner</a></li>
                                 <li><a href="javascript:void(0)">Small Banner</a></li>
                                 <li><a href="javascript:void(0)">Banner 2 Image per row</a></li>
                                 <li><a href="javascript:void(0)">Banner 3 Image per row</a></li>
@@ -99,7 +101,7 @@
                     </ul>
                 </li>
 
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Vendor</span></a>
+        <!--         <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Vendor</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li> <a href="#">View Vendors</a></li>
                         <li><a href="#">Add Vendors</a></li>
@@ -115,7 +117,7 @@
                         <li><a href="#">Vendor Subscriptions</a></li>
                        
                     </ul>
-                </li>
+                </li> -->
 
                 
 

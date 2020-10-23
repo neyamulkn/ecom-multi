@@ -12,17 +12,21 @@
             <div class="total-price clearfix">
                 <div class="price price-left">
                      <label for="ratting5"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span></label><br/>
-                @if($product->discount)
-                    <span class="price-new">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price-($product->discount*$product->selling_price)/100 }}</span>
+                    @php
+                    $discount =  \App\Http\Controllers\OfferController::discount($product->id, Session::get('offerId'));
+                @endphp
+
+                @if($discount)
+                    <span class="price-new">{{Config::get('siteSetting.currency_symble')}}{{ $discount['discount_price'] }}</span>
                     <span class="price-old">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span>
                 @else
                     <span class="price-new">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span>
                 @endif
                 </div>
-                @if($product->discount)
+                @if($discount)
                 <div class="price-sale price-right">
                   <span class="discount">
-                    -{{$product->discount}}%
+                      -@if($discount['discount_type'] != '%'){{$discount['discount_type']}}@endif{{$discount['discount']}}@if($discount['discount_type'] == '%'){{$discount['discount_type']}}@endif
                     <strong>OFF</strong>
                   </span>
                 </div>

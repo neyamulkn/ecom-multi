@@ -1,6 +1,6 @@
 <?php  
 
-$products = App\Models\Product::whereIn('id', explode(',', $section->product_id))->where('status', 1)->selectRaw('id,title,selling_price,discount, slug, feature_image')->orderBy('id', 'desc')->take(10)->get();
+$products = App\Models\Product::whereIn('id', explode(',', $section->product_id))->where('status', 1)->selectRaw('id,title,selling_price,discount, slug, feature_image')->orderBy('id', 'desc')->take(7)->get();
 ?>
 @if(count($products)>0)
 <div class="row">

@@ -1,5 +1,44 @@
 <input type="hidden" value="{{$data->id}}" name="id">
-
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="required" for="title">Slider Type</label>
+            <select name="type" required class="form-control">
+                <option @if($data->type == 'homepage') selected @endif value="homepage">Homepage Slider</option>
+                <option @if($data->type == 'offer') selected @endif value="offer">Offer</option>
+                <option @if($data->type == 'today-deal') selected @endif value="today-deal">Today Deal</option>
+                <option @if($data->type == 'mega-discount') selected @endif value="mega-discount">Mega Discount</option>
+                <option @if($data->type == 'gitcard') selected @endif value="gitcard">Gitcard</option>
+                <option @if($data->type == 'brand') selected @endif value="brand">Top Brand</option>
+                <option @if($data->type == 'free-shipping') selected @endif value="free-shipping">Free Shipping</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12">
+    <div class="form-group"> 
+        <label class="dropify_image">Feature Image</label>
+        <input data-default-file="{{asset('upload/images/slider/'.$data->phato)}}" type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
+        <p style="color:red">Image Size: 1350px*400px</p>
+    </div>
+    @if ($errors->has('phato'))
+        <span class="invalid-feedback" role="alert">
+            {{ $errors->first('phato') }}
+        </span>
+    @endif
+</div>
+<div class="col-md-4">
+    <div class="form-group">
+        <label  for="btn_text">Button Name</label>
+        <input type="text" value="{{$data->btn_text}}" placeholder="Exm: Shop Now" id="btn_text" name="btn_text" class="form-control">
+           
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <label  for="btn_link">Button Link</label>
+        <input type="text" id="btn_link" value="{{$data->btn_link}}" name="btn_link" placeholder="Exp: {{url('/shop')}}" class="form-control">
+           
+    </div>
+</div>
     <div class="col-md-12">
         <div class="form-group">
             <label class="required" for="title">Slider Title</label>
@@ -52,32 +91,7 @@
     </div>
 </div>
 
-<div class="col-md-12">
-    <div class="form-group"> 
-        <label class="dropify_image">Feature Image</label>
-        <input data-default-file="{{asset('upload/images/slider/'.$data->phato)}}" type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
-        <p style="color:red">Image Size: 1350px*400px</p>
-    </div>
-    @if ($errors->has('phato'))
-        <span class="invalid-feedback" role="alert">
-            {{ $errors->first('phato') }}
-        </span>
-    @endif
-</div>
-<div class="col-md-4">
-    <div class="form-group">
-        <label  for="btn_text">Button Name</label>
-        <input type="text" value="{{$data->btn_text}}" placeholder="Exm: Shop Now" id="btn_text" name="btn_text" class="form-control">
-           
-    </div>
-</div>
-<div class="col-md-8">
-    <div class="form-group">
-        <label  for="btn_link">Button Link</label>
-        <input type="text" id="btn_link" value="{{$data->btn_link}}" name="btn_link" placeholder="Exp: {{url('/shop')}}" class="form-control">
-           
-    </div>
-</div>
+
 <div class="col-md-12">
     <div class="form-group">
         <label  for="text_position">Text Position</label>

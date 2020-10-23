@@ -397,16 +397,20 @@
                         </div>
                        
                         @if($product->get_brand)
-                        <p>Brand: {{$product->get_brand->name}} | @endif <span class="availability in-stock"> Availability: <span> <i class="fa fa-check-square-o"></i> In Stock</span></span> </p>
+                        <p>Brand: {{$product->get_brand->name}} | @endif 
+                          <span class="availability @if($product->stock>0) in-stock  @else out-stock @endif"> Availability: <span> <i class="fa fa-check-square-o"></i>@if($product->stock>0) In Stock @else Out of stock @endif</span></span> </p>
                       </div>
                       <div class="product_page_price price">
-                     
-                        @if($product->discount)
-                          <span class="price-new"><span id="price-special">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price-($product->discount*$product->selling_price)/100 }}</span></span>
+                        @php
+                            $discount =  \App\Http\Controllers\OfferController::discount($product->id, Session::get('offerId'));
+                        @endphp
+                        @if($discount)
+                          <span class="price-new"><span id="price-special">{{Config::get('siteSetting.currency_symble')}}{{$discount['discount_price'] }}</span></span>
                             <span>
                               <span class="price-old" id="price-old">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span> 
                               <span class="discount">
-                                -{{$product->discount}}%
+                               -@if($discount['discount_type'] != '%'){{$discount['discount_type']}}@endif{{$discount['discount']}}@if($discount['discount_type'] == '%'){{$discount['discount_type']}}@endif
+                    
                                 <strong>OFF</strong>
                               </span>
                             </span>
@@ -417,10 +421,10 @@
                       </div>
                       <form action="{{route('cart.add')}}" id="addToCart" method="get"> 
                       <div class="product-box-desc">
-                        <div class="inner-box-desc">
+                        <!-- <div class="inner-box-desc">
                           <div class="model"><span>Product Code: </span> Simple Product</div>
                           <div class="reward"><span>Reward Points:</span> 400</div>
-                        </div>
+                        </div> -->
                         <!-- //get feature attribute-->
                         @foreach ($product->get_features->where('attribute_id', '!=', null) as $feature)
                           <!-- show attribute name -->

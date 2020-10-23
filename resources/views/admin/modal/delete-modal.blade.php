@@ -1,4 +1,4 @@
-
+@section('perpage-css')
 <style type="text/css">
     /*delete confirm popup*/
 
@@ -87,7 +87,7 @@
 
     /*delete confirm popup*/
 </style>
-
+@endsection
 <!-- delete Modal -->
 <div id="delete" class="modal fade">
     <div class="modal-dialog modal-confirm">
@@ -109,7 +109,7 @@
         </div>
     </div>
 </div>
-
+@section('perpage-js')
 <script type="text/javascript">
     function deleteConfirmPopup(route) {
         document.getElementById('deleteItemRoute').value = route;
@@ -136,3 +136,4 @@
 
 
 </script>
+@endsection

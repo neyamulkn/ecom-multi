@@ -58,6 +58,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Feature Image</th>
+                                                <th>Slider Type</th>
                                                 <th>Title</th>
                                                 <th>Sub Title</th>
                                                 <th>Status</th>
@@ -69,6 +70,7 @@
                                             <tr id="item{{$slider->id}}">
                                                 
                                                 <td><img src="{{asset('upload/images/slider/'. $slider->phato)}}" width="150"></td>
+                                                <td>{{ str_replace('-',' ', $slider->type) }}</td>
                                                 <td><span style="color:{{$slider->title_color}}; font-family: {{$slider->title_style}}">{{$slider->title}}</td>
                                                 <td>{{$slider->subtitle}}</span></td>
                                                 <td>
@@ -115,11 +117,65 @@
                     </div>
                     <div class="modal-body form-row">
                         <div class="card-body">
-                            <form action="{{route('slider.store')}}" enctype="multipart/form-data" data-parsley-validate method="POST" class="floating-labels">
+                            <form action="{{route('slider.store')}}" enctype="multipart/form-data" data-parsley-validate method="POST" >
                                 {{csrf_field()}}
                                 <div class="form-body">
                                     <!--/row-->
                                     <div class="row justify-content-md-center">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="required" for="title">Slider Type</label>
+                                                <select name="type" required class="form-control">
+                                                    <option value="">Select Type</option>
+                                                    <option value="homepage">Homepage Slider</option>
+                                                    <option value="offer">Offer</option>
+                                                    <option value="today-deal">Today Deal</option>
+                                                    <option value="mega-discount">Mega Discount</option>
+                                                    <option value="gitcard">Gitcard</option>
+                                                    <option value="brand">Brand</option>
+                                                    <option value="free-shipping">Free Shipping</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group"> 
+                                                <label class="required dropify_image">Slider Image</label>
+                                                <input required type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
+                                                <p style="color:red">Image Size: 1350px * 400px</p>
+                                            </div>
+                                            @if ($errors->has('phato'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    {{ $errors->first('phato') }}
+                                                </span>
+                                            @endif
+                                        </div>
+                                
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label  for="btn_text">Button Name</label>
+                                                <input type="text" placeholder="Exm: Shop Now" id="btn_text" name="btn_text" class="form-control">
+                                                   
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label  for="btn_link">Button Link</label>
+                                                <input type="text" id="btn_link" name="btn_link" placeholder="Exp: {{url('/shop')}}" class="form-control">
+                                            </div>
+                                        </div>
+                                   
+                                       <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label  for="text_position">Text Position</label>
+                                                <select class="form-control" name="text_position">
+                                                    <option value="left">Left</option>
+                                                    <option value="center">Center</option>
+                                                    <option value="right">Right</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="required" for="title">Slider Title</label>
@@ -127,7 +183,7 @@
                                             </div>
                                         </div>
 
-                                         <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="title_style">Title Font Style</label>
                                                 <input placeholder="Exp. arial" name="title_style" id="title_style" value="{{old('title_style')}}"  type="text" class="form-control">
@@ -145,7 +201,6 @@
                                                 <input placeholder="Exp. #00000" name="title_color" id="title_color" value="{{old('title_color')}}" type="color" class="form-control">
                                             </div>
                                         </div>
-                                        
                                     </div>
                                     <div class="row justify-content-md-center">
                                         
@@ -176,49 +231,7 @@
                                         </div>
                                         
                                     </div>
-                                    <div class="row justify-content-md-center">
-                                        <div class="col-md-12">
-                                            <div class="form-group"> 
-                                                <label class="required dropify_image">Slider Image</label>
-                                                <input required type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg png gif"  data-max-file-size="2M"  name="phato" id="input-file-events">
-                                                <p style="color:red">Image Size: 1350px*400px</p>
-                                            </div>
-                                            @if ($errors->has('phato'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    {{ $errors->first('phato') }}
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label  for="btn_text">Button Name</label>
-                                                <input type="text" placeholder="Exm: Shop Now" id="btn_text" name="btn_text" class="form-control">
-                                                   
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <label  for="btn_link">Button Link</label>
-                                                <input type="text" id="btn_link" name="btn_link" placeholder="Exp: {{url('/shop')}}" class="form-control">
-                                                   
-                                            </div>
-                                        </div>
-                                       <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label  for="text_position">Text Position</label>
-                                                <select class="form-control" name="text_position">
-                                                    <option value="left">Left</option>
-                                                    <option value="center">Center</option>
-                                                    <option value="right">Right</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                   
                                     <div class="row justify-content-md-center">
                                         <div class="col-md-12">
                                             <div class="head-label">

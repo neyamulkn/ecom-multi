@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
 
 @yield('css')
+@yield('perpage-css')
 <style type="text/css">
     .loadingData
     {

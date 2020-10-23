@@ -4,7 +4,7 @@
     <script src="{{ asset('js/parsley.min.js') }}"></script>
     <script src="{{asset('assets/node_modules/jqueryui/jquery-ui.min.js')}}"></script>
     @yield('js')
-
+    @yield('perpage-js')
     <script type="text/javascript">
         //change status by id
         function satusActiveDeactive(table, id, field = null){

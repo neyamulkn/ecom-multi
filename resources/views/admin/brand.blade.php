@@ -5,7 +5,10 @@
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css"
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
- 
+    <link href="{{asset('assets')}}/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="{{asset('css')}}/pages/bootstrap-switch.css" rel="stylesheet">
+
 @endsection
 @section('content')
                 <!-- Page wrapper  -->
@@ -52,6 +55,7 @@
                                                 <th>Brand Name</th>
                                                 <th>Logo</th>
                                                 <th>Category</th>
+                                                <th>Allow Top Brand</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -62,8 +66,15 @@
                                                 <td>{{$data->name}}</td>
                                                 <td><img width="70" src="{{ asset('upload/images/brand/thumb/'.$data->logo)}}"></td>
                                                 <td>{{ ($data->get_category) ? $data->get_category->name : 'All Category'}}</td>
-                                                
-                                                <td>{!!($data->status == 1) ? "<span class='label label-info'>Active</span>" : '<span class="label label-danger">Deactive</span>'!!} 
+                                                <td><div class="bt-switch">
+                                                        <input  onchange="satusActiveDeactive('brands', '{{$data->id}}', 'top')" type="checkbox" {{($data->top == 1) ? 'checked' : ''}} data-on-color="warning" data-off-color="danger" data-on-text="Enabled" data-off-text="Disabled"> 
+                                                   
+                                                    </div></td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                      <input  name="status" onclick="satusActiveDeactive('brands', {{$data->id}})"  type="checkbox" {{($data->status == 1) ? 'checked' : ''}}  type="checkbox" class="custom-control-input" id="status{{$data->id}}">
+                                                      <label style="padding: 5px 12px" class="custom-control-label" for="status{{$data->id}}"></label>
+                                                    </div>
                                                 </td>
 
                                                 <td>
@@ -148,7 +159,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <span for="name">Brand Logo</span>
-                                                    <input type="file" name="phato">
+                                                    <input type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  name="phato">
                                                     <p class="upload-info">Logo Size: 95px*95px</p>
                                                 </div>
                                             </div>
@@ -231,9 +242,40 @@
     <!-- This is data table -->
     <script src="{{asset('assets')}}/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{asset('assets')}}/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="{{asset('assets')}}/node_modules/dropify/dist/js/dropify.min.js"></script>
+     <script>
+    $(document).ready(function() {
+        // Basic
+        $('.dropify').dropify();
+    });
+    </script>
+    <!-- bt-switch -->
+    <script src="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.js"></script>
+    <script type="text/javascript">
+    $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+    var radioswitch = function() {
+        var bt = function() {
+            $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioState")
+            }), $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+            }), $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+            })
+        };
+        return {
+            init: function() {
+                bt()
+            }
+        }
+    }();
+    $(document).ready(function() {
+        radioswitch.init()
+    });
+    </script>
    <script>
         $(function () {
-            $('#myTable').DataTable();
+           $('#myTable').DataTable({"ordering": false});
         });
 
     </script>
@@ -250,7 +292,7 @@
                 success:function(data){
                     if(data){
                         $("#edit_form").html(data);
-                       
+                        $('.dropify').dropify();
                     }
                 }
 
@@ -300,7 +342,7 @@ $(document).ready(function(){
             $.ajax({
                 url:"{{route('positionSorting')}}",
                 method:"get",
-                data:{ids:ids},
+                data:{ids:ids,table:'brands'},
                 success:function(data){
                     toastr.success(data)
                 }

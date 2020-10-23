@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Page;
+use App\Traits\CreateSlug;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
+    use CreateSlug;
 
     public function index()
     {
@@ -29,6 +31,7 @@ class MenuController extends Controller
         ]);
         $data = new Menu();
         $data->name = $request->name;
+        $data->slug = $this->createSlug('menus', $request->name);
         $data->menu_source = $request->menu_type;
         $data->source_id = implode(',', $request->source_id);
         $data->top_header = ($request->top_header ? 1 : null);

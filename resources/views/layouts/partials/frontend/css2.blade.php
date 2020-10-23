@@ -23,7 +23,7 @@
 <link href="{{ asset('frontend/css/toastr.css') }}"  rel="stylesheet">
 
 <style type="text/css">
-    #pageLoading
+    #homepageLoading
     {
         z-index: 999999; 
         width: 100%;
@@ -33,6 +33,19 @@
         text-align: center;
         min-height: 200px;
         position: fixed;
+        background: #ffffffe0 url('{{ asset("assets/images/loading.gif")}}') no-repeat center; 
+    }    
+
+    #pageLoading
+    {
+        z-index: 999999; 
+        width: 100%;
+        height: 100%;
+        top: 0%;
+        left: 0%;
+        text-align: center;
+        min-height: 200px;
+        position: absolute;
         background: #ffffffe0 url('{{ asset("assets/images/loading.gif")}}') no-repeat center; 
     }
     #loadingData

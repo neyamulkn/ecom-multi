@@ -19,7 +19,7 @@
  ==============================================*/
 
   /*prduct slider next, prev*/
-
+body{background-color: #f1f1f1 !important;}
 .page-builder-ltr{ 
      margin-bottom: 10px;}
      .releate-products:hover .owl2-controls, div.so-extraslider.grid:hover .owl2-controls {
@@ -2036,7 +2036,7 @@ div.required .control-label:before {
     cursor: pointer; }
   .container-megamenu.vertical .vertical-wrapper ul.megamenu > li > a {
     padding: 11px 0;
-    margin: 0 10px 0 20px;
+    margin: 0 10px 0 0px;
     border-bottom: 1px solid #efefef;
     color: #222;
     font-weight: normal;
@@ -2647,7 +2647,7 @@ div.required .control-label:before {
 .breadcrumbs {
   margin-top: 0;
   padding: 5px 0;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   color: #253237;
   text-align: left;
   background: #e9ecef }
@@ -5136,7 +5136,8 @@ span.fa-stack {
 .products-list.list-masonry .product-layout .product-item-container, .products-list.grid .product-layout .product-item-container {
   overflow: hidden;
   position: relative;
-  margin: 0 0 30px;
+  margin: 0 0 10px;
+  padding:5px;
   background: #fff;
   border-radius: 3px;
   z-index: 1; }
@@ -5286,7 +5287,7 @@ span.fa-stack {
 
 .products-list.list .product-layout .product-item-container {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   overflow: hidden;
   border-radius: 3px;
   background: #fff;
@@ -5471,10 +5472,8 @@ span.fa-stack {
   color: #fff;
   font-weight: bold;
   display: inline-block;
-  font-size: 16px;
-  width: 40px;
-  height: 40px;
-  padding: 3px 0;
+  font-size: 14px;
+  padding: 2px 5px;
   text-align: center;
   border-radius: 5px;
   line-height: 17px;
@@ -7278,7 +7277,7 @@ header ul.top-link > li .btn-group .btn-link:hover, header ul.top-link > li > a:
 
   .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu > li > a:hover strong, .megamenu-style-dev .navbar-default .horizontal .megamenu-wrapper ul.megamenu > li > a:hover {
     color: #1d4c9e !important; } }
-
+footer{background: #fff;}
 footer #collapse-footer {
   display: block; }
 

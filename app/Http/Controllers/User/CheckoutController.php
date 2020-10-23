@@ -104,18 +104,7 @@ class CheckoutController extends Controller
         return response()->json($output);
     }
 
-    // get area by city
-    public function get_area($id=0){
-        $areas = Area::where('city_id', $id)->get();
-        $output = '';
-        if(count($areas)>0){
-            $output .= '<option value="">Select area</option>';
-            foreach($areas as $area){
-                $output .='<option '. (old("area") == $area->id ? "selected" : "" ).' value="'.$area->id.'">'.$area->name.'</option>';
-            }
-        }
-        echo $output;
-    }
+
 
     public function ShippingRegister(Request $request) {
 

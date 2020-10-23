@@ -10,7 +10,7 @@
               <div class="row row_q34c  border ">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col_5j8y col-style">
                   <div class="contactinfo">
-                    <img width="200" src="{{asset('frontend')}}/image/catalog/demo/logo/logo-home6.png" title="Your Store - Layout 6" alt="Your Store - Layout 6">
+                    <img width="200" src="{{asset('frontend')}}/image/logo/logo-footer.png" title="Your Store - Layout 6" alt="Your Store - Layout 6">
                     
                     <p>Plaza Jacinto Benavente 08950 Esplugues de LLobregat (Barcelona)</p>
                     <div class="content-footer">

@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css"
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
     <link href="{{asset('assets')}}/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet" type="text/css" />
-        <link href="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
     <link href="{{asset('css')}}/pages/bootstrap-switch.css" rel="stylesheet">
 
     <style type="text/css">
@@ -328,7 +328,7 @@
            });
 
            $.ajax({
-            url:"{{route('positionSorting')}}",
+            url:"{{route('categorySorting')}}",
             method:"get",
             data:{ids:ids,operator:'=',operator2:'='},
             success:function(data)

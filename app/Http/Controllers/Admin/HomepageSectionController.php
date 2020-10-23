@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\HomepageSection;
 use App\Models\Product;
+use App\Traits\CreateSlug;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class HomepageSectionController extends Controller
 {
+    use CreateSlug;
     public function index()
     {
         $data['categories'] = Category::where('parent_id', null)->orderBy('name', 'asc')->get();
@@ -39,7 +41,8 @@ class HomepageSectionController extends Controller
 
         $section = new HomepageSection();
         $section->title = $request->title;
-        $section->type = 'product';
+        $section->slug = $this->createSlug('homepage_sections', $request->title);
+        $section->type = 'section';
         $section->product_id =  implode(',', $request->product_id);
         $section->status = ($request->status ? 1 : 0);
         $store = $section->save();
@@ -92,9 +95,23 @@ class HomepageSectionController extends Controller
      * @param  \App\Models\HomepageSection  $HomepageSection
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HomepageSection $HomepageSection)
+    public function delete($id)
     {
-        //
+        $section = HomepageSection::find($id);
+
+        if($section){
+            $section->delete();
+            $output = [
+                'status' => true,
+                'msg' => 'Home section deleted successfully.'
+            ];
+        }else{
+            $output = [
+                'status' => false,
+                'msg' => 'Home section cannot deleted.'
+            ];
+        }
+        return response()->json($output);
     }
 
     public function getAllProducts (Request $request){

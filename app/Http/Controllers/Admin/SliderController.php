@@ -17,7 +17,7 @@ class SliderController extends Controller
     // Slider list
     public function index()
     {
-        $sliders = Slider::orderBy('position', 'desc')->get();
+        $sliders = Slider::orderBy('position', 'asc')->get();
         return view('admin.slider.slider')->with(compact('sliders'));
     }
 
@@ -34,7 +34,7 @@ class SliderController extends Controller
         $data->title_size = $request->title_size;
         $data->title_color = $request->title_color;
         $data->title_style = $request->title_style;
-
+        $data->type = $request->type;
         $data->subtitle = $request->subtitle;
         $data->subtitle_size = $request->subtitle_size;
         $data->subtitle_color = $request->subtitle_color;

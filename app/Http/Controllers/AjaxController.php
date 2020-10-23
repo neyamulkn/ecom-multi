@@ -69,6 +69,31 @@ class AjaxController extends Controller
     	echo $output;
     }
 
+    // get city by state
+    public function get_city($id=0){
+        $cities = City::where('state_id', $id)->get();
+        $output = '';
+        if(count($cities)>0){
+            $output .= '<option value="">Select area</option>';
+            foreach($cities as $city){
+                $output .='<option '. (old("area") == $city->id ? "selected" : "" ).' value="'.$city->id.'">'.$city->name.'</option>';
+            }
+        }
+        echo $output;
+    }
+
+    // get area by city
+    public function get_area($id=0){
+        $areas = Area::where('city_id', $id)->get();
+        $output = '';
+        if(count($areas)>0){
+            $output .= '<option value="">Select area</option>';
+            foreach($areas as $area){
+                $output .='<option '. (old("area") == $area->id ? "selected" : "" ).' value="'.$area->id.'">'.$area->name.'</option>';
+            }
+        }
+        echo $output;
+    }
 
     // check unique fielde
     public function checkField(Request $request){
@@ -141,9 +166,9 @@ class AjaxController extends Controller
         $getSources = [];
         $output = '';
         if($type == 'category'){
-            $subcategory = Category::where('parent_id', '!=', null)->where('subcategory_id', null)->where('status', 1)->get();
-            if(count($subcategory)>0){
-                foreach ($subcategory as $source) {
+            $categories = Category::where('parent_id', '!=', null)->where('subcategory_id', null)->where('status', 1)->get();
+            if(count($categories)>0){
+                foreach ($categories as $source) {
                     $output .= ' <option value="'.$source->id.'">'.$source->name.'</option>';
                     if(count($source->get_subcategory)>0){
 
@@ -205,9 +230,9 @@ class AjaxController extends Controller
             }else{
                 DB::table($request->table)->where('id', $request->id)->update([$field => 1]);
             }
-            $output = array( 'status' => true,  'message'  => 'Status update successful.');
+            $output = array( 'status' => true,  'message'  => $field. ' update successful.');
         }else{
-            $output = array( 'status' => false,  'message'  => 'Status can\'t update.!');
+            $output = array( 'status' => false,  'message'  => $field. ' can\'t update.!');
         }
         return response()->json($output);
     }
@@ -238,6 +263,7 @@ class AjaxController extends Controller
         return false;
     }
 
+    //position sorting
     public function positionSorting(Request $request){
 
         for($i=0; $i<count($request->ids); $i++)
@@ -249,6 +275,19 @@ class AjaxController extends Controller
             $sorting->where('id', str_replace('item', '', $request->ids[$i]))->update(['position' => $i]);
         }
         echo 'Position sorting has been updated';
+    }
+
+    //get products by anyone field
+    public function getProductsByField (Request $request, $field){
+        $output = '';
+        $products = Product::where($field, $request->id)->where('status', 1)->get();
+        if(count($products)>0){
+            $output .= ' <option value="">Select Product</option>';
+            foreach ($products as $source) {
+                $output .= ' <option value="'.$source->id.'">'.$source->title.'</option>';
+            }
+        }
+        echo $output;
     }
 
 

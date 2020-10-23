@@ -3,7 +3,13 @@
 
 @section('css-top')
     <link href="{{asset('assets')}}/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
-  
+      <link href="{{asset('assets')}}/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets')}}/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets')}}/node_modules/switchery/dist/switchery.min.css" rel="stylesheet" />
+    <link href="{{asset('assets')}}/node_modules/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="{{asset('assets')}}/node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="{{asset('assets')}}/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+    <link href="{{asset('assets')}}/node_modules/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('css')
     <link rel="stylesheet" type="text/css"
@@ -147,8 +153,11 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="menu">Source Path</label>
-                                                <select required name="source_id[]" id="showMenuSourch" class="select2 m-b-10 select2-multiple" style="width: 100%" multiple="multiple" data-placeholder="Choose"></select>
+                                                <label for="showMenuSourch">Source Path</label>
+                                                <select required name="source_id[]" id="showMenuSourch" class="select2 m-b-10 select2-multiple" style="width: 100%" multiple="multiple" data-placeholder="Choose">
+                                                    <option>fsdf</option>
+                                                    <option>fsdf</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -229,16 +238,23 @@
     <!-- This is data table -->
     <script src="{{asset('assets')}}/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{asset('assets')}}/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
-    <script src="{{asset('assets')}}/node_modules/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+
+    <script src="{{asset('assets')}}/node_modules/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+     <script type="text/javascript" src="{{asset('assets')}}/node_modules/multiselect/js/jquery.multi-select.js"></script>
+        <script src="{{asset('assets')}}/node_modules/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
  
+    <!-- end - This is for export functionality only -->
+    <script>
+        $(".select2").select2();
+    </script>
+
     <!-- end - This is for export functionality only -->
     <script>
         $(document).ready( function() {
             $('#myTable').dataTable({
                 "ordering": false
             });
-        })
-        $(".select2").select2();
+        });
     </script>
 
     <script type="text/javascript">

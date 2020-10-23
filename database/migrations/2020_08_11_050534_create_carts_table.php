@@ -23,6 +23,7 @@ class CreateCartsTable extends Migration
             $table->integer('qty');
             $table->decimal('price');
             $table->string('attributes')->nullable();
+            $table->integer('offer_id')->nullable();
             $table->timestamps();
         });
     }

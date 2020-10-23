@@ -19,7 +19,6 @@ Route::get('category/{catslug?}/{subslug?}/{childslug?}', 'HomeController@catego
 //search products
 Route::get('search', 'HomeController@search')->name('product.search');
 
-
 Route::get('product/{slug?}', 'HomeController@product_details')->name('product_details');
 
 Route::get('cart/add', 'CartController@cartAdd')->name('cart.add');
@@ -52,9 +51,18 @@ Route::get('contact-us', 'HomeController@contactUs')->name('contactUs');
 Route::get('about-us', 'HomeController@aboutUs')->name('contactUs');
 
 Route::get('brand/{slug}', 'HomeController@brandProducts')->name('brandProducts');
-Route::get('{slug}', 'HomeController@moreProducts')->name('moreProducts');
+Route::get('more/{slug}', 'HomeController@moreProducts')->name('moreProducts');
 
-Route::get('{page}', 'HomeController@page')->name('page');
+
+Route::get('offer', 'OfferController@offers')->name('offers');
+Route::get('offer/{slug}', 'OfferController@offerDetails')->name('offer.details');
+
+Route::get('gift-cards', 'HomeController@giftCards')->name('giftCards');
+Route::get('top-brand', 'FrontPagesController@topBrand')->name('topBrand');
+
+Route::get('today-deals', 'FrontPagesController@todayDeals')->name('todayDeals');
+Route::get('mega-discount', 'FrontPagesController@megaDiscount')->name('megaDiscount');
+Route::get('{page}', 'FrontPagesController@page')->name('page');
 
 Route::get('social-login/redirect/{provider}', 'SocialLoginController@redirectToProvider')->name('social.login');
 Route::get('social-login/{provider}/callback', 'SocialLoginController@handleProviderCallback')->name('social.callback');

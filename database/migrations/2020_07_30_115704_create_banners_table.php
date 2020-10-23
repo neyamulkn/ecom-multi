@@ -15,15 +15,20 @@ class CreateBannersTable extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
-            $table->string('link')->nullable();
-            $table->char('position', 10)->nullable();
-            $table->integer('orderBy')->default(0);
-            $table->char('banner_type', 10)->nullable();
+            $table->string('title')->nullable();
+            $table->string('subtitle')->nullable();
+            $table->char('title_size', 5)->default(60)->nullable();
+            $table->string('title_color')->default('#000000')->nullable();
+            $table->string('title_style')->default('inherit')->nullable();
+            $table->char('subtitle_size', 5)->default(50)->nullable();
+            $table->string('subtitle_color')->default('#000000')->nullable();
+            $table->string('subtitle_style')->default('auto')->nullable();
+            $table->string('text_position')->default('left');
+            $table->integer('banner_type');
+            $table->integer('position')->nullable();
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->timestamps();
         });
     }
 

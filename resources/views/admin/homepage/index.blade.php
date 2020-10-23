@@ -135,7 +135,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="homepage">Select Product</label>
-                                                <select required  onchange="getProduct(this.value)" id="showAllProducts" class="form-control custom-select" style="width: 100%"></select>
+                                                <select required onchange="getProduct(this.value)" id="showAllProducts" class="form-control custom-select" style="width: 100%"></select>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -226,7 +226,7 @@
     // get homepage Sourch
     function getAllProducts(id){
 
-        var  url = '{{route("admin.getAllProducts")}}';
+        var  url = '{{route("admin.getProductsByField", "category_id")}}';
      
         $.ajax({
             url:url,

@@ -16,6 +16,7 @@ class CreateSlidersTable extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
+            $table->string('type', 15);
             $table->string('subtitle')->nullable();
             $table->char('title_size', 5)->default(60)->nullable();
             $table->string('title_color')->default('#000000')->nullable();
@@ -28,7 +29,7 @@ class CreateSlidersTable extends Migration
             $table->string('btn_text')->default('SHOP NOW')->nullable();
             $table->string('btn_link')->default('#')->nullable();
             $table->integer('position')->nullable();
-            $table->integer('created_by');
+            $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

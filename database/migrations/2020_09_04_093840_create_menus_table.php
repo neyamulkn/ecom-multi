@@ -16,13 +16,14 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('name', '25');
+            $table->string('slug', '25');
             $table->string('menu_source', '15')->comment('category, page');
             $table->string('source_id', '75')->nullable();
             $table->tinyInteger('top_header')->nullable();
             $table->tinyInteger('main_header')->nullable();
             $table->tinyInteger('footer')->nullable();
-            $table->integer('priority')->nullable();
             $table->integer('position')->nullable();
+            $table->tinyInteger('is_default')->nullable();
             $table->tinyInteger('status')->default(1);
         });
     }

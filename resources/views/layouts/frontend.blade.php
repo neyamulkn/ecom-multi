@@ -22,15 +22,14 @@
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" type="text/css"> -->
 
     </head>
-    <body class="common-home res layout-4">
-        <div id="wrapper" class="wrapper-fluid banners-effect-3">
+    <body class="common-home res layout-6" >
+        <div id="wrapper" class="wrapper-fluid banners-effect-11">
             <div id="app">
-
             <!-- Header Start -->
             @include('layouts.partials.frontend.header')
-             @if(Request::is('/'))
+            @if(Request::is('/'))
             <div style="width: 100%;height: 100%;display: block;position: relative;">
-            <div id="pageLoading"></div>
+            <div id="pageLoading"></div></div>
             @endif
             <!-- Header End -->
             @yield('content')
@@ -44,7 +43,7 @@
             <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="border:none;">
                         <button type="button" id="modalClose" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body form-row" id="quickviewProduct"></div>

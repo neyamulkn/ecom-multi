@@ -34,25 +34,20 @@ class HomeController extends Controller
     public function index()
     {
         $data = [];
+        //get all homepage section
         $data['sections'] = HomepageSection::where('status', 1)->orderBy('position', 'asc')->get();
-        $data['sliders'] = Slider::where('status', 1)->orderBy('position', 'asc')->get();
+        $data['sliders'] = Slider::where('status', 1)->where('type', 'homepage')->orderBy('position', 'asc')->get();
 
-
-        $data['categories'] = Category::with('products')->where('parent_id', '=' , null)->where('popular', 1)->where('status', 1)->orderBy('orderBy', 'asc')->take(12)->get();
-        $data['features'] = Product::where('featured', 1)->where('status', 1)->orderBy('id', 'desc')->get();
-        $data['newArrivals'] = Product::where('status', 1)->orderBy('id', 'desc')->get();
-
-        return view('frontend.home2')->with($data);
+        return view('frontend.home')->with($data);
     }
 
-    //product showby category
+    //product show by category
     public function category(Request $request)
     {
-
         $data['products'] = $data['specifications'] = $data['category'] = $data['filterCategories'] = $data['brands'] = [];
 
         try {
-            $products = new Product();
+            $products = Product::with('discount');
             $specifications = ProductAttribute::orderBy('id', 'asc');
             if ($request->catslug) {
                 $data['category'] = Category::where('slug', $request->catslug)->first();
@@ -156,7 +151,7 @@ class HomeController extends Controller
 
             $data['products'] = $products->where('status', 1)->paginate($perPage);
 
-        }catch (Exception $e){
+        }catch (\Exception $e){
 
         }
 
@@ -170,11 +165,11 @@ class HomeController extends Controller
             return view('frontend.products.category')->with($data);
         }
     }
+
     //search products
     public function search(Request $request)
     {
-
-        $search = Product::where('status', 1);
+        $search = Product::where('products.status', 1);
             if($request->q) {
                 $search->where('title', 'like', '%' . $request->q . '%');
             }
@@ -252,7 +247,7 @@ class HomeController extends Controller
                     $value = (($sort[1] == 'a' || $sort[1] == 'l')) ? 'asc' : 'desc';
 
                     $products = $products->orderBy($field, $value);
-                }catch (Exception $exception){}
+                }catch (\Exception $exception){}
             }
 
             //check price keyword
@@ -476,14 +471,7 @@ class HomeController extends Controller
         return view('frontend.404');
     }
 
-    public function page($slug)
-    {
-        $page = Page::where('slug', $slug)->where('status', 1)->first();
-        if($page){
-            return view('frontend.page')->with(compact('page'));
-        }
-        return view('frontend.404');
-    }
+
 
     public function quickview($product_id){
         $data['product'] = Product::with('user:id,name','get_category:id,name','get_features')->where('id', $product_id)->first();

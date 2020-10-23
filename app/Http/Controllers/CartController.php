@@ -14,6 +14,7 @@ class CartController extends Controller
 
     public function cartAdd(Request $request)
     {
+
         $product = Product::find($request->product_id);
         $qty = 0;
         $user_id = rand(1000000000, 9999999999);
@@ -53,12 +54,13 @@ class CartController extends Controller
             }
             $cart_user->update($data);
         }else{
+            $price = $product->selling_price;
             //check weather have discount
-            if ($product->discount) {
-                $price = $product->selling_price - ($product->discount * $product->selling_price) / 100;
-            } else {
-                $price = $product->selling_price;
+            $discount =  \App\Http\Controllers\OfferController::discount($product->id, Session::get('offerId'));
+            if($discount){
+                $price = $discount['discount_price'];
             }
+
             $data = [
                 'user_id' => $user_id,
                 'product_id' => $request->product_id,
@@ -68,6 +70,7 @@ class CartController extends Controller
                 'qty' => (isset($request->quantity)) ? $request->quantity : 1,
                 'price' => $price,
                 'attributes' => $attributes,
+                'offer_id' => (Session::has('offerId')) ? Session::get('offerId') : null,
             ];
             Cart::create($data);
         }

@@ -1,6 +1,6 @@
 <?php  
 
-$products = App\Models\Product::where('status', 1)->selectRaw('id,title,selling_price,discount, slug, feature_image')->orderBy('views', 'desc')->take(10)->get(); 
+$products = App\Models\Product::where('status', 1)->selectRaw('id,title,selling_price,discount, slug, feature_image')->orderBy('views', 'desc')->take(7)->get(); 
 ?>
 @if(count($products)>0)
 <div class="row">

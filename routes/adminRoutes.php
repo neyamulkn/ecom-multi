@@ -79,8 +79,6 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::post('brand/update', 'BrandController@update')->name('brand.update');
 	Route::get('brand/delete/{id}', 'BrandController@delete')->name('brand.delete');
 
-
-
 	// product routes
 	Route::get('product/create', 'ProductController@create')->name('product.create');
 	Route::post('product/store', 'ProductController@store')->name('product.store');
@@ -111,18 +109,23 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('homepage/section/edit/{id}', 'HomepageSectionController@edit')->name('admin.homepageSection.edit');
 	Route::post('homepage/section/update', 'HomepageSectionController@update')->name('admin.homepageSection.update');
 	Route::get('homepage/section/delete/{id}', 'HomepageSectionController@delete')->name('admin.homepageSection.delete');
-	Route::get('homepage/section/get/all-products', 'HomepageSectionController@getAllProducts')->name('admin.getAllProducts');
+
 	Route::get('homepage/section/get/single-product', 'HomepageSectionController@getSingleProduct')->name('admin.getSingleProduct');
 	
 	Route::get('homepage/section/sorting', 'HomepageSectionController@homepageSectionSorting')->name('admin.homepageSectionSorting');
 
-	// menu routes
-	Route::get('menu', 'MenuController@index')->name('menu');
-	Route::post('menu/store', 'MenuController@store')->name('menu.store');
-	Route::get('menu/list', 'MenuController@index')->name('menu.list');
-	Route::get('menu/edit/{id}', 'MenuController@edit')->name('menu.edit');
-	Route::post('menu/update', 'MenuController@update')->name('menu.update');
-	Route::get('menu/delete/{id}', 'MenuController@delete')->name('menu.delete');
+
+
+
+	// offer routes
+	Route::get('offer', 'OfferController@index')->name('admin.offer');
+	Route::post('offer/store', 'OfferController@store')->name('admin.offer.store');
+	Route::get('offer/list', 'OfferController@index')->name('admin.offer.list');
+	Route::get('offer/edit/{id}', 'OfferController@edit')->name('admin.offer.edit');
+	Route::post('offer/update', 'OfferController@update')->name('admin.offer.update');
+	Route::get('offer/delete/{id}', 'OfferController@delete')->name('admin.offer.delete');
+	Route::get('offer/get/all/product', 'OfferController@getAllProducts')->name('offer.getAllProducts');
+	Route::get('offer/get/single/product', 'OfferController@getSingleProduct')->name('offer.getSingleProduct');
 
 	// page routes
 	Route::get('page/create', 'PageController@create')->name('page.create');
@@ -135,6 +138,15 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 
 	Route::get('page/status/{id}', 'PageController@status')->name('page.status');	
 	Route::get('page/homepage-status/{id}', 'PageController@homepageStatus')->name('page.homepageStatus');	
+
+
+	// menu routes
+	Route::get('menu', 'MenuController@index')->name('menu');
+	Route::post('menu/store', 'MenuController@store')->name('menu.store');
+	Route::get('menu/list', 'MenuController@index')->name('menu.list');
+	Route::get('menu/edit/{id}', 'MenuController@edit')->name('menu.edit');
+	Route::post('menu/update', 'MenuController@update')->name('menu.update');
+	Route::get('menu/delete/{id}', 'MenuController@delete')->name('menu.delete');
 
 	// user routes
 	Route::get('user/create', 'UserController@create')->name('user.create');
@@ -174,12 +186,13 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('role/delete/{id}', 'RoleController@delete')->name('role.delete');
 
 	// banner routes
-	Route::get('banner/create', 'BannerController@create')->name('banner.create');
+	Route::get('banner/list/{type?}', 'BannerController@index')->name('banner');
 	Route::post('banner/store', 'BannerController@store')->name('banner.store');
-	Route::get('banner/list', 'BannerController@index')->name('banner.list');
+	
 	Route::get('banner/{id}/edit', 'BannerController@edit')->name('banner.edit');
 	Route::post('banner/update', 'BannerController@update')->name('banner.update');
 	Route::get('banner/delete/{id}', 'BannerController@delete')->name('banner.delete');
+	Route::get('banner/image/delete', 'BannerController@bannerImage_delete')->name('bannerImage_delete');
 	
 	// service routes
 	Route::post('service/store', 'ServicesController@store')->name('service.store');

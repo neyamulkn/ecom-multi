@@ -1,3 +1,4 @@
+@if(count($sliders)>0)
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col_k2sd col-style">
         <div class="module sohomepage-slider so-homeslider-ltr">
@@ -26,5 +27,6 @@
         </div>
     </div>
 </div>
+@endif
 
 

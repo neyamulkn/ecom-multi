@@ -1,3 +1,4 @@
+
 <header id="header" class="typeheader-6">
   <!-- Header Top -->
   <div class="header-top hidden-compact">
@@ -7,7 +8,7 @@
                     <div class="list-contact hidden-sm hidden-xs">
                         <ul class="top-link list-inline">
 
-                          <li class="account"><a style="color: #fff" href="#">Sell On</a></li>
+                          <li class="account"><a style="color: #fff" href="{{route('vendorRegisterForm')}}">Sell On</a></li>
                           <li class="account"><a style="color: #fff" href="#">Track Order</a></li>
                           <li class="account"><a style="color: #fff" href="#">How To Buy</a></li>
                         </ul>
@@ -24,8 +25,8 @@
                                   <li><a href="{{route('user.myAccount')}}">My Account</a></li>
                                   <li><a href="{{route('user.orderHistory')}}">Order History</a></li>
                                   <li><a href="#">Transactions</a></li>
-                                  <li><a href="{{route('checkout')}}" title="Checkout ">Checkout</a></li>
-                                   <li> <a href="{{route('userLogout')}}">Logout </a> </li>
+                                  <li><a href="{{route('checkout')}}"> Checkout </a></li>
+                                  <li> <a href="{{route('userLogout')}}">Logout </a> </li>
                                   @else
 
                                   <li> <a href="{{route('login')}}">Login </a> </li>
@@ -100,7 +101,7 @@
                       <div id="sosearchpro" class="sosearchpro-wrapper so-search ">
                           <form method="GET" action="{{ route('product.search') }}">
                               <div id="search0" class="search input-group form-group">
-                                  <div class="select_category filter_type  icon-select">
+                                  <div title="Select Category" class="select_category filter_type  icon-select">
                                       <?php $categories =  \App\Models\Category::where('parent_id', '=', null)->orderBy('orderBy', 'asc')->where('status', 1)->get() ?>
                                       <select class="no-border" name="cat">
                                           <option value="">All categories</option>
@@ -109,9 +110,9 @@
                                           @endforeach
                                       </select>
                                   </div>
-                                  <input class="autosearch-input form-control" type="text" onkeyup="searchItem(this.value)" name="q" value="@if(Request::get('q')){!! Request::get('q') !!}@endif" id="searchKey" required placeholder="Search">
+                                  <input title="Write search keyword" class="autosearch-input form-control" type="text" onkeyup="searchItem(this.value)" name="q" value="@if(Request::get('q')){!! Request::get('q') !!}@endif" id="searchKey" required placeholder="Search">
                                   <span class="input-group-btn">
-                                  <button type="submit" class="button-search btn btn-default btn-lg" ><i class="fa fa-search"></i><span class="hidden">Search</span></button>
+                                  <button title="search product" type="submit" class="button-search btn btn-default btn-lg" ><span class="fa fa-search"></span></button>
                                   </span>
                               </div>
 
@@ -210,7 +211,7 @@
                                                     <p class="close-menu"></p>
                                                     <a href="{{ route('home.category', $category->slug) }}" class="clearfix">
                                                     <span>
-                                                    <strong><img src="{{asset('frontend')}}/image/catalog/demo/menu/icon/icon-8.png" alt="">{{$category->name}}</strong>
+                                                    <strong>{{$category->name}}</strong>
                                                     </span>
                                                     <b class="fa fa-caret-right"></b>
                                                     </a>
@@ -254,7 +255,7 @@
                                                     <p class="close-menu"></p>
                                                     <a href="{{ route('home.category', $category->slug) }}" class="clearfix">
                                                     <span>
-                                                    <strong><img src="{{asset('frontend')}}/image/catalog/demo/menu/icon/icon-6.png" alt="">{{$category->name}}</strong>
+                                                    <strong>{{$category->name}}</strong>
                                                     </span>
                                                     </a>
                                                   </li>
@@ -292,54 +293,54 @@
                                               <div class="container">
                                                 <ul class="megamenu" data-transition="slide" data-animationtime="500">
 
-                                                <?php $menus =  \App\Models\Menu::where('main_header', 1)->where('status', 1)->get() ?>
+                                            
 
+                                                <?php $menus =  \App\Models\Menu::where('main_header', 1)->where('status', 1)->orderBy('position', 'asc')->get() ?>
                                                 @foreach($menus as $menu)
                                                   @if($menu->menu_source == 'category')
                                                   <li class="item-style2 content-full feafute with-sub-menu hover">
                                                     <p class="close-menu"></p>
-                                                    <a class="clearfix">
+                                                      <a class="clearfix">
                                                       <strong>
                                                       {{$menu->name}}
                                                       </strong>
-                                                      @if(count($menu->get_categories)>0) <b class="caret"></b> @endif
-                                                      </a>
-
                                                       @if(count($menu->get_categories)>0)
-                                                      <div class="sub-menu" style="width: 100%">
-                                                        <div class="content">
-                                                          <div class="categories ">
-                                                            <div class="row">
-                                                              @foreach($menu->get_categories as $category)
-                                                              <div class="col-sm-3 static-menu">
-                                                                <div class="menu">
-                                                                  <ul>
-                                                                    <li>
+                                                        <b class="caret"></b>
+                                                        </a>
+                                                        <div class="sub-menu" style="width: 100%">
+                                                          <div class="content">
+                                                            <div class="categories ">
+                                                              <div class="row">
+                                                                @foreach($menu->get_categories as $category)
+                                                                <div class="col-sm-3 static-menu">
+                                                                  <div class="menu">
+                                                                    <ul>
+                                                                      <li>
 
-                                                                      <a href="{{route('home.category', [$category->get_singleSubcategory->slug, $category->slug])}}" class="main-menu">{{$category->name}}</a>
-                                                                      @if(count($category->get_subchild_category)>0)
-                                                                      <ul>
-                                                                        @foreach($category->get_subchild_category as $childcategory)
-                                                                        <li><a href="{{route('home.category', [$category->get_singleSubcategory->slug, $childcategory->get_singleChildCategory->slug, $childcategory->slug])}}">{{$childcategory->name}}</a></li>
-                                                                        @endforeach
-                                                                      </ul>
-                                                                      @endif
+                                                                        <a href="{{route('home.category', [$category->get_singleSubcategory->slug, $category->slug])}}" class="main-menu">{{$category->name}}</a>
+                                                                        @if(count($category->get_subchild_category)>0)
+                                                                        <ul>
+                                                                          @foreach($category->get_subchild_category as $childcategory)
+                                                                          <li><a href="{{route('home.category', [$category->get_singleSubcategory->slug, $childcategory->get_singleChildCategory->slug, $childcategory->slug])}}">{{$childcategory->name}}</a></li>
+                                                                          @endforeach
+                                                                        </ul>
+                                                                        @endif
 
-                                                                    </li>
-                                                                  </ul>
+                                                                      </li>
+                                                                    </ul>
+                                                                  </div>
                                                                 </div>
+                                                               @endforeach
                                                               </div>
-                                                             @endforeach
                                                             </div>
                                                           </div>
                                                         </div>
-                                                      </div>
                                                       @else
                                                       </a>
                                                       @endif
                                                   </li>
 
-                                                  @else
+                                                  @elseif($menu->menu_source == 'page')
                                                   <li class="style-page with-sub-menu hover">
                                                     <p class="close-menu"></p>
                                                     @if(count($menu->get_pages)>1)
@@ -375,16 +376,64 @@
                                                       </div>
                                                     @endforeach
                                                     @else
-                                                     <a href="{{route('page', $menu->get_pages[0]->slug)}}" class="clearfix">
+                                                     <a href="{{ ($menu->get_pages[0]->is_default == 1) ? url($menu->get_pages[0]->slug) : route('page', $menu->get_pages[0]->slug)}}" class="clearfix">
                                                       <strong>
                                                       {{$menu->get_pages[0]->title}}
                                                       </strong>
                                                       </a>
                                                     @endif
                                                   </li>
+
+                                                  @else
+                                                    <li class="style-page with-sub-menu hover">
+                                                    <p class="close-menu"></p>
+                                                    @if(count($menu->get_pages)>1)
+
+                                                    @foreach($menu->get_pages as $page)
+                                                      <a class="clearfix">
+                                                      <strong>
+                                                      {{$menu->name}}
+                                                      </strong>
+                                                      <b class="caret"></b>
+                                                      </a>
+                                                      <div class="sub-menu" style="width: 40%;">
+                                                        <div class="content" >
+                                                          <div class="row">
+                                                            <div class="col-md-6">
+                                                              <ul class="row-list">
+                                                                <li><a class="subcategory_item" href="faq.html">FAQ</a></li>
+                                                                <li><a class="subcategory_item" href="sitemap.html">Site Map</a></li>
+                                                                <li><a class="subcategory_item" href="contact.html">Contact us</a></li>
+                                                                <li><a class="subcategory_item" href="banner-effect.html">Banner Effect</a></li>
+                                                              </ul>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                              <ul class="row-list">
+                                                                <li><a class="subcategory_item" href="about-us.html">About Us 1</a></li>
+                                                                <li><a class="subcategory_item" href="about-us-2.html">About Us 2</a></li>
+                                                                <li><a class="subcategory_item" href="about-us-3.html">About Us 3</a></li>
+                                                                <li><a class="subcategory_item" href="about-us-4.html">About Us 4</a></li>
+                                                              </ul>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    @endforeach
+                                                    @else
+                                                     <a href="{{ url($menu->slug) }}" class="clearfix">
+                                                      <strong>
+                                                      {{$menu->name}}
+                                                      </strong>
+                                                      </a>
+                                                    @endif
+                                                  </li>
+
+
                                                   @endif
                                                 @endforeach
-                                                  <li class="deal-h5 hidden">
+
+
+                                                  <!-- <li class="deal-h5 hidden">
                                                     <p class="close-menu"></p>
                                                     <a href="#" class="clearfix">
                                                     <strong>
@@ -399,7 +448,7 @@
                                                     Today Deals
                                                     </strong>
                                                     </a>
-                                                  </li>
+                                                  </li> -->
                                                 </ul>
                                               </div>
                                             </div>

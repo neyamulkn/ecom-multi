@@ -8,9 +8,7 @@ Route::get('user/register', 'UserRegController@RegisterForm')->name('userRegiste
 Route::post('user/register', 'UserRegController@register')->name('userRegister');
 Route::get('user/logout', 'UserLoginController@logout')->name('userLogout');
 
-
-Route::get('get/city/{state_id?}', 'CheckoutController@get_city')->name('get_city');
-Route::get('get/area/{city_id?}', 'CheckoutController@get_area')->name('get_area');
+Route::get('checkout/get/city/{state_id?}', 'CheckoutController@get_city')->name('checkout.get_city');
 Route::post('user/shipping/register', 'CheckoutController@ShippingRegister')->name('shippingRegister');
 // get shipping address by shipping id
 Route::get('get/shipping/address/{shipping_id}', 'CheckoutController@getShippingAddress')->name('getShippingAddress');

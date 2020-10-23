@@ -14,14 +14,13 @@
 <script type="text/javascript" src="{{asset('frontend')}}/js/modernizr/modernizr-2.6.2.min.js"></script>
 <script type="text/javascript" src="{{asset('frontend')}}/js/minicolors/jquery.miniColors.min.js"></script>
 <script type="text/javascript" src="{{asset('frontend')}}/js/jquery.nav.js"></script>
-<script type="text/javascript" src="{{asset('frontend')}}/js/quickview/jquery.magnific-popup.min.js"></script> 
+<script type="text/javascript" src="{{asset('frontend')}}/js/quickview/jquery.magnific-popup.min.js"></script>
 <!-- Theme files
-    ============================================ -->
+   ============================================ -->
 <script type="text/javascript" src="{{asset('frontend')}}/js/themejs/application.js"></script>
 <script type="text/javascript" src="{{asset('frontend')}}/js/themejs/homepage.js"></script>
-<script type="text/javascript" src="{{asset('frontend')}}/js/themejs/custom_h1.js"></script>
-<script type="text/javascript" src="{{asset('frontend')}}/js/themejs/addtocart.js"></script>  
-
+<script type="text/javascript" src="{{asset('frontend')}}/js/themejs/custom_h3.js"></script>
+<script type="text/javascript" src="{{asset('frontend')}}/js/themejs/addtocart.js"></script>
 <script src="{{ mix('js/laravel-echo.js') }}"></script>
 <script src="{{ asset('js/parsley.min.js') }}"></script>
 <script src="{{ asset('frontend/js/typeahead.js') }}"></script>
@@ -87,7 +86,6 @@
         });
     } 
 
-
     $(document).on('hide.bs.modal','#quickviewModal', function () {
         $('#quickviewProduct').html('');
         $('.zoomContainer').html('');
@@ -97,7 +95,7 @@
 
 <script>
     $(document).ready(function () {
-      
+     
         document.getElementById('pageLoading').style.display = 'none';
       
         $('#searchKey').typeahead({

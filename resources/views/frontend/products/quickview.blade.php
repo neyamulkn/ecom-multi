@@ -138,10 +138,7 @@
                       </div>
                       <form action="{{route('cart.add')}}" id="addToCart" method="get"> 
                       <div class="product-box-desc">
-                        <div class="inner-box-desc">
-                          <div class="model"><span>Product Code: </span> Simple Product</div>
-                          <div class="reward"><span>Reward Points:</span> 400</div>
-                        </div>
+                       
                         <!-- //get feature attribute-->
                         @foreach ($product->get_features->where('attribute_id', '!=', null) as $feature)
                           <!-- show attribute name -->
