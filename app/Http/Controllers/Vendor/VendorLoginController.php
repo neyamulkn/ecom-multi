@@ -26,19 +26,20 @@ class VendorLoginController extends Controller
 
 
       $this->validate($request, [
-            'usernameOrEmail' => 'required',
+            'emailOrMobile' => 'required',
             'password' => 'required',
         ]);
 
-      $fieldType = filter_var($request->usernameOrEmail, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+      $fieldType = filter_var($request->emailOrMobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
 
-      // $vendor = Vendor::where($fieldType, $request->usernameOrEmail)->first();
-      // if (!empty($vendor) && ($vendor->status == 0 || $vendor->status == -1)) {
-      //     return back()->with('missmatch', 'Username/Password didn\'t match!');
-      // }
+      $vendor = Vendor::where($fieldType, $request->emailOrMobile)->first();
+       if (!empty($vendor) && ($vendor->status == 0 || $vendor->status == -1)) {
+           Toastr::error('Your account is deactivated');
+           return back()->with('error', 'Your account is deactivated');
+       }
 
 
-      if(Auth::guard('vendor')->attempt(array($fieldType => $request->usernameOrEmail, 'password' => $request->password)))
+      if(Auth::guard('vendor')->attempt(array($fieldType => $request->emailOrMobile, 'password' => $request->password)))
       {
         Toastr::success('Logged in success.');
         return redirect()->intended(route('vendor.dashboard'));

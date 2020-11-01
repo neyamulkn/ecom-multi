@@ -23,14 +23,17 @@ class ProductController extends Controller
 {
     use CreateSlug;
     // get product lists function
-    public function index()
+    public function index($status='')
     {
-        $products = Product::with(['get_category', 'get_subcategory'])->orderBy('id', 'desc')->paginate(15);
+        $products = Product::with(['get_category', 'get_subcategory']);
+        if($status){
+            $products->where('status', $status);
+        }
+        $products = $products->orderBy('id', 'desc')->paginate(15);
         return view('admin.product.product-lists')->with(compact('products'));
     }
-
     // Add new product
-    public function create()
+    public function upload()
     {
         $data['regions'] = State::orderBy('name', 'asc')->get();
         $data['categories'] = Category::where('parent_id', '=', null)->where('status', 1)->get();

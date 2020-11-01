@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="container">
-        <div id="pageLoading"></div>
+        <div id="dataLoading"></div>
         <div class="row" id="cart_summary">
             @include('frontend.carts.cart_summary') 
         </div>
@@ -34,7 +34,7 @@
 
 <script type="text/javascript">
     function cartUpdate(id){
-        document.getElementById('pageLoading').style.display = 'block';
+        document.getElementById('dataLoading').style.display = 'block';
         var qty = $('#qtyTotal'+id).val();
         if(parseInt(qty) && qty>0){
             $.ajax({
@@ -48,16 +48,16 @@
                         $('#cart_summary').html(data);
                         toastr.success('Quantity Update Successful');
                     }
-                    document.getElementById('pageLoading').style.display = 'none';
+                    document.getElementById('dataLoading').style.display = 'none';
                 },
                 error: function(jqXHR, exception) {
                     toastr.error('Internal server error.');
-                    document.getElementById('pageLoading').style.display = 'none';
+                    document.getElementById('dataLoading').style.display = 'none';
                 }
             });
         }else{
             toastr.error('Invalid Number.');
-            document.getElementById('pageLoading').style.display = 'none';
+            document.getElementById('dataLoading').style.display = 'none';
         }
     }    
 
@@ -65,13 +65,13 @@
         e.preventDefault(); 
         var coupon_code = $('#coupon_code').val();
        
-        document.getElementById('pageLoading').style.display = 'block';
+        document.getElementById('dataLoading').style.display = 'block';
         $.ajax({
             url:"{{route('coupon.apply')}}",
             method:"get",
             data:{ coupon_code:coupon_code },
             success:function(data){
-                document.getElementById('pageLoading').style.display = 'none';
+                document.getElementById('dataLoading').style.display = 'none';
                 if(data.status){
                     document.getElementById('couponSection').style.display = 'table-row';
                     $('#couponAmount').html(data.couponAmount);
@@ -83,7 +83,7 @@
             },
             error: function(jqXHR, exception) {
                 toastr.error('Internal server error.');
-                document.getElementById('pageLoading').style.display = 'none';
+                document.getElementById('dataLoading').style.display = 'none';
             }
         });
     });

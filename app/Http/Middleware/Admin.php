@@ -17,10 +17,8 @@ class Admin
     public function handle($request, Closure $next)
     {
         if (Auth::guard('admin')->check()) {
-            if (Auth::guard('admin')->user()->IsAdmin()){
-                return $next($request);
-            }
+            return $next($request);
         }
-        return redirect()->route('admin.dashboard')->with('unsuccess',"You don't have access to that section");
+        return redirect()->back()->with('unsuccess',"You don't have access to that section");
     }
 }

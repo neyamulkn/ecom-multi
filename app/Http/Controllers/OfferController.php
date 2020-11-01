@@ -27,9 +27,8 @@ class OfferController extends Controller
         if($data['offer']) {
             //set offer id in session for offer identify
             Session::put('offerId', $data['offer']->id);
-            $data['products'] = OfferProduct::join('products', 'offer_products.product_id', 'products.id')
+            $data['products'] = Product::join('offer_products', 'products.id', 'offer_products.product_id')
                 ->where('offer_id', $data['offer']->id)
-                ->where('products.status', 1)
                 ->inRandomOrder()
                 ->selectRaw('offer_discount, discount_type, offer_id, products.id,title,slug,selling_price,stock,feature_image')
                 ->groupBy('offer_products.id')

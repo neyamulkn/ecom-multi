@@ -1,4 +1,6 @@
 <?php  $services = App\Models\Services::where('status', 1)->orderBy('position', 'asc')->take(5)->get(); ?>
+<section class="section" style="background:{{$section->background_color}}">
+  <div class="container">
 <div class="row">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="block-service-home6">
@@ -18,3 +20,5 @@
     </div>
   </div>
 </div>
+</div>
+</section>

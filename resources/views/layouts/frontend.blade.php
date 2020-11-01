@@ -27,10 +27,7 @@
             <div id="app">
             <!-- Header Start -->
             @include('layouts.partials.frontend.header')
-            @if(Request::is('/'))
-            <div style="width: 100%;height: 100%;display: block;position: relative;">
-            <div id="pageLoading"></div></div>
-            @endif
+         
             <!-- Header End -->
             @yield('content')
             </div>
@@ -55,7 +52,7 @@
             <!-- login Modal -->
             @include('users.modal.login')
         @endif
-        <div class="back-to-top"><i class="fa fa-angle-up"></i></div>
+        <div class="back-to-top hidden-top"><i class="fa fa-angle-up"></i></div>
         @include('layouts.partials.frontend.scripts')
     </body>
 </html>

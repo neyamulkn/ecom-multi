@@ -30,12 +30,17 @@ use Symfony\Component\Console\Input\Input;
 class HomeController extends Controller
 {
 
-    //home page
-    public function index()
+    //home page function
+    public function index(Request $request)
     {
         $data = [];
         //get all homepage section
-        $data['sections'] = HomepageSection::where('status', 1)->orderBy('position', 'asc')->get();
+        $data['sections'] = HomepageSection::where('status', 1)->orderBy('position', 'asc')->paginate(5);
+        //check ajax request
+        if ($request->ajax()) {
+            $view = view('frontend.homepage.homesection', $data)->render();
+            return response()->json(['html'=>$view]);
+        }
         $data['sliders'] = Slider::where('status', 1)->where('type', 'homepage')->orderBy('position', 'asc')->get();
 
         return view('frontend.home')->with($data);
@@ -149,7 +154,7 @@ class HomeController extends Controller
                 $perPage = $request->perPage;
             }
 
-            $data['products'] = $products->where('status', 1)->paginate($perPage);
+            $data['products'] = $products->where('status', 'active')->paginate($perPage);
 
         }catch (\Exception $e){
 
@@ -169,7 +174,7 @@ class HomeController extends Controller
     //search products
     public function search(Request $request)
     {
-        $search = Product::where('products.status', 1);
+        $search = Product::where('products.status', 'active');
             if($request->q) {
                 $search->where('title', 'like', '%' . $request->q . '%');
             }
@@ -292,11 +297,13 @@ class HomeController extends Controller
     //disply product details by product id/slug
     public function product_details($slug)
     {
-        $data['product'] = Product::with('user:id,name','get_category:id,name','get_features')->where('slug', $slug)->where('status', 1)->first();
+        $data['product'] = Product::with('reviews.review_image_video', 'reviews.user:id,name,phato', 'reviews.review_comments.user', 'user:id,name','get_category:id,name','get_features')
+            ->where('slug', $slug)->first();
 
         if($data['product']) {
+
             $data['product']->increment('views'); // news view count
-            $data['related_products'] = Product::where('category_id', $data['product']->category_id)->where('id', '!=', $data['product']->id)->where('status', 1)->take(8)->get();
+            $data['related_products'] = Product::where('category_id', $data['product']->category_id)->where('id', '!=', $data['product']->id)->where('status', 'active')->take(8)->get();
 
             return view('frontend.products.product_details')->with($data);
         }else{

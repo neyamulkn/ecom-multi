@@ -1,7 +1,7 @@
 <thead>
 	<tr>
 		<th class="text-left name" colspan="2">Product Name</th>
-		<th class="text-center checkout-price">Price</th>
+		<th class="text-center">Price</th>
 		<th class="text-center quantity">Quantity</th>
 		<th class="text-right total">Total</th>
 	</tr>
@@ -33,7 +33,7 @@
             <small> {{$key}} : {{$value}} </small>
             @endforeach
         </td>
-		<td class="text-right price">{{$site['currency_symble']}}<span class="amount">{{$item->price}}</span></td>
+		<td class="text-center">{{$site['currency_symble']}}<span class="amount">{{$item->price}}</span></td>
 		<td class="text-left quantity">
 			<div class="input-group">
 				<input type="text" min="1" id="qtyTotal{{$item->id}}" onchange="cartUpdate({{$item->id}})" name="qtybutton" value="{{$item->qty}}" size="1" class="form-control">
@@ -75,7 +75,7 @@
                 	<div class="input-group">
 	                <input type="text" required name="coupon_code" id="coupon_code" value="{{Session::get('couponCode')}}" placeholder="Enter your coupon here" class="form-control">
 	                <span class="input-group-btn" style="display: block;">
-	                        <input style="padding: 9px;" type="submit" value="Apply Coupon" id="couponBtn" data-loading-text="Loading..." class="btn btn-primary">
+	                        <input style="padding: 7px;" type="submit" value="Apply Coupon" id="couponBtn" data-loading-text="Loading..." class="btn btn-primary">
 	                    </span>
 	                </div>
                 </form>

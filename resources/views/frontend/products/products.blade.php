@@ -11,7 +11,9 @@
             <h4><a href="{{ route('product_details', $product->slug) }}">{{Str::limit($product->title, 20)}}</a></h4>
             <div class="total-price clearfix">
                 <div class="price price-left">
-                     <label for="ratting5"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span></label><br/>
+                     <label for="ratting5">
+                       {{\App\Http\Controllers\HelperController::ratting(round($product->reviews->avg('ratting'), 1))}}
+                    </label><br/>
                     @php
                     $discount =  \App\Http\Controllers\OfferController::discount($product->id, Session::get('offerId'));
                 @endphp

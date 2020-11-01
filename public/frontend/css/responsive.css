@@ -1361,7 +1361,7 @@
         .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu .item-vertical.css-menu .sub-menu .content .categories .menu > ul li:before {
           display: none; }
           .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu .item-vertical.css-menu .sub-menu .content .categories .menu > ul li .main-menu {
-            text-transform: uppercase;
+           
             margin: 0px;font-weight: 600;
             margin-left: -12px; }
           .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu .item-vertical.css-menu .sub-menu .content .categories .menu > ul li a:hover {
@@ -1387,9 +1387,9 @@
           margin: 0;
           margin-right: 30px;
           font-family: Open Sans, sans-serif;
-          text-transform: uppercase;
+
           background: transparent !important;
-          font-size: 13px; }
+          font-size: 12px; }
           .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu > li > a strong {
             color: #222;
             font-weight: normal; }
@@ -2108,7 +2108,7 @@
         .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu .item-vertical.css-menu .sub-menu .content .categories .menu > ul li:before {
           display: none; }
           .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu .item-vertical.css-menu .sub-menu .content .categories .menu > ul li .main-menu {
-            text-transform: uppercase;
+           
             margin: 0 0 10px; }
           .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu .item-vertical.css-menu .sub-menu .content .categories .menu > ul li a:hover {
             color: #ff5e00; }
@@ -2133,7 +2133,7 @@
           margin-right: 30px;
           padding: 3px 0;
           font-family: Open Sans, sans-serif;
-          text-transform: uppercase;
+        
           background: transparent !important;
           font-size: 13px; }
           .megamenu-style-dev .navbar-default .vertical .vertical-wrapper ul.megamenu > li > a strong {

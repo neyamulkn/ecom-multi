@@ -73,6 +73,9 @@ class Handler extends ExceptionHandler
             case 'vendor':
                 $login = 'vendorLoginForm';
                 break;
+            case 'staff':
+                $login = 'staffLoginForm';
+                break;
             default:
                 $login = 'login';
                 break;

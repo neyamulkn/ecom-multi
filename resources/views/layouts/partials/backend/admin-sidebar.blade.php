@@ -22,8 +22,8 @@
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cart-plus"></i><span class="hide-menu">Product </span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{route('product.create')}}">Add New Product</a></li>
-                        <li><a href="{{route('product.list')}}">Manage Product</a></li>
+                        <li><a href="{{route('admin.product.upload')}}">Add New Product</a></li>
+                        <li><a href="{{route('admin.product.list')}}">Manage Product</a></li>
                        
                     </ul>
                 </li>

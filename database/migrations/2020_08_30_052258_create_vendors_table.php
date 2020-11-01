@@ -15,13 +15,13 @@ class CreateVendorsTable extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->id();
-            $table->integer('role_id')->default(3);
             $table->string('shop_name');
-            $table->string('username');
+            $table->string('slug');
+            $table->string('username')->nullable();
             $table->string('shop_dsc')->nullable();
             $table->decimal('balance')->default(0.00);
             $table->string('email');
-            $table->string('phone');
+            $table->string('mobile');
             $table->string('country', 25)->nullable();
             $table->string('state', 25)->nullable();
             $table->string('city', 25)->nullable();
@@ -29,7 +29,7 @@ class CreateVendorsTable extends Migration
             $table->string('address')->nullable();
             $table->integer('products')->default(0);
             $table->dateTime('expire_date')->nullable();
-            $table->string('logo')->default('default.png');
+            $table->string('logo')->default('logo.png');
             $table->string('password', 75);
             $table->string('temp_password', 15)->nullable();
             $table->string('reset_key', 75)->nullable();
@@ -45,6 +45,9 @@ class CreateVendorsTable extends Migration
             $table->integer('email_sent')->default(0);
             $table->integer('sms_sent')->default(0);
             $table->integer('vsent')->default(0);
+            $table->tinyInteger('cash_on_delivery')->default(0);
+            $table->string('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
             $table->softDeletes();
             $table->tinyInteger('status')->default(1);
             $table->string('remember_token')->nullable();

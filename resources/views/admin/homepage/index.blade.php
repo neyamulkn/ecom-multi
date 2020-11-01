@@ -3,10 +3,10 @@
 
 @section('css-top')
     <link href="{{asset('assets')}}/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
-  
+
 @endsection
 @section('css')
-  
+
     <style type="text/css">
         .select2-container--default .select2-selection--multiple .select2-selection__rendered{height: 100px!important}
     </style>
@@ -53,16 +53,18 @@
                                     <table  class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Title</th>
+                                                <th>Section Title</th>
+                                                <th>Section Type</th>
                                                 <th>Is Default</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
-                                        </thead> 
+                                        </thead>
                                         <tbody id="positionSorting">
                                             @foreach($homepageSections as $data)
-                                            <tr  id="item{{$data->id}}">
+                                            <tr style="background:{{$data->background_color}};color: {{$data->text_color}}" id="item{{$data->id}}">
                                                 <td>{{$data->title}}</td>
+                                                <td>{{str_replace('_', ' ', $data->type)}}</td>
                                                <td><span class="label label-info"> {!!($data->is_default == 1) ? 'Default' : 'Custom' !!}</span>
                                                 </td>
                                                 <td>
@@ -103,7 +105,7 @@
                   <!-- Modal content-->
                   <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Create homepage section</h4>
+                        <h4 class="modal-title">Create Homepage section</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body form-row">
@@ -113,37 +115,39 @@
                                 <div class="form-body">
                                     <!--/row-->
                                     <div class="row justify-content-md-center">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="required" for="name">Section Title</label>
                                                 <input  name="title" id="name" value="{{old('title')}}" required="" type="text" class="form-control">
                                             </div>
                                         </div>
-
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="required" for="category">Product Categories</label>
-                                                <select onchange="getAllProducts(this.value)"  required="required" id="category" class="form-control custom-select">
-                                                    <option value="">Select category</option>
-                                                    @foreach($categories as $category)
-                                                    <option value="{{$category->id}}" {{ (old('category') == $category->id) ? 'selected' : '' }}> {{$category->name}}</option>
-                                                    @endforeach
+                                                <label for="name required">Select Type</label>
+                                                <select required onchange="sectionType(this.value)" name="section_type" class="form-control">
+                                                    <option value="">Selct one</option>
+                                                    <option value="banner">Banner</option>
+                                                    <option  value="category">Product Category</option>
+                                                    <option  value="section">Products</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="homepage">Select Product</label>
-                                                <select required onchange="getProduct(this.value)" id="showAllProducts" class="form-control custom-select" style="width: 100%"></select>
+                                                <label class="required" for="name">Bacground Color</label>
+                                                <input name="background_color" value="#ffffff" class="form-control" onfocus="(this.type='color')">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="getProducts">Selected Products</label>
-                                                <select required name="product_id[]" id="showSingleProduct" class="select2 m-b-10 select2-multiple" style="width: 100%" multiple="multiple" data-placeholder="Choose"></select>
+                                                <label class="required" for="name">Text Color</label>
+                                                <input name="text_color" value="#000000" class="form-control" onfocus="(this.type='color')">
                                             </div>
                                         </div>
+
+                                        <div class="col-md-12" id="showSection"></div>
+
                                     </div>
 
                                     <div class="row justify-content-md-center">
@@ -198,7 +202,7 @@
 @section('js')
 
     <script src="{{asset('assets')}}/node_modules/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
- 
+
     <!-- end - This is for export functionality only -->
     <script>
         $(".select2").select2();
@@ -206,8 +210,24 @@
 
     <script type="text/javascript">
 
+
+    function sectionType(sectionType){
+        var output = '';
+        if(sectionType== 'banner'){
+            output = '<div class="col-md-12"><div class="form-group"> <label class="required" for="product_id">Select Banner</label> <select name="product_id" required="required" id="product_id" class="form-control custom-select"> <option value="">Select banner</option>@foreach($banners as $banner)<option value="{{$banner->id}}" > {{$banner->title}}</option>@endforeach</select> </div></div>';
+        }else if(sectionType== 'category'){
+            output = '<div class="col-md-12"><div class="form-group"> <label class="required" for="product_id">Product Categories</label> <select name="product_id" required="required" id="product_id" class="form-control custom-select"> <option value="">Select category</option>@foreach($categories as $category)<option value="{{$category->id}}" {{ (old("category") == $category->id) ? "selected" : '' }}> {{$category->name}}</option>@endforeach</select> </div></div>';
+
+        }else if(sectionType== 'section'){
+            output += '<div class="col-md-12"><div class="form-group"> <label class="required" for="category">Product Categories</label> <select onchange="getAllProducts(this.value)"  required="required" id="category" class="form-control custom-select"> <option value="">Select category</option>@foreach($categories as $category)<option value="{{$category->id}}" {{ (old("category") == $category->id) ? "selected" : '' }}> {{$category->name}}</option>@endforeach</select> </div></div><div class="col-md-12"> <div class="form-group"><label for="homepage">Select Product</label><select required onchange="getProduct(this.value)" id="showAllProducts" class="form-control custom-select" style="width: 100%"></select></div></div><div class="col-md-12"><div class="form-group"><label for="getProducts">Selected Products</label><select required name="product_id[]" id="showSingleProduct" class="select2 m-b-10 select2-multiple" style="width: 100%" multiple="multiple" data-placeholder="Choose"></select></div></div>';
+        }else{
+
+        }
+        $('#showSection').html(output);
+    }
+
     function edit(id){
-          
+
         var  url = '{{route("admin.homepageSection.edit", ":id")}}';
         url = url.replace(':id',id);
         $.ajax({
@@ -227,28 +247,28 @@
     function getAllProducts(id){
 
         var  url = '{{route("admin.getProductsByField", "category_id")}}';
-     
+
         $.ajax({
             url:url,
             method:"get",
             data:{id:id},
             success:function(data){
-                
+
                 if(data){
                     $("#showAllProducts").html(data);
-                   
+
                 }else{
                     $("#showAllProducts").html('<option>Product not found</option>');
                 }
             }
         });
-    } 
+    }
 
     // get homepage Sourch
     function getProduct(id){
 
         var  url = '{{route("admin.getSingleProduct")}}';
-     
+
         $.ajax({
             url:url,
             method:"get",
@@ -260,7 +280,7 @@
                 }
             }
         });
-    }   
+    }
         // if occur error open model
         @if($errors->any())
             $("#{{Session::get('submitType')}}").modal('show');

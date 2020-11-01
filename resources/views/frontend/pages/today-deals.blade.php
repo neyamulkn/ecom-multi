@@ -18,11 +18,11 @@
     @include('frontend.sliders.slider2')
     <div class="container">
         <div class="row">
-         
-            <div id="content" class="col-md-12 col-sm-12 col-xs-12" >
+            
+            <h1 style="padding-top: 10px"> Today Deals</h1>
+            <div class="col-md-12 col-sm-12 col-xs-12" >
 
-                <div id="pageLoading"></div>
-                
+            
                 <div class="products-category">
                      
                     @if(count($products)>0)

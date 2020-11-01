@@ -1,13 +1,15 @@
 <?php
 
-Route::get('/login', 'AdminLoginController@LoginForm')->name('adminLoginForm');
-Route::post('/login', 'AdminLoginController@login')->name('adminLogin');
-Route::get('/register', 'AdminLoginController@RegisterForm')->name('adminRegisterForm');
-Route::post('/register', 'AdminLoginController@register')->name('adminRegister');
-Route::get('/logout', 'AdminLoginController@logout')->name('adminLogout');
+use Illuminate\Support\Facades\Route;
+
+Route::get('/login', 'Admin\AdminLoginController@LoginForm')->name('adminLoginForm');
+Route::post('/login', 'Admin\AdminLoginController@login')->name('adminLogin');
+Route::get('/register', 'Admin\AdminLoginController@RegisterForm')->name('adminRegisterForm');
+Route::post('/register', 'Admin\AdminLoginController@register')->name('adminRegister');
+Route::get('/logout', 'Admin\AdminLoginController@logout')->name('adminLogout');
 
 // authenticate routes & check role admin
-Route::group(['middleware' => ['auth:admin', 'admin']], function(){
+Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], function(){
 	Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
 	Route::get('category', 'CategoryController@category')->name('category');
 	Route::get('get/category', 'CategoryController@getcategory')->name('getcategory');
@@ -18,7 +20,7 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 
 	// sub category routes
 	Route::get('subcategory', 'CategoryController@subcategory')->name('subcategory');
-	
+
 	Route::post('subcategory/store', 'CategoryController@subcategory_store')->name('subcategory.store');
 	Route::get('subcategory/list', 'CategoryController@subcategory_index')->name('subcategory.list');
 	Route::get('subcategory/edit/{id}', 'CategoryController@subcategory_edit')->name('subcategory.edit');
@@ -36,7 +38,7 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('subchild/category/delete/{id}', 'CategoryController@subchildcategory_delete')->name('subchildcategory.delete');
 
 	Route::get('category/sorting', 'CategoryController@categorySorting')->name('categorySorting');
-	
+
 		// productAttribute routes
 	Route::get('product/attribute', 'ProductAttributeController@attribute_create')->name('productAttribute');
 	Route::post('product/attribute/store', 'ProductAttributeController@attribute_store')->name('productAttribute.store');
@@ -80,12 +82,12 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('brand/delete/{id}', 'BrandController@delete')->name('brand.delete');
 
 	// product routes
-	Route::get('product/create', 'ProductController@create')->name('product.create');
-	Route::post('product/store', 'ProductController@store')->name('product.store');
-	Route::get('product/list', 'ProductController@index')->name('product.list');
-	Route::get('product/edit/{id}', 'ProductController@edit')->name('product.edit');
-	Route::post('product/update', 'ProductController@update')->name('product.update');
-	Route::get('product/delete/{id}', 'ProductController@delete')->name('product.delete');
+	Route::get('product/upload', 'ProductController@upload')->name('admin.product.upload');
+	Route::post('product/store', 'ProductController@store')->name('admin.product.store');
+	Route::get('product/{status?}', 'ProductController@index')->name('admin.product.list');
+	Route::get('product/edit/{id}', 'ProductController@edit')->name('admin.product.edit');
+	Route::post('product/update', 'ProductController@update')->name('admin.product.update');
+	Route::get('product/delete/{id}', 'ProductController@delete')->name('admin.product.delete');
 	//get highlight popup
 	Route::get('product/highlight//popup/{id}', 'ProductController@highlight')->name('product.highlight');
  	//add/remove highlight product
@@ -111,7 +113,7 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('homepage/section/delete/{id}', 'HomepageSectionController@delete')->name('admin.homepageSection.delete');
 
 	Route::get('homepage/section/get/single-product', 'HomepageSectionController@getSingleProduct')->name('admin.getSingleProduct');
-	
+
 	Route::get('homepage/section/sorting', 'HomepageSectionController@homepageSectionSorting')->name('admin.homepageSectionSorting');
 
 
@@ -133,11 +135,11 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('page/list', 'PageController@index')->name('page.list');
 	Route::get('page/{id}/edit', 'PageController@edit')->name('page.edit');
 	Route::post('page/update/{id}', 'PageController@update')->name('page.update');
-	Route::get('page/delete/{id}', 'PageController@delete')->name('page.delete');	
+	Route::get('page/delete/{id}', 'PageController@delete')->name('page.delete');
 	Route::get('page/slug/create', 'PageController@getSlug')->name('page.slug');
 
-	Route::get('page/status/{id}', 'PageController@status')->name('page.status');	
-	Route::get('page/homepage-status/{id}', 'PageController@homepageStatus')->name('page.homepageStatus');	
+	Route::get('page/status/{id}', 'PageController@status')->name('page.status');
+	Route::get('page/homepage-status/{id}', 'PageController@homepageStatus')->name('page.homepageStatus');
 
 
 	// menu routes
@@ -168,15 +170,15 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('designation/list', 'DesignationController@index')->name('designation.list');
 	Route::get('designation/{id}/edit', 'DesignationController@edit')->name('designation.edit');
 	Route::post('designation/update', 'DesignationController@update')->name('designation.update');
-	Route::get('designation/delete/{id}', 'DesignationController@delete')->name('designation.delete');	
-	
+	Route::get('designation/delete/{id}', 'DesignationController@delete')->name('designation.delete');
+
 	// staff routes
 	Route::get('staff/create', 'StaffController@create')->name('staff.create');
 	Route::post('staff/store', 'StaffController@store')->name('staff.store');
 	Route::get('staff/list', 'StaffController@index')->name('staff.list');
 	Route::get('staff/{id}/edit', 'StaffController@edit')->name('staff.edit');
 	Route::post('staff/update', 'StaffController@update')->name('staff.update');
-	Route::get('staff/delete/{id}', 'StaffController@delete')->name('staff.delete');	
+	Route::get('staff/delete/{id}', 'StaffController@delete')->name('staff.delete');
 	// role routes
 	Route::get('role/create', 'RoleController@create')->name('role.create');
 	Route::post('role/store', 'RoleController@store')->name('role.store');
@@ -188,12 +190,12 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	// banner routes
 	Route::get('banner/list/{type?}', 'BannerController@index')->name('banner');
 	Route::post('banner/store', 'BannerController@store')->name('banner.store');
-	
+
 	Route::get('banner/{id}/edit', 'BannerController@edit')->name('banner.edit');
 	Route::post('banner/update', 'BannerController@update')->name('banner.update');
 	Route::get('banner/delete/{id}', 'BannerController@delete')->name('banner.delete');
 	Route::get('banner/image/delete', 'BannerController@bannerImage_delete')->name('bannerImage_delete');
-	
+
 	// service routes
 	Route::post('service/store', 'ServicesController@store')->name('service.store');
 	Route::get('service/list', 'ServicesController@index')->name('service.list');
@@ -209,7 +211,7 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::get('coupon/delete/{id}', 'CouponController@delete')->name('coupon.delete');
 
 	Route::get('shipping/method', 'ShippingChargeController@shipping_method')->name('shipping');
-	
+
 	Route::get('shipping/method', 'ShippingChargeController@shipping_method')->name('shipping');
 
 	//location all routes
@@ -245,7 +247,6 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 
 
 	Route::get('order/{status?}', 'AdminOrderController@orderHistory')->name('admin.orderList');
-	Route::get('order/search/{status?}', 'AdminOrderController@orderHistory')->name('orderSearch');
 	Route::get('order/invoice/{order_id?}', 'AdminOrderController@orderInvoice')->name('admin.orderInvoice');
 	Route::get('order/return/{order_id?}', 'AdminOrderController@orderReturn')->name('admin.orderReturn');
 	//change order status

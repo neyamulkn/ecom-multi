@@ -2,7 +2,7 @@
 @section('title', 'Offers  | '. Config::get('siteSetting.site_name') )
 
 @section('content')
-    <div id="pageLoading"></div>
+   
     <!-- Main Container  -->
     <div class="breadcrumbs">
         <div class="container">
@@ -16,7 +16,7 @@
     @include('frontend.sliders.slider2')
     @if(count($offers)>0)
         @foreach($offers as $offer)
-        <section class="offers" style="margin: 10px 0;padding: 10px 0; background:{{$offer->background_color}}">
+        <section class="offers" style="padding: 10px 0; background:{{$offer->background_color}}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -50,7 +50,7 @@
                                                         <h4><a href="{{ route('product_details', $products->product->slug) }}">{{Str::limit($products->product->title, 20)}}</a></h4>
                                                         <div class="total-price clearfix" style="visibility: hidden; display: block;">
                                                             <div class="price price-left">
-                                                                <label for="ratting5"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span></label><br/>
+                                                                <label for="ratting5">{{\App\Http\Controllers\HelperController::ratting(round($products->product->reviews->avg('ratting'), 1))}}</label><br/>
                                                             @php
                                                                 $discount =  \App\Http\Controllers\OfferController::discount($products->product->id, Session::get('offerId'), 'offerpage');
                                                             @endphp

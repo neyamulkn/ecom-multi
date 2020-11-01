@@ -13,10 +13,10 @@
 	</div>
 	<div class="right-block">
 	   	<div class="caption">
-	      	<h4><a href="{{ route('product_details', $product->slug) }}">{{Str::limit($product->title, 20)}}</a></h4>
+	      	<h4><a href="{{ route('product_details', $product->slug) }}">{{Str::limit($product->title, 40)}}</a></h4>
 	      	<div class="total-price clearfix" style="visibility: hidden; display: block;">
 	        	<div class="price price-left">
-                    <label for="ratting5"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span></label><br/>
+                    <label for="ratting5">{{\App\Http\Controllers\HelperController::ratting(round($product->reviews->avg('ratting'), 1))}}</label><br/>
                 @if($product->discount)
                     <span class="price-new">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price-($product->discount*$product->selling_price)/100 }}</span>
                     <span class="price-old">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span>

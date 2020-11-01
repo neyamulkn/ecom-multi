@@ -3,6 +3,9 @@
 @section('css')
 
     <link href="{{asset('assets')}}/node_modules/dropify/dist/css/dropify.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="{{asset('css')}}/pages/bootstrap-switch.css" rel="stylesheet">
+
     <style type="text/css">
         .dropify_image{
             position: absolute;top: -12px!important;left: 12px !important; z-index: 9; background:#fff!important;padding: 3px;
@@ -11,6 +14,7 @@
             height: 100px !important;
         }
         svg{width: 20px}
+     
     </style>
 
     <link href="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet">
@@ -38,7 +42,7 @@
                                 <li class="breadcrumb-item"><a href="javascript:void(0)">Product</a></li>
                                 <li class="breadcrumb-item active">list</li>
                             </ol>
-                            <a class="btn btn-info d-none d-lg-block m-l-15" href="{{ route('product.create') }}"><i
+                            <a class="btn btn-info d-none d-lg-block m-l-15" href="{{ route('admin.product.upload') }}"><i
                                     class="fa fa-plus-circle"></i> Add New Product</a>
                         </div>
                     </div>
@@ -50,10 +54,11 @@
                 <div class="row">
                     <!-- Column -->
                     <div class="col-lg-12">
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive" style="overflow-x: initial !important;overflow-y: initial !important;">
-                                    <table  class="table color-table muted-table" >
+                                    <table  class="table table-striped" >
                                         <thead>
                                             <tr>
                                                 <th>Photo</th>
@@ -62,6 +67,7 @@
                                                 <th>Stock</th>
                                                 <th>Sales</th>
                                                 <th>Price</th>
+                                                <th>Approved</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -77,13 +83,21 @@
                                                     <td>{{($product->stock) ? $product->stock : 0 }}</td>
                                                     <td>{{ $product->sales }}</td>
                                                     <td>{{$site['currency_symble']}}{{$product->purchase_price}}</td>
-
                                                     <td>
-                                                        <div class="custom-control custom-switch">
-                                                          <input  name="status" onclick="satusActiveDeactive('products', {{$product->id}})"  type="checkbox" {{($product->status == 1) ? 'checked' : ''}}  type="checkbox" class="custom-control-input" id="status{{$product->id}}">
-                                                          <label style="padding: 5px 12px" class="custom-control-label" for="status{{$product->id}}"></label>
-                                                    
+                                                        <div class="bt-switch">
+                                                            <input  onchange="approveUnapprove('products', '{{$product->id}}')" type="checkbox" {{($product->status != 'unapprove') ? 'checked' : ''}} data-on-color="success" data-off-color="danger" data-on-text="InApproved" data-off-text="UnApproved"> 
+                                                       
                                                         </div>
+                                                    </td>
+                                                    <td>
+                                                        @if($product->status != 'unapprove')
+                                                        <div class="custom-control custom-switch">
+                                                          <input  name="status" onclick="satusActiveDeactive('products', {{$product->id}})"  type="checkbox" {{($product->status == 1 || $product->status == 'active') ? 'checked' : ''}}  type="checkbox" class="custom-control-input" id="status{{$product->id}}">
+                                                          <label style="padding: 5px 12px" class="custom-control-label" for="status{{$product->id}}"></label>
+                                                        </div>
+                                                        @else
+                                                            <span class="label label-warning"> Un Approved </span>
+                                                        @endif
                                                     </td>
                                                     
                                                     <td>
@@ -98,7 +112,7 @@
                                                             <a onclick="producthighlight({{ $product->id }})" class="dropdown-item"  href="javascript:void(0)"><i class="ti-pin-alt"></i> Highlight</a></span>
                                                             <span title="Manage Gallery Images" data-toggle="tooltip">
                                                             <a onclick="setGallerryImage({{ $product->id }})" data-toggle="modal" data-target="#GallerryImage" class="dropdown-item" href="javascript:void(0)"><i class="ti-image"></i> Gallery Images</a></span>
-                                                            <span title="Delete" data-toggle="tooltip"><button   data-target="#delete" onclick='deleteConfirmPopup("{{route("product.delete", $product->id)}}")'  data-toggle="modal" class="dropdown-item" ><i class="ti-trash"></i> Delete Product</button></span>
+                                                            <span title="Delete" data-toggle="tooltip"><button   data-target="#delete" onclick='deleteConfirmPopup("{{route("admin.product.delete", $product->id)}}")'  data-toggle="modal" class="dropdown-item" ><i class="ti-trash"></i> Delete Product</button></span>
                                                         </div>
                                                     </div>                                                  
                                                     </td>
@@ -292,4 +306,28 @@
     });
     </script>
 
+        <!-- bt-switch -->
+    <script src="{{asset('assets')}}/node_modules/bootstrap-switch/bootstrap-switch.min.js"></script>
+    <script type="text/javascript">
+    $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+    var radioswitch = function() {
+        var bt = function() {
+            $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioState")
+            }), $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+            }), $(".radio-switch").on("switch-change", function() {
+                $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+            })
+        };
+        return {
+            init: function() {
+                bt()
+            }
+        }
+    }();
+    $(document).ready(function() {
+        radioswitch.init()
+    });
+    </script>
 @endsection

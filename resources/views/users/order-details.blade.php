@@ -1,7 +1,69 @@
 @extends('layouts.frontend')
 @section('title', 'Order information | '. Config::get('siteSetting.site_name') )
 @section('css')
+    <style type="text/css">
 
+        .orderprogressbar {
+          counter-reset: step;
+        }
+
+        .orderprogressbar li {
+          position: relative;
+          list-style: none;
+          float: left;
+          width: 19.33%;
+          text-align: center;
+        }
+
+        /* Circles */
+        .orderprogressbar li:before {
+          content: counter(step);
+          counter-increment: step;
+          width: 40px;
+          height: 40px;
+          border: 1px solid #2979FF;
+          display: block;
+          text-align: center;
+          margin: 0 auto 10px auto;
+          border-radius: 50%;
+          background-color: #ddd;
+           
+          /* Center # in circle */
+          line-height: 39px;
+        }
+
+        .orderprogressbar li:after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 5px;
+          background: #ddd ;
+          top: 20px; /*half of height Parent (li) */
+          left: -50%;
+          z-index: -1;
+        }
+
+        .orderprogressbar li:first-child:after {
+          content: none;
+        }
+
+        .orderprogressbar li.active:before {
+          background: #0f7d0f;
+          content: "✔";  
+          color: #fff;
+        }
+        .orderprogressbar li.orderprocess:before {
+          background: orange;
+          content: "\039F";  
+        }
+
+        .orderprogressbar li.active + li:after {
+          background: #0f7d0f;
+        }
+
+       
+        .title{border-bottom: 1px solid #ccc;padding-bottom:10px;}
+    </style>
 @endsection
 @section('content')
   <div class="breadcrumbs">
@@ -13,20 +75,45 @@
       </div>
   </div>
 	<!-- Main Container  -->
-	<div class="main-container container">
+	<div class="container">
 		
 		<div class="row">
 			@include('users.inc.sidebar')
 			<!--Middle Part Start-->
 			<div id="content" class="col-md-9 sticky-content">
+				<h2 class="title"><a href="{{ route('user.orderHistory') }}"> <i class="fa fa-angle-left"></i>  Order Details #{{ $order->order_id }}</a></h2>
 
-				<h2 class="title">Order Information</h2>
+				<div style="width: 100%; display: inline-block;">
+				  <ul class="orderprogressbar">
+				  	@if($order->payment_method == 'pending')
+				    <li class="@if('payment_method' != 'cod') orderprocess @endif">Payment @if('cod' == 'cod') Pending @endif</li>
+				    @endif
+				   
+				    <li  @if($order->order_status == 'pending' && $order->payment_method != 'pending') class="orderprocess" @endif @if($order->order_status != 'pending' && $order->payment_method != 'pending') class="active" @endif >Order placed</li>
 
+				    @if($order->order_status != 'cancel')
+				    <li  @if($order->order_status == 'on-review') class="orderprocess" @endif  @if($order->order_status == 'on-review' || $order->order_status == 'on-review' || $order->order_status == 'complete') class="active" @endif>Processing</li>
+
+				    <li  @if($order->order_status == 'complete') class="orderprocess" @endif class="">On Delivery</li>
+				    <li>Complete</li>
+				  	@else
+				    <li class="active">Cancel</li>
+				    @endif
+				  </ul>
+				</div>
+				
 				<table class="table table-bordered table-hover">
 					<thead>
 						<tr>
-							<td colspan="2" class="text-left">Order Details</td>
 							
+							@if($order->payment_method == 'pending')
+							<td colspan="2">
+								<span  class="text-left">Order Details</span> 
+								<span style="float: right;" class="text-right"> Payment Pending <a style="margin-top: 5px;" href="{{route('order.paymentGateway', $order->order_id)}}" class="btn btn-danger">Pay Now</a></span>
+							</td>
+							@else
+							<td colspan="2" class="text-left">Order Details</td>
+							@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -94,6 +181,7 @@
                                          
 							<tr>
 								<td class="text-left">
+									<img width="50" src="{{ asset('upload/images/product/thumb/'.$item->product->feature_image) }}">
 									 <a href="{{route('product_details', $item->product->slug)}}">{{Str::limit($item->product->title, 50)}}</a><br>
                                     @foreach(json_decode($item->attributes) as $key=>$value)
                                     <small> {{$key}} : {{$value}} </small>
@@ -103,8 +191,35 @@
 								<td class="text-right">{{$item->qty}}</td>
 								<td class="text-right">{{$order->currency_sign. $item->price}}</td>
 								<td class="text-right">{{$order->currency_sign. $item->price*$item->qty}}</td>
-								<td style="white-space: nowrap;" class="text-right"> <a onclick="addToCart({{$item->product_id}})" class="btn btn-primary" title="" data-toggle="tooltip" data-original-title="Reorder"><i class="fa fa-shopping-cart"></i></a>
-									<a class="btn btn-danger" title="" data-toggle="tooltip" href="{{route('user.orderReturn', $order->order_id)}}" data-original-title="Return"><i class="fa fa-reply"></i></a>
+							
+								<td style="width: 150px; white-space: nowrap;">
+									
+                                    <ul>
+                                    	@if($item->shipping_status == 'deliverd')
+                                    	<li><a title="Cancel Order" data-toggle="tooltip" data-original-title=" Write Product Review"><i class="fa fa-edit"></i> Write Review</a></li>
+                                    	@endif
+
+                                        <li><a onclick="addToCart({{$item->product_id}})" title="" data-toggle="tooltip" data-original-title="Reorder"><i class="fa fa-shopping-cart"></i> Reorder</a></li>
+                                        
+		                        	@if($item->shipping_status != 'cancel')
+
+		                        		@if($item->product->refundable == 1)
+			                        		<?php 
+						                        $current_time = strtotime(Carbon\Carbon::parse(now())->format('Y-m-d'));
+						                        $refund_time = strtotime(Carbon\Carbon::parse($item->shipping_date)->addDays(7)->format('Y-m-d'));
+			                        		?>
+			                        		@if($current_time<=$refund_time && $item->shipping_status == 'deliverd')
+	                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', $order->order_id)}}" data-original-title="Return ? Replace Order"><i class="fa fa-reply"></i> Return / Replace <br/> Eligible til {{Carbon\Carbon::parse($item->shipping_date)->addDays(7)->format('d m, Y')}} </a></li>
+	                                      	
+	                                      	@else
+	                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', $order->order_id)}}" data-original-title="Return"><i class="fa fa-reply"></i> Return / Replace</a></li>
+	                                      	@endif
+                                      	@endif
+
+                                        <li><a title="Cancel Order" data-toggle="tooltip" data-original-title=" Cancel order"><i class="fa fa-trash"></i> Cancel</a></li>
+                                    @endif
+                                    </ul>
+                                   
 								</td>
 							</tr>
 							@endforeach

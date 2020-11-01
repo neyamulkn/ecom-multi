@@ -19,7 +19,7 @@
 	</div>
 	<!-- Main Container  -->
 	<div class="container">
-		<div id="pageLoading"></div>
+		<div id="dataLoading"></div>
 		<div class="row">
 			<div id="content" class="col-sm-12">
 				@if(Session::has('alert'))
@@ -59,7 +59,7 @@
                                            
                                               <div class="row">
                                                 <div class="col-lg-8 col-md-8">
-                                                <div class='col-lg-12 col-md-12 col-xs-12 card required'> <span class='control-label'>Card Number</span> <input  autocomplete='off' placeholder='Enter card number' class='form-control card-number' size='20' type='text'> </div> <div class='col-xs-3  cvc required'> <span class='control-label'>CVC</span> <input autocomplete='off' class='form-control card-cvc' maxlength="3" placeholder='ex. 311' size='4' type='text'> </div> <div class='col-xs-4 expiration required'> <span class='control-label'>Month</span>  <input maxlength="2" class='form-control card-expiry-month' placeholder='MM' size='2' type='text'> </div> <div class='col-xs-5 expiration required'> <span class='control-label'>Expiration Year</span> <input class='form-control card-expiry-year' placeholder='YYYY'  size='4' maxlength="4" type='text'> </div>
+                                                <div class='col-lg-12 col-md-12 col-xs-12 card '> <span class='control-label required'>Card Number</span> <input  autocomplete='off' placeholder='Enter card number' class='form-control card-number' size='20' type='text'> </div> <div class='col-xs-3  cvc '> <span class='control-label required'>CVC</span> <input autocomplete='off' class='form-control card-cvc' maxlength="3" placeholder='ex. 311' size='4' type='text'> </div> <div class='col-xs-4 expiration '> <span class='required control-label'>Month</span>  <input maxlength="2" class='form-control card-expiry-month' placeholder='MM' size='2' type='text'> </div> <div class='col-xs-5 expiration '> <span class='control-label required'>Expiration Year</span> <input class='form-control card-expiry-year' placeholder='YYYY'  size='4' maxlength="4" type='text'> </div>
                                               </div>
                                             </div>
                       

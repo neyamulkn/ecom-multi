@@ -4,7 +4,7 @@
 
 @endsection
 @section('content')
-<div id="pageLoading"></div>
+
     <!-- Main Container  -->
     <div class="breadcrumbs">
         <div class="container">

@@ -13,14 +13,14 @@
       </div>
   </div>
   <!-- Main Container  -->
-  <div class="main-container container">
+  <div class="container">
   	
   	
   	<div class="row">
       @include('users.inc.sidebar')
   		<!--Middle Part Start-->
   		<div id="content" class="col-md-9 sticky-content">
-  			<h2 class="title">Product Returns</h2>
+  			<h2 class="title"><a href="{{ route('user.orderDetails', 'afsdfsd') }}"> <i class="fa fa-angle-left"></i>  Product Returns </a></h2>
   			<p>Please complete the form below to request product returns.</p>
 
   			<form class="form-horizontal">
@@ -122,7 +122,7 @@
   						</div>
   					</div>
   					<div class="form-group">
-  						<label for="input-comment" class="col-sm-2 control-label">Other details</label>
+  						<label for="input-comment" class="col-sm-2 control-label">Please explain the issue in detail</label>
   						<div class="col-sm-10">
   							<textarea class="form-control" id="input-comment" placeholder="Other details" rows="10" name="comment"></textarea>
   						</div>
@@ -132,6 +132,7 @@
   					<div class="pull-left"><a class="btn btn-default buttonGray">Back</a>
   					</div>
   					<div class="pull-right">
+              <p>only refund allowed as per return policy <a href="#">View Return Policy</a></p>
   						<input type="submit" class="btn btn-primary" value="Submit">
   					</div>
   				</div>

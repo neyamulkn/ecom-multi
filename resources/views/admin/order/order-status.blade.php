@@ -130,7 +130,7 @@
                     <div class="col-lg-12">
                         <div class="card" style="margin-bottom: 2px;">
                            
-                            <form action="{{route('orderSearch')}}" method="get">
+                            <form action="{{route('admin.orderList')}}" method="get">
                               
                                 <div class="form-body">
                                     <div class="card-body">
@@ -140,10 +140,10 @@
                                                     <label class="control-label">Order Status  </label>
                                                     <select name="status" class="form-control">
                                                         <option value="">Select Status</option>
-                                                        <option value="0" {{ (Request::get('status') == 0) ? 'selected' : ''}} >Pending</option>
-                                                        <option value="1" {{ (Request::get('status') == 1) ? 'selected' : ''}}>Accepted</option>
-                                                        <option value="2" {{ (Request::get('status') == 2) ? 'selected' : ''}}>Delivered</option>
-                                                        <option value="3" {{ (Request::get('status') == 3) ? 'selected' : ''}}>Cancel</option>
+                                                        <option value="pending" {{ (Request::get('status') == 'pending') ? 'selected' : ''}} >Pending</option>
+                                                        <option value="accepted" {{ (Request::get('status') == 'accepted') ? 'selected' : ''}}>Accepted</option>
+                                                        <option value="delivered" {{ (Request::get('status') == 'delivered') ? 'selected' : ''}}>Delivered</option>
+                                                        <option value="cancel" {{ (Request::get('status') == 'cancel') ? 'selected' : ''}}>Cancel</option>
                                                         <option value="all" {{ (Request::get('status') == "all") ? 'selected' : ''}}>All</option>
                                                     </select>
                                                 </div>

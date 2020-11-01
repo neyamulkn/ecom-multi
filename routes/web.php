@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//backend common routes
+
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('category/{catslug?}/{subslug?}/{childslug?}', 'HomeController@category')->name('home.category');
@@ -35,7 +37,7 @@ Route::get('buy/direct', 'HomeController@buyDirect')->name('buyDirect');
 Route::get('checkout/{buy_product_id?}', 'User\CheckoutController@checkout')->name('checkout');
 Route::get('checkout/shipping/{buy_product_id?}', 'User\CheckoutController@shipping')->name('shipping');
 
-//paypal payment 
+//paypal payment
 Route::get('order/paypal/payment/{orderId}', 'PaypalController@paypalPayment')->name('paypalPayment');
 Route::get('paypal/payment/status/success', 'PaypalController@paymentSuccess')->name('paypalPaymentSuccess');
 Route::get('paypal/payment/status/cancel', 'PaypalController@paymentCancel')->name('paypalPaymentCancel');

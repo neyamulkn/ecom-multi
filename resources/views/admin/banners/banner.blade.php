@@ -28,7 +28,7 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">banner List</h4>
+                        <h4 class="text-themecolor">Banner List</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
@@ -59,6 +59,7 @@
                                             <tr>
                                                 <th>Image</th>
                                                 <th>Title</th>
+                                                <th>Page</th>
                                                 <th>Link</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -69,15 +70,28 @@
                                             <tr id="item{{$banner->id}}">
                                                 
                                                 <td>
-
-                                                    @foreach( $banner->bannerImage as $phato)
-                                                    <img src="{!! asset('upload/images/banner/'. $phato->phato) !!}" width="120">
-                                                    @endforeach
+                                                    @if($banner->banner1)
+                                                    <img src="{!! asset('upload/images/banner/'. $banner->banner1) !!}" width="120">
+                                                    @endif
+                                                    @if($banner->banner2)
+                                                    <img src="{!! asset('upload/images/banner/'. $banner->banner2) !!}" width="120">
+                                                    @endif
+                                                    @if($banner->banner3)
+                                                    <img src="{!! asset('upload/images/banner/'. $banner->banner3) !!}" width="120">
+                                                    @endif
                                                 </td>
-                                                <td><span style="color:{{$banner->title_color}}; font-family: {{$banner->title_style}}">{{$banner->title}}</td>
-                                                <td>@foreach($banner->bannerImage as $link)
-                                                    <small> {!! $link->btn_link !!} <br/> </small>
-                                                    @endforeach</span>
+                                                <td>{{$banner->title}}</td>
+                                                <td>{{str_replace('_', ' ', $banner->page_name)}}</td>
+                                                <td>
+                                                    @if($banner->btn_link1)
+                                                    <small> {!! $banner->btn_link1 !!} <br/> </small>
+                                                    @endif
+                                                    @if($banner->btn_link2)
+                                                    <small> {!! $banner->btn_link2 !!} <br/> </small>
+                                                    @endif
+                                                    @if($banner->btn_link3)
+                                                    <small> {!! $banner->btn_link3 !!} <br/> </small>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <div class="custom-control custom-switch">
@@ -130,6 +144,12 @@
                                     <div class="row justify-content-md-center">
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <label class="" for="title">Banner Title</label>
+                                                <input name="title" id="title" value="{{old('title')}}"  type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label for="name required">Select Banner Type</label>
                                                 <select required onchange="bannerType(this.value)" name="banner_type" class="form-control">
                                                     <option value="">Select Banner</option>
@@ -139,82 +159,22 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row justify-content-md-center" id="showBannerImage"> </div>
-                                    <div class="row justify-content-md-center">
-                                        
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="" for="title">Banner Title</label>
-                                                <input name="title" id="title" value="{{old('title')}}"  type="text" class="form-control">
-                                            </div>
-                                        </div>
-
-                                         <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="title_style">Title Font Style</label>
-                                                <input placeholder="Exp. arial" name="title_style" id="title_style" value="{{old('title_style')}}"  type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="title_size">Title Font Size(px)</label>
-                                                <input placeholder="Exp. 50" name="title_size" id="title_size" value="{{old('title_size')}}"  type="number" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="title_color">Title Font Color</label>
-                                                <input placeholder="Exp. #00000" name="title_color" id="title_color" value="{{old('title_color')}}" type="color" class="form-control">
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="row justify-content-md-center">
-                                        
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="subtitle">banner Sub Title</label>
-                                                <input placeholder="Enter sub title" name="subtitle" id="subtitle" value="{{old('subtitle')}}" type="text" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="subtitle_style">Font Style</label>
-                                                <input placeholder="Exp. arial" name="subtitle_style" id="subtitle_style" value="{{old('subtitle_style')}}"  type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="subtitle_size">Font Size(px)</label>
-                                                <input placeholder="Exp. 50" name="subtitle_size" id="subtitle_size" value="{{old('subtitle_size')}}"  type="number" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="subtitle_color">Font Color</label>
-                                                <input placeholder="Exp. #00000" name="subtitle_color" id="subtitle_color" value="{{old('subtitle_color')}}"  type="color" class="form-control">
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    
-
-                                    <div class="row">
-
-                                       <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label  for="text_position">Text Position</label>
-                                                <select class="form-control" name="text_position">
-                                                    <option value="left">Left</option>
-                                                    <option value="center">Center</option>
-                                                    <option value="right">Right</option>
+                                                <label for="name required">Select Page</label>
+                                                <select required  name="page_name" class="form-control">
+                                                    <option value="all">All Page</option>
+                                                    <option value="homepage">HomePage</option>
+                                                    <option  value="category_page">Category page</option>
+                                                    <option  value="product_detail_page">Proudct details page</option>
+                                                    <option  value="offer_page">Offer Page</option>
                                                 </select>
                                             </div>
                                         </div>
-
                                     </div>
+                                    <div class="row justify-content-md-center" id="showBannerImage"> </div>
+                                    
+                                         
                                     <div class="row justify-content-md-center">
                                         <div class="col-md-12">
                                             <div class="head-label">
@@ -288,26 +248,26 @@
     <!-- This is data table -->
     <script src="{{asset('assets')}}/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{asset('assets')}}/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
-        <script src="{{asset('assets')}}/node_modules/dropify/dist/js/dropify.min.js"></script>
+    <script src="{{asset('assets')}}/node_modules/dropify/dist/js/dropify.min.js"></script>
  
    <script>
         $(function () {
            $('#myTable').DataTable({"ordering": false});
         });
 
-        function removeImage(image_path, id, imageNo){
+        function removeImage(id, imageNo){
             if ( confirm("Are you sure delete it.?")) {
                        
                 $.ajax({
                     url:"{{route('bannerImage_delete')}}",
                     method:"get",
-                    data: {image_path: image_path, id:id},
+                    data: {id:id, imageNo:imageNo},
                     success:function(data){
                         if(data){
-                            $('.'+imageNo).html('<input type="file" accept="image/*" data-type="image" data-allowed-file-extensions="jpg jpeg png gif"  name="file[]" id="'+imageNo+'" class="dropify" />');
-                            $("#"+imageNo).addClass('dropify');
+                            $('.image'+imageNo).html('<input type="file" required accept="image/*" data-type="image" data-allowed-file-extensions="jpg jpeg png gif"  name="banner'+imageNo+'" id="'+imageNo+'" class="dropify" />');
+                            $("#image"+imageNo).addClass('dropify');
                             $('.dropify').dropify();
-                            toastr.success(data);
+                            toastr.success(data.msg);
                         }
                     }
                 }); 
@@ -343,7 +303,7 @@
         var width = (1170/type) - (type*5);
         var output = '';
         for(var i=1; i<=type; i++){
-            output += '<div class="col-md-'+12/type+'"><div class="form-group"><label class="required dropify_image">Banner Image '+i+'</label><input type="hidden" name="width" value="'+width+'"><input required type="file" class="dropify" accept="image/*" data-type="image" data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="phato[]" id="input-file-events"><p style="color:red">Image Size: '+width+'px * 250px</p> <label class="required" for="btn_link">Link '+i+'</label><input type="text" required id="btn_link" name="btn_link[]" placeholder="Exp: {{url("/")}}" class="form-control"></div></div>';
+            output += '<div class="col-md-'+12/type+'"><div class="form-group"><label class="required dropify_image">Banner '+i+'</label><input type="hidden" name="width" value="'+width+'"><input required type="file" class="dropify" accept="image/*" data-type="image" data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="banner'+i+'" id="input-file-events"><p style="color:red">Image Size: '+width+'px * 250px</p> <label class="required" for="btn_link">Link '+i+'</label><input type="text" required id="btn_link" name="btn_link'+i+'" placeholder="Exp: {{url("/")}}" class="form-control"></div></div>';
         }
         document.getElementById('showBannerImage'+edit).innerHTML = output;
         $('.dropify').dropify();

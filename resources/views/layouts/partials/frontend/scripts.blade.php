@@ -18,14 +18,116 @@
 <!-- Theme files
    ============================================ -->
 <script type="text/javascript" src="{{asset('frontend')}}/js/themejs/application.js"></script>
-<script type="text/javascript" src="{{asset('frontend')}}/js/themejs/homepage.js"></script>
-<script type="text/javascript" src="{{asset('frontend')}}/js/themejs/custom_h3.js"></script>
+
 <script type="text/javascript" src="{{asset('frontend')}}/js/themejs/addtocart.js"></script>
 <script src="{{ mix('js/laravel-echo.js') }}"></script>
 <script src="{{ asset('js/parsley.min.js') }}"></script>
 <script src="{{ asset('frontend/js/typeahead.js') }}"></script>
 <script src="{{ asset('frontend/js/toastr.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+    "use strict";
+    // Content slider
+    $('.yt-content-slider').each(function () {
+        var $slider = $(this),
+            $panels = $slider.children('div'),
+            data = $slider.data();
+        // Remove unwanted br's
+        //$slider.children(':not(.yt-content-slide)').remove();
+        // Apply Owl Carousel
+        
+        $slider.owlCarousel2({
+            responsiveClass: true,
+            mouseDrag: true,
+            video:true,
+        lazyLoad: (data.lazyload == 'yes') ? true : false,
+            autoplay: (data.autoplay == 'yes') ? true : false,
+            autoHeight: (data.autoheight == 'yes') ? true : false,
+            autoplayTimeout: data.delay * 1000,
+            smartSpeed: data.speed * 1000,
+            autoplayHoverPause: (data.hoverpause == 'yes') ? true : false,
+            center: (data.center == 'yes') ? true : false,
+            loop: (data.loop == 'yes') ? true : false,
+      dots: (data.pagination == 'yes') ? true : false,
+      nav: (data.arrows == 'yes') ? true : false,
+            dotClass: "owl2-dot",
+            dotsClass: "owl2-dots",
+      margin: data.margin,
+        navText:  ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
+            
+            responsive: {
+                0: {
+                    items: data.items_column4 
+                    },
+                480: {
+                    items: data.items_column3
+                    },
+                768: {
+                    items: data.items_column2
+                    },
+                992: { 
+                    items: data.items_column1
+                    },
+                1200: {
+                    items: data.items_column0 
+                    }
+            }
+        });
+        
+    });
 
+    // Resonsive Sidebar aside
+    $(document).ready(function(){
+        $(".open-sidebar").click(function(e){
+            e.preventDefault();
+            $(".sidebar-overlay").toggleClass("show");
+            $(".sidebar-offcanvas").toggleClass("active");
+        });
+           
+        $(".sidebar-overlay").click(function(e){
+            e.preventDefault();
+            $(".sidebar-overlay").toggleClass("show");
+            $(".sidebar-offcanvas").toggleClass("active");
+        });
+        $('#close-sidebar').click(function() {
+            $('.sidebar-overlay').removeClass('show');
+            $('.sidebar-offcanvas').removeClass('active');
+            
+        }); 
+
+    });
+        
+            
+    
+    /*function buttonpage(element){
+        var $element = $(element),
+            $slider = $(".yt-content-slider", $element),
+            data = $slider.data();
+        if (data.buttonpage == "top") {
+            $(".owl2-controls",$element).insertBefore($slider);
+            $(".owl2-dots",$element).insertAfter($(".owl2-prev", $slider));
+        } else {
+            $(".owl2-nav",$element).insertBefore($slider);
+            $(".owl2-controls",$element).insertAfter($slider);
+        }   
+    }
+    
+    // Home 1 - Latest Blogs
+    (function (element) {
+        buttonpage(element);
+    })(".blog-sidebar");
+    
+    (function (element) {
+        buttonpage(element);
+    })("#so_extra_slider_1");
+    
+    (function (element) {
+        buttonpage(element);
+    })("#so_extra_slider_2");*/
+
+}); 
+
+</script>
 @yield('js')
 
 {!! Toastr::message() !!}
@@ -95,9 +197,7 @@
 
 <script>
     $(document).ready(function () {
-     
-        document.getElementById('pageLoading').style.display = 'none';
-      
+  
         $('#searchKey').typeahead({
             source: function (query, result) {
                 $.ajax({
@@ -114,4 +214,6 @@
             }
         });
     });
+
+ 
 </script>

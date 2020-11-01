@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class AdminOrderController extends Controller
 {
     //get all order by user id
-    public function orderHistory($status='')
+    public function orderHistory(Request $request, $status='')
     {
+
         $orders = Order::orderBy('id', 'desc')->where('payment_method', '!=', 'pending');
+        if($request->status){
+            $orders = $orders->where('order_status', $request->status)->get();
+            return view('admin.order.order-status')->with(compact('orders'));
+        }
         if($status){
             $orders = $orders->where('order_status', $status)->get();
             return view('admin.order.order-status')->with(compact('orders'));

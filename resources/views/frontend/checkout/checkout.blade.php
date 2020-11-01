@@ -107,7 +107,7 @@
 	</div>
 	<!-- Main Container  -->
 	<div class="container">
-		<div id="pageLoading"></div>
+		
 		<div class="row">
 			<div id="content" class="col-sm-12">
 				@if(Session::has('alert'))

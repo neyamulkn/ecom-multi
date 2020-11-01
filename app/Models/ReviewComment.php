@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class bannerImage extends Model
+class ReviewComment extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-
-    public $timestamps = false;
-
 
 }

@@ -16,10 +16,5 @@ class Admin extends Authenticatable
         'password',
     ];
 
-    public function IsAdmin(){
-        if ($this->role_id == 1) {
-           return true;
-        }
-        return false;
-    }
+
 }

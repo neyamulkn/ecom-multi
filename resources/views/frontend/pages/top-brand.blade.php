@@ -2,22 +2,15 @@
 @section('title', 'Top Brand | '. Config::get('siteSetting.site_name') )
 @section('css')
 <style type="text/css">
-    .brand-thumb{position: relative;width: 100%;padding: 3px;height: 100%;border: 2px solid #de560d;background: #fff;direction: rtl;}
+    .brand-list{border: 2px solid #de560d;}
+    .brand-thumb{position: relative;width: 100%;padding: 3px;height: 100px;
+    background: #fff;text-align: center;}
     .desc-listcategoreis {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
         color: #ffffff;
-        text-align: left;
-        padding: 12% 20px;
-        top: 50%;
+        text-align: center;
+        padding: 5px;
         background: #0000006b;
-        -moz-transform: translateY(-50%);
-        -webkit-transform: translateY(-50%);
-        -o-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
+  
     }
     .brand-thumb img{max-height: 100%}
 </style>
@@ -34,27 +27,22 @@
         </div>
     </div>
     @include('frontend.sliders.slider2')
-    <div class="container" style="background: #fff;">
+    <div class="container">
         <div class="row">
-            <h1 style="padding: 0px"><img style="width: 130px;" src="{{asset('frontend/image/brand/brand.png')}}"> Top {{count($brands)}} Brands</h1>
+            <h1 style="padding-top: 10px"><img style="width: 130px;" src="{{asset('frontend/image/brand/brand.png')}}"> Top {{count($brands)}} Brands</h1>
             @foreach($brands as $brand)
-            <div class="col-xs-6 col-md-3" style="padding: 0 5px;">
-                <div class="brand-list cat-border" style="height: 130px; max-height: 130px">
-                   
+            <div class="col-xs-6 col-md-2" style="padding-right: 0px;margin-bottom:10px;">
+                <div class="brand-list">
+                    <a href="{{ route('product.search') }}?brand={{$brand->id}}"> 
                     <div class="brand-thumb">
-                       <a href="{{ route('product.search') }}?brand={{$brand->id}}">
-                        <img src="{{asset('upload/images/brand/thumb/'.$brand->logo)}}">
-                       
-                        <div class="desc-listcategoreis" >
-                            <div class="name_categories">
-                                <h6>{{$brand->name}}</h6>
-                            </div>
-                            <span class="number_product">{{ count($brand->products)}} Products</span>
-                            Shop Now <i class="fa fa-angle-right"></i>
-                        </div>
-                        </a>
+                        <img src="{{asset('upload/images/brand/thumb/'.$brand->logo)}}" >
                     </div>
-                    
+                    <div class="desc-listcategoreis" >
+                        <span style="font-weight: bold;font-size: 16px">{{$brand->name}}</span><br/>
+                        <span>{{ count($brand->products)}} Products</span>
+                           
+                    </div>
+                    </a>
                 </div>
             </div>
             @endforeach

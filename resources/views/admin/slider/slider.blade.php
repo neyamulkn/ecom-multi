@@ -57,7 +57,7 @@
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Feature Image</th>
+                                                <th>Slider Image</th>
                                                 <th>Slider Type</th>
                                                 <th>Title</th>
                                                 <th>Sub Title</th>

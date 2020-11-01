@@ -61,7 +61,8 @@ class CreateProductsTable extends Migration
             $table->integer('updated_by')->nullable();
             $table->integer('position')->nullable();
             $table->softDeletes();
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('approved')->default(0);
+            $table->string('status', '10')->default('pending')->comment('pending,active,reject');
             $table->timestamps();
         });
     }

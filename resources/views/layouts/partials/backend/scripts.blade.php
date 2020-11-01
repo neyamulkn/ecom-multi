@@ -22,6 +22,25 @@
                 }
             });
         }
+    </script>    
+
+    <script type="text/javascript">
+        //change status by id
+        function approveUnapprove(table, id, field = null){
+            var  url = '{{route("approveUnapprove")}}';
+            $.ajax({
+                url:url,
+                method:"get",
+                data:{table:table,field:field,id:id},
+                success:function(data){
+                    if(data.status){
+                        toastr.success(data.message);
+                    }else{
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
     </script>
 
     {!! Toastr::message() !!}

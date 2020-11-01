@@ -184,7 +184,7 @@
                 </div>
             </aside>
             <div id="content" class="col-md-9 col-sm-12 col-xs-12 sticky-content" >
-                <div id="pageLoading"></div>
+                <div id="dataLoading"></div>
                 <a href="javascript:void(0)" class="open-sidebar hidden-lg hidden-md"><i class="fa fa-bars"></i>Filter By</a>
         
                 <div id="filter_product" class="products-category">
@@ -224,7 +224,7 @@
     function filter_data(page)
     {
         //enable loader
-        document.getElementById('pageLoading').style.display ='block';
+        document.getElementById('dataLoading').style.display ='block';
         
         var concatUrl = '';
         var category = "{!! (Request::get('cat')) ? 'cat='.Request::get('cat') : '' !!}";
@@ -304,7 +304,7 @@
                 filter:'filter',perPage:showItem
             },
             success:function(data){
-                document.getElementById('pageLoading').style.display ='none';
+                document.getElementById('dataLoading').style.display ='none';
         
                 if(data){
                     $('#filter_product').html(data);
@@ -313,7 +313,7 @@
                }
             },
             error: function() {
-                document.getElementById('pageLoading').style.display ='none';
+                document.getElementById('dataLoading').style.display ='none';
                 $('#filter_product').html('<span class="ajaxError">Internal server error.!</span>');
             }
 

@@ -39,9 +39,9 @@
                 <td class="text-right">{{$site['currency_symble']}}<span class="amount">{{$item->price}}</span></td>
                 <td class="text-left">
                     <div class="input-group btn-block" style="max-width: 200px;">
-                    <input type="number" min="1" id="qtyTotal{{$item->id}}" onchange="cartUpdate({{$item->id}})" name="qtybutton" value="{{$item->qty}}" class="form-control">
+                    <input type="number" min="1" style="margin-right: 15px;" id="qtyTotal{{$item->id}}" onchange="cartUpdate({{$item->id}})" name="qtybutton" value="{{$item->qty}}" class="form-control">
                     <span class="input-group-btn">
-                        <button style="padding: 9px;" type="button" onclick ="cartUpdate({{$item->id}})" data-toggle="tooltip" title="" class="btn btn-primary" data-original-titl
+                        <button style="padding: 7px;" type="button" onclick ="cartUpdate({{$item->id}})" data-toggle="tooltip" title="" class="btn btn-primary" data-original-titl
                     ="Update"><i class="fa fa-refresh"></i></button>
                     
                     </span></div>
@@ -93,7 +93,7 @@
                 <div class="input-group">
                 <input type="text" required name="coupon_code" id="coupon_code" value="{{Session::get('couponCode')}}" placeholder="Enter your coupon here" class="form-control">
                 <span class="input-group-btn">
-                        <input style="padding: 9px;" type="submit" value="Apply Coupon" id="couponBtn" data-loading-text="Loading..." class="btn btn-primary">
+                        <input style="padding: 7px;" type="submit" value="Apply Coupon" id="couponBtn" data-loading-text="Loading..." class="btn btn-primary">
                     </span>
                 </div>
                 </form>

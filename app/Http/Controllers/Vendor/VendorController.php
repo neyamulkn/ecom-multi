@@ -3,19 +3,27 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customers;
-use App\Models\Package;
-use App\Models\Vendor;
+use App\Models\OrderDetail;
+use App\Models\Product;
+use App\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorController extends Controller
 {
     public function dashboard()
     {
-        $data['total_users'] = Customers::count();
-        $data['active_users'] = Customers::where('status', 1)->count();
-        $data['inactive_users'] = Customers::where('status', 0)->count();
-        $data['packages'] = Package::where('status', 1)->count();
+        $vendor_id = Auth::guard('vendor')->id();
+        $data= [];
+        $data['allProducts'] = Product::where('vendor_id', $vendor_id)->count();
+        $data['pendingProducts'] = Product::where('vendor_id', $vendor_id)->where('status', 0)->count();
+        $data['outOfStock'] = Product::where('vendor_id', $vendor_id)->where('stock', '<=', 0)->count();
+        $data['rejectProducts'] = Product::where('vendor_id', $vendor_id)->where('status', 2)->count();
+        $data['allOrders'] = OrderDetail::where('vendor_id', $vendor_id)->groupBy('order_id')->count();
+        $data['pendingOrders'] = OrderDetail::where('vendor_id', $vendor_id)->where('shipping_status', 'pending')->groupBy('order_id')->count();
+        $data['completeOrders'] = OrderDetail::where('vendor_id', $vendor_id)->where('shipping_status', 'complete')->groupBy('order_id')->count();
+        $data['rejectOrders'] = OrderDetail::where('vendor_id', $vendor_id)->where('shipping_status', 'reject')->groupBy('order_id')->count();
+
         return view('vendors.dashboard')->with($data);
 
     }

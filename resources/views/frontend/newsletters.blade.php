@@ -12,9 +12,9 @@
                   </div>
                   <div class="modcontent block_content">
                     <form method="post" id="signup" name="signup" class="form-group form-inline signup send-mail">
-                      <div class="input-group form-group required">
+                      <div class="input-group form-group">
                         <div class="input-box">
-                          <input type="email" placeholder="Your email address..." value="" class="form-control" id="txtemail" name="txtemail" size="55">
+                          <input type="email" required placeholder="Your email address..." value="" class="form-control" id="txtemail" name="txtemail" size="55">
                         </div>
                         <div class="input-group-btn subcribe">
                           <button class="btn btn-primary" type="submit" onclick="return subscribe_newsletter();" name="submit">

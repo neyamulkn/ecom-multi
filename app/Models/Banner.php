@@ -10,6 +10,6 @@ class Banner extends Model
 
     public $timestamps = false;
     public function bannerImage(){
-        return $this->hasMany(bannerImage::class, 'banner_id');
+        return $this->hasMany(BannerImage::class, 'banner_id');
     }
 }

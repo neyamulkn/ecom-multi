@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\HomepageSection;
 use App\Models\Product;
@@ -16,6 +17,7 @@ class HomepageSectionController extends Controller
     public function index()
     {
         $data['categories'] = Category::where('parent_id', null)->orderBy('name', 'asc')->get();
+        $data['banners'] = Banner::orderBy('position', 'asc')->where('status', 1)->get();
         $data['homepageSections'] = HomepageSection::orderBy('position', 'asc')->get();
         return view('admin.homepage.index')->with($data);
     }
@@ -42,14 +44,16 @@ class HomepageSectionController extends Controller
         $section = new HomepageSection();
         $section->title = $request->title;
         $section->slug = $this->createSlug('homepage_sections', $request->title);
-        $section->type = 'section';
-        $section->product_id =  implode(',', $request->product_id);
+        $section->type = $request->section_type;
+        $section->background_color = $request->background_color;
+        $section->text_color = $request->text_color;
+        $section->product_id =  ($request->section_type == 'section' ?  implode(',', $request->product_id) : $request->product_id);
         $section->status = ($request->status ? 1 : 0);
         $store = $section->save();
         if($store){
-            Toastr::success('Homepage section created successfully.');
+            Toastr::success('Homepage section added successfully.');
         }else{
-            Toastr::error('HomepageS section cann\' created.');
+            Toastr::error('Homepage section cann\'t added.');
         }
 
         return back();
@@ -113,21 +117,21 @@ class HomepageSectionController extends Controller
         }
         return response()->json($output);
     }
-
-    public function getAllProducts (Request $request){
-        $output = '';
-        $products = Product::where('category_id', $request->id)->where('status', 1)->get();
-        if(count($products)>0){
-            foreach ($products as $source) {
-                $output .= ' <option value="'.$source->id.'">'.$source->title.'</option>';
-            }
-        }
-        echo $output;
-    }
+//
+//    public function getAllProducts (Request $request){
+//        $output = '';
+//        $products = Product::where('category_id', $request->id)->where('status', 'active')->get();
+//        if(count($products)>0){
+//            foreach ($products as $source) {
+//                $output .= ' <option value="'.$source->id.'">'.$source->title.'</option>';
+//            }
+//        }
+//        echo $output;
+//    }
 
     public function getSingleProduct (Request $request){
         $output = '';
-        $products = Product::where('id', $request->id)->where('status', 1)->get();
+        $products = Product::where('id', $request->id)->where('status', 'active')->get();
         if(count($products)>0){
             foreach ($products as $source) {
                 $output .= ' <option selected value="'.$source->id.'">'.$source->title.'</option>';

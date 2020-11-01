@@ -35,14 +35,16 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        @include('layouts.partials.backend.header')
+        @include('layouts.partials.backend.admin-header')
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-       @include('layouts.partials.backend.sidebar')
+      
+        @include('layouts.partials.backend.admin-sidebar')
+
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
        <!-- ============================================================== -->

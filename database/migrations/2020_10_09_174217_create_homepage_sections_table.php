@@ -20,6 +20,8 @@ class CreateHomepageSectionsTable extends Migration
             $table->string('type')->comment('slider,banner,product');
             $table->string('product_id')->nullable();
             $table->string('layout')->nullable();
+            $table->string('background_color')->default('#fff');
+            $table->string('text_color')->default('#000');
             $table->integer('position')->nullable();
             $table->tinyInteger('is_default')->nullable();
             $table->tinyInteger('status')->default(1);

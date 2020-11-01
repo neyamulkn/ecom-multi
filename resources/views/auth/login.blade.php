@@ -2,7 +2,6 @@
 @extends('layouts.frontend')
 @section('title', 'Login | '.Config::get('siteSetting.site_name'))
 @section('css-top')
- <link href="{{asset('css/pages/login-register-lock.css')}}" rel="stylesheet">
 
 <style type="text/css">
     @media (min-width: 1200px){
@@ -16,21 +15,23 @@
     .card-footer, .card-header {
         margin-bottom: 5px;
         border-bottom: 1px solid #ececec;
-    }
+    }#recoverform {
+      display: none; }
+
     .loginArea{background: #fff; border-radius: 5px;margin:10px 0;padding-top: 10px;}
 </style>
  @endsection
 @section('content')
 <div class="container">
-    
+    <div id="pageLoading" style="display: none;"></div>
     <div class="row justify-content-center">
         <div class="col-md-3 col-12"></div>
         <div class="col-md-6 col-12 loginArea">
             <div class="card">
 
                    <div class="card-body">
-
-                        <form id="loginform" action="{{route('login')}}" data-parsley-validate method="post">
+                    <div id="loginform">
+                        <form action="{{route('login')}}" data-parsley-validate method="post">
                             @csrf
                             <div class="card-header text-center"><h3>Sign In</h3></div>
 
@@ -52,7 +53,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group">
                                 <div class="col-md-12">
                                     <div style=" display: flex!important;" class="d-flex no-block align-items-center">
                                         <div style="display: inline-flex;" class="custom-control custom-checkbox">
@@ -67,11 +68,11 @@
                             </div>
                         
                             <div class="form-group text-center">
-                                <div class="col-xs-12 p-b-20">
-                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Log In</button>
-                                </div>
+                                <input type="submit" value="Log In" class="btn btn-block btn-lg btn-info btn-rounded">
                             </div> 
-                            <div id="column-login" style="margin:15px 0" class="col-sm-8 pull-right">
+                        </form>
+
+                         <div id="column-login" style="margin:15px 0" class="col-sm-8 pull-right">
                                 <div class="row">
                                     <div class="social_login pull-right" id="so_sociallogin">
                                       <a href="{{route('social.login', 'facebook')}}"class="btn btn-social-icon btn-sm btn-facebook " id="socialloginBtn"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></a>
@@ -80,26 +81,25 @@
                                       <!-- <a href="#" class="btn btn-social-icon btn-sm btn-linkdin"><i class="fa fa-linkedin fa-fw" aria-hidden="true"></i></a> -->
                                     </div>
                                 </div>
-                            </div>                            
-           
+                            </div> 
+                        </div>  
+                        <form class="form-horizontal" id="recoverform" action="#">
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <h3>Recover Password</h3>
+                                    <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <input class="form-control" type="text" required="" placeholder="Email"> </div>
+                            </div>
+                            <div class="form-group text-center m-t-20">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
+                                </div>
+                            </div>
                         </form>
-                        <form class="form-horizontal" id="recoverform" action="index.html">
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <h3>Recover Password</h3>
-                                <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Email"> </div>
-                        </div>
-                        <div class="form-group text-center m-t-20">
-                            <div class="col-xs-12">
-                                <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
-                            </div>
-                        </div>
-                    </form>
                 
                     </div>
             </div>

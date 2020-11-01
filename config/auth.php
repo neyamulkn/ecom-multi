@@ -66,12 +66,22 @@ return [
             'driver' => 'token',
             'provider' => 'vendors',
         ],
-        
+
+        'staff' => [
+            'driver' => 'session',
+            'provider' => 'staffs',
+        ],
+
+        'staff-api' => [
+            'driver' => 'token',
+            'provider' => 'staffs',
+        ],
+
         'user' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        
+
         'user-api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -111,10 +121,10 @@ return [
             'model' => App\Vendor::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'staffs' => [
+             'driver' => 'database',
+             'model' => App\Staff::class,
+         ],
     ],
 
     /*

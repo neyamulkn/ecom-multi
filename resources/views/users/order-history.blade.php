@@ -1,6 +1,11 @@
 @extends('layouts.frontend')
 @section('title', 'Order information | '. Config::get('siteSetting.site_name') )
 @section('css')
+   <link rel="stylesheet" type="text/css"
+        href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
+
 <style type="text/css">
 	
 	<style type="text/css">
@@ -103,14 +108,14 @@
       </div>
   </div>
 	<!-- Main Container  -->
-	<div class="main-container container">
+	<div class="container">
 		<div class="row">
 			@include('users.inc.sidebar')
 			<!--Middle Part Start-->
 			<div id="content" class="col-md-9 sticky-content">
 				<h2 class="title">Order History</h2>
-				<div class="table-responsive" style="overflow-x: inherit;">
-					<table class="table table-bordered table-hover">
+				<div class="table-responsive" >
+					<table  id="config-table" class="table display table-bordered table-striped">
 						<thead>
 							<tr>
 								<td class="text-left">Order ID</td>
@@ -183,6 +188,8 @@
 
 @endsection		
 @section('js')
+   <script src="{{asset('assets')}}/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="{{asset('assets')}}/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript">
     function orderCancelPopup(route) {
         document.getElementById('orderCancelRoute').value = route;
@@ -207,6 +214,12 @@
     }
 
 </script>
+        <script>
+    // responsive table
+        $('#config-table').DataTable({
+            responsive: true
+        });
+    </script>
 @endsection		
 
 

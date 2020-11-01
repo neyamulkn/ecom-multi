@@ -19,7 +19,6 @@ class CreateAdminsTable extends Migration
             $table->string('username');
             $table->string('email')->nullable();
             $table->string('mobile');
-            $table->integer('role_id');
             $table->string('photo')->default('default.png');
             $table->string('password', 75);
             $table->string('temp_password', 15)->nullable();

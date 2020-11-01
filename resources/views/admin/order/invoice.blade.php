@@ -49,7 +49,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="pull-left" style="float: left;">
-                                            <div style="width: 90%; max-height: 200px;">
+                                            <div style="width:160px; height: 55px;">
                                                 <img style="height: 100%; width: 100%;" src="{{asset('frontend/image/logo/'.Config::get('siteSetting.logo'))}}" title="Home" alt="Logo">
                                             </div>
                                         </div>

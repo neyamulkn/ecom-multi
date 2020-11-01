@@ -27,7 +27,7 @@ class FrontPagesController extends Controller
     // today deals
     public function todayDeals()
     {
-        $data['products'] = Product::orderBy('id', 'desc')->where('status', 1)->paginate(20);
+        $data['products'] = Product::orderBy('id', 'desc')->where('status', 'active')->paginate(20);
         if($data['products']){
             $data['sliders'] = Slider::where('type', 'today-deal')->where('status', 1)->get();
             return view('frontend.pages.today-deals')->with($data);
@@ -38,7 +38,7 @@ class FrontPagesController extends Controller
     // get mega discount
     public function megaDiscount ()
     {
-        $data['products'] = Product::where('discount', '!=', null)->where('status', 1)->paginate(20);
+        $data['products'] = Product::where('discount', '!=', null)->where('status', 'active')->paginate(20);
         if($data['products']){
             $data['sliders'] = Slider::where('type', 'mega-discount')->where('status', 1)->get();
             return view('frontend.pages.mega-discount')->with($data);

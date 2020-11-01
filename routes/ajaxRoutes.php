@@ -26,6 +26,7 @@ Route::get('search/keyword', 'AjaxController@search_keyword')->name('search_keyw
 
 //change status active/deactive
 Route::get('status/change', 'AjaxController@satusActiveDeactive')->name('statusChange');
+Route::get('status/approve/Unapprove', 'AjaxController@approveUnapprove')->name('approveUnapprove');
 
 Route::get('get/order/details/{order_id}', 'AjaxController@showOrderDetails')->name('getOrderDetails');
 

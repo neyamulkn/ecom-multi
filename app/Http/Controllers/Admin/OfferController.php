@@ -128,7 +128,7 @@ class OfferController extends Controller
     //get all products by anyone field
     public function getAllProducts (Request $request){
         $output = '';
-        $products = Product::where('status', 1);
+        $products = Product::where('status', 'active');
             if($request->brand !=  'all'){
                 $products->where('brand_id', $request->brand);
             }
@@ -147,7 +147,7 @@ class OfferController extends Controller
 
     public function getSingleProduct (Request $request){
         $output = '';
-        $product = Product::where('id', $request->id)->where('status', 1)->first();
+        $product = Product::where('id', $request->id)->where('status', 'active')->first();
         //$productIds = Session::has('productIds') ? Session::get('productIds') : [];
 
 //        if(in_array($request->id, $productIds)){

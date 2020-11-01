@@ -115,7 +115,7 @@
 	</div>
 	<!-- Main Container  -->
 	<div class="container">
-		<div id="pageLoading"></div>
+		<div id="dataLoading"></div>
 		<div class="row">
 			<div id="content" class="col-sm-12">
 				@if(Session::has('alert'))
@@ -241,20 +241,20 @@
                                     
                                     <div id="shipping-new" style="display: block; text-align: left;">
                                         
-                                        <div class="form-group input-lastname required" >
-                                            <span>Full Name</span>
+                                        <div class="form-group input-lastname " >
+                                            <span class="required">Full Name</span>
                                             <input type="text" required value="{{old('shipping_name')}}" name="shipping_name" placeholder="Enter Full Name *" id="input-payment-lastname" class="form-control">
                                         </div>
-                                        <div class="form-group required" style="width: 49%; float: left;">
-                                            <span>Email</span>
+                                        <div class="form-group " style="width: 49%; float: left;">
+                                            <span class="required">Email</span>
                                             <input type="text" value="{{old('shipping_email')}}" name="shipping_email"placeholder="E-Mail *" id="input-payment-email" class="form-control">
                                         </div>
-                                        <div class="form-group required" style="width: 49%; float: right;">
-                                            <span>Phone Number</span>
+                                        <div class="form-group" style="width: 49%; float: right;">
+                                            <span class="required">Phone Number</span>
                                             <input type="text"  required value="{{old('shipping_phone')}}" name="shipping_phone" placeholder="Phone Number *" id="input-payment-telephone" class="form-control">
                                         </div>
-                                        <div class="form-group required" style="width: 49%; float: left;">
-                                        <span>Select Your Rejion</span>
+                                        <div class="form-group" style="width: 49%; float: left;">
+                                        <span class="required">Select Your Rejion</span>
                                         <select name="shipping_region" onchange="get_city(this.value)" required id="input-payment-country" class="form-control">
                                             <option value=""> --- Please Select --- </option>
                                             @foreach($states as $state)
@@ -262,21 +262,21 @@
                                             @endforeach
                                         </select>
                                         </div>
-                                        <div class="form-group required" style="width: 49%; float: right;">
-                                            <span>City</span>
+                                        <div class="form-group " style="width: 49%; float: right;">
+                                            <span class="required">City</span>
                                             <select name="shipping_city"  onchange="get_area(this.value)"  required id="show_city" class="form-control">
                                                 <option value=""> Select first rejion </option>
                                                 
                                             </select>
                                         </div>
-                                        <div class="form-group required">
-                                            <span>Area</span>
+                                        <div class="form-group ">
+                                            <span class="required" >Area</span>
                                             <select name="shipping_area" required id="show_area" class="form-control">
                                                 <option value=""> Select first city </option>
                                             </select>
                                         </div>
                                         
-                                        <div class="form-group required">
+                                        <div class="form-group ">
                                             <span class="required">Address</span>
                                             <input type="text" value="{{old('ship_address')}}" required name="ship_address" placeholder="Enter Address" id="input-payment-address" class="form-control">
                                         </div>
@@ -304,7 +304,7 @@
 <script type="text/javascript" src="{{asset('frontend/js/parsley.min.js')}}"></script>
 <script type="text/javascript">
     function cartUpdate(id){
-        document.getElementById('pageLoading').style.display = 'block';
+        document.getElementById('dataLoading').style.display = 'block';
         var qty = $('#qtyTotal'+id).val();
        
         if(parseInt(qty) && qty>0){
@@ -319,16 +319,16 @@
                         $('#order_summary').html(data);
                         toastr.success('Quantity Update Successful');
                     }
-                    document.getElementById('pageLoading').style.display = 'none';
+                    document.getElementById('dataLoading').style.display = 'none';
                 },
                 error: function(jqXHR, exception) {
                     toastr.error('Internal server error.');
-                    document.getElementById('pageLoading').style.display = 'none';
+                    document.getElementById('dataLoading').style.display = 'none';
                 }
             });
         }else{
             toastr.error('Invalid Number.');
-            document.getElementById('pageLoading').style.display = 'none';
+            document.getElementById('dataLoading').style.display = 'none';
         }
     }    
 
@@ -336,13 +336,13 @@
         e.preventDefault(); 
         var coupon_code = $('#coupon_code').val();
        	
-        document.getElementById('pageLoading').style.display = 'block';
+        document.getElementById('dataLoading').style.display = 'block';
         $.ajax({
             url:"{{route('coupon.apply')}}",
             method:"get",
             data:{ coupon_code:coupon_code},
             success:function(data){
-                document.getElementById('pageLoading').style.display = 'none';
+                document.getElementById('dataLoading').style.display = 'none';
                 if(data.status){
                 	document.getElementById('couponSection').style.display = 'table-row';
                     $('#couponAmount').html(data.couponAmount);
@@ -354,7 +354,7 @@
             },
             error: function(jqXHR, exception) {
                 toastr.error('Internal server error.');
-                document.getElementById('pageLoading').style.display = 'none';
+                document.getElementById('dataLoading').style.display = 'none';
             }
         });
     });

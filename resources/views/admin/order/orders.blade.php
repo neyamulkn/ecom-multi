@@ -92,7 +92,7 @@
         display: inline-block;
         margin: 100px auto;
     }
-
+    .display-5{font-size: 2rem !important;}
     /*delete confirm popup*/
 </style>
 @endsection
@@ -122,15 +122,100 @@
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Info box Content -->
-                <!-- ============================================================== -->
+               
+                <?php 
+                    $all = $pending = $accepted = $on_review = $on_delivery = $delivered = 0;
+                    foreach($orders as $order_status){
+          
+                        if($order_status->order_status == 'pending'){ $pending +=1 ; }
+                        if($order_status->order_status == 'accepted'){ $accepted +=1 ; }
+                        if($order_status->order_status == 'on-review'){ $on_review +=1 ; }
+                        if($order_status->order_status == 'on-delivery'){ $on_delivery +=1 ; }
+                        if($order_status->order_status == 'delivered'){ $delivered +=1 ; }
+                    }
+                    $all = $pending+$accepted +$on_review+ $on_delivery+ $delivered;
+
+                ?>
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Orders</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-primary"><i class="fa fa-list-ol"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$all}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Pending Order</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-info"><i class="fa fa-database"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$pending}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Accept Order</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-primary"><i class="fa fa-shipping-fast"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$accepted}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">On Review</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-warning"><i class="fa fa-hourglass-half"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$on_review}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">On Delivery</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-info"><i class="fa fa-shipping-fast"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$on_delivery}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Complete</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-success"><i class="fa fa-check-circle"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$delivered}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card" style="margin-bottom: 2px;">
 
-                            <form action="{{route('orderSearch')}}" method="get">
+                            <form action="{{route('admin.orderList')}}" method="get">
 
                                 <div class="form-body">
                                     <div class="card-body">
@@ -140,10 +225,10 @@
                                                     <label class="control-label">Order Status  </label>
                                                     <select name="status" class="form-control">
                                                         <option value="">Select Status</option>
-                                                        <option value="0" {{ (Request::get('status') == 0) ? 'selected' : ''}} >Pending</option>
-                                                        <option value="1" {{ (Request::get('status') == 1) ? 'selected' : ''}}>Accepted</option>
-                                                        <option value="2" {{ (Request::get('status') == 2) ? 'selected' : ''}}>Delivered</option>
-                                                        <option value="3" {{ (Request::get('status') == 3) ? 'selected' : ''}}>Cancel</option>
+                                                        <option value="pending" {{ (Request::get('status') == 'pending') ? 'selected' : ''}} >Pending</option>
+                                                        <option value="accepted" {{ (Request::get('status') == 'accepted') ? 'selected' : ''}}>Accepted</option>
+                                                        <option value="delivered" {{ (Request::get('status') == 'delivered') ? 'selected' : ''}}>Delivered</option>
+                                                        <option value="cancel" {{ (Request::get('status') == 'cancel') ? 'selected' : ''}}>Cancel</option>
                                                         <option value="all" {{ (Request::get('status') == "all") ? 'selected' : ''}}>All</option>
                                                     </select>
                                                 </div>

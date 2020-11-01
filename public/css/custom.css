@@ -1,4 +1,22 @@
 body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+
+    
+.container-fluid { padding: 0 10px !important; }
+.page-titles {padding: 5px 10px; margin: 0 -20px 10px !important;}
+.page-titles .breadcrumb{float: left;}
+.page-titles .d-none{display: initial !important;}
+.sidebar-nav>ul>li.active>a {background: #343a400a;}
+.sidebar-nav ul li a:hover {background: #343a400a}
+.title_head{
+    width: 100%; margin-bottom: 10px; background: #8d8f90; color:#fff; padding: 8px;
+}
+/*input field required */
+.required:after {
+    content:"*";
+    color: red;
+}
+.invalid-feedback{display: block !important;}
+
 .sidebar-nav ul li ul{padding-left: 18px;}
 
 .sticky-conent{  position: sticky;

@@ -30,9 +30,9 @@
 
                    <div class="card-body">
 
-                        <form id="loginform" action="{{route('login')}}" data-parsley-validate method="post">
+                        <form id="loginform" action="{{route('vendorLogin')}}" data-parsley-validate method="post">
                             @csrf
-                            <div class="card-header text-center"><h3>Sign In</h3></div>
+                            <div class="card-header text-center"><h3>Seller Sign In</h3></div>
 
                             <div class="form-group">
                               <label class="control-label" for="phoneOrEmail">Email or Mobile Number</label>
@@ -95,7 +95,7 @@
             
             <div class="form-group m-b-0">
                 <div class="col-sm-12 text-center">
-                    Don't have an account? <a href="{{route('register')}}" class="text-info m-l-5"><b>Sign Up</b></a>
+                    Don't have an account? <a href="{{route('vendorRegisterForm')}}" class="text-info m-l-5"><b>Sign Up</b></a>
                 </div>
             </div>  
             <div class="col-md-3 col-12"></div>     

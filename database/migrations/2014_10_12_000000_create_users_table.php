@@ -19,8 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('name', 25);
             $table->string('username', 25);
             $table->text('user_dsc')->nullable();
-            $table->integer('gender')->nullable();
+            $table->string('gender' ,6)->nullable();
             $table->string('birthday')->nullable();
+            $table->string('blood')->nullable();
             $table->string('mobile', 15)->nullable();
             $table->timestamp('mobile_verified_at')->nullable();
             $table->string('mobile_verification_token')->nullable();

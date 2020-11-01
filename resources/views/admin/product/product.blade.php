@@ -58,7 +58,7 @@
                                 <li class="breadcrumb-item"><a href="javascript:void(0)">Product</a></li>
                                 <li class="breadcrumb-item active">create</li>
                             </ol>
-                        <a href="{{route('product.list')}}" class="btn btn-info btn-sm d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Product List</a>
+                        <a href="{{route('admin.product.list')}}" class="btn btn-info btn-sm d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Product List</a>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                  <div id="pageLoading"></div>
                 <div class="card-body">
 
-                    <form action="{{route('product.store')}}" data-parsley-validate enctype="multipart/form-data" method="post" id="product">
+                    <form action="{{route('admin.product.store')}}" data-parsley-validate enctype="multipart/form-data" method="post" id="product">
                         @csrf
 
                         <div class="form-body">

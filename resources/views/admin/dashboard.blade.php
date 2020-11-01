@@ -5,7 +5,7 @@
     <!--Toaster Popup message CSS -->
 
     <link href="{{ asset('css') }}/pages/dashboard1.css" rel="stylesheet">
-    <style type="text/css">.round{font-size:25px;}</style>
+    <style type="text/css">.round{font-size:25px;}    .display-5{font-size: 2rem !important;}</style>
 @endsection
 @section('content')
     <!-- ============================================================== -->
@@ -29,61 +29,73 @@
                             <h5 class="card-title">Total Products</h5>
                             <div class="d-flex  no-block align-items-center">
                                 <span class="display-5 text-purple"><i class="fa fa-cart-plus"></i></span>
-                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$products}}</a>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$allProducts}}</a>
                             </div>
                         </div>
                     </div>
                     </div>
-                    
-                    <!-- Column -->
                     <div class="col-md-3">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Total Orders</h5>
-                            <div class="d-flex no-block align-items-center">
-                                <span class="display-5 text-danger"><i class="fa fa-shipping-fast"></i></span>
-                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$orders}}</a>
+                            <h5 class="card-title">UnApporve Products</h5>
+                            <div class="d-flex  no-block align-items-center">
+                                <span class="display-5 text-info"><i class="fa fa-hourglass-half"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$pendingProducts}}</a>
                             </div>
                         </div>
                     </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Customer</h5>
-                                <div class="d-flex  no-block align-items-center">
-                                    <span class="display-5 text-info"><i class="fa fa-user-plus"></i></span>
-                                    <a href="javscript:void(0)" class="link display-5 ml-auto">0</a>
-                                </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Out Of Stock Products</h5>
+                            <div class="d-flex  no-block align-items-center">
+                                <span class="display-5 text-danger"><i class="fa fa-database"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$outOfStock}}</a>
                             </div>
                         </div>
+                    </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Total Vendors</h5>
-                                <div class="d-flex  no-block align-items-center">
-                                    <span class="display-5 text-success"><i class="icon-people"></i></span>
-                                    <a href="javscript:void(0)" class="link display-5 ml-auto">3</a>
-                                </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Reject Products</h5>
+                            <div class="d-flex  no-block align-items-center">
+                                <span class="display-5 text-danger"><i class="fa fa-times"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$rejectProducts}}</a>
                             </div>
                         </div>
                     </div>
-                    
+                    </div>
                 </div>
-
                 <div class="row">
                     <!-- Column -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row">
-                                    <div class="round align-self-center round-success"><i class="fa fa-shopping-cart"></i></div>
+                                    <div class="round align-self-center round-success"><i class="fa fa-user"></i></div>
                                     <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">{{$pendinOorders}}</h3>
-                                        <h5 class="text-muted m-b-0">Pending Orders</h5></div>
+                                        <h3 class="m-b-0">{{$pendingSeller}}</h3>
+                                        <h5 class="text-muted m-b-0">Pending Seller</h5></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+
+              
+                    <!-- Column -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-row">
+                                    <div class="round align-self-center round-info"><i class="icon-people"></i></div>
+                                    <div class="m-l-10 align-self-center">
+                                        <h3 class="m-b-0">{{$allSeller}}</h3>
+                                        <h5 class="text-muted m-b-0">All Seller</h5></div>
                                 </div>
                             </div>
                         </div>
@@ -94,45 +106,85 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row">
-                                    <div class="round align-self-center round-info"><i class="fa fa-dollar-sign"></i></div>
+                                    <div class="round align-self-center round-info"><i class="fa fa-user-plus"></i></div>
                                     <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">0</h3>
-                                        <h5 class="text-muted m-b-0">Today Orders</h5></div>
+                                        <h3 class="m-b-0">{{$newUser}}</h3>
+                                        <h5 class="text-muted m-b-0">Customer 7 Days</h5></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
+
                     <!-- Column -->
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row">
-                                    <div class="round align-self-center round-danger"><i class="fa fa-handshake"></i></div>
+                                    <div class="round align-self-center round-success"><i class="fa fa-user"></i></div>
                                     <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">0</h3>
-                                        <h5 class="text-muted m-b-0">Reviews</h5></div>
+                                        <h3 class="m-b-0">{{$allUser}}</h3>
+                                        <h5 class="text-muted m-b-0">All Customer</h5></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
-                    <!-- Column -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-row">
-                                    <div class="round align-self-center round-success"><i class="fa fa-money-bill-alt"></i></div>
-                                    <div class="m-l-10 align-self-center">
-                                        <h3 class="m-b-0">10</h3>
-                                        <h5 class="text-muted m-b-0">Subscribers</h5></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
+                
                 </div>
 
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Orders</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-primary"><i class="fa fa-shipping-fast"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$allOrders}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Pending Orders</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-info"><i class="fa fa-hourglass-half"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$pendingOrders}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    
+                    <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Complete Orders</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-success"><i class="fa fa-check-circle"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$completeOrders}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Reject Orders</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-danger"><i class="fa fa-times"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$rejectOrders}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                
 
                 <div class="row">
                     <!-- Column -->
@@ -142,8 +194,8 @@
                                 <div class="p-10 bg-info">
                                     <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-info">90</h3>
-                                    <h5 class="text-muted m-b-0">Total Customers</h5></div>
+                                    <h3 class="m-b-0 text-info">0</h3>
+                                    <h5 class="text-muted m-b-0">All Ticket</h5></div>
                             </div>
                         </div>
                     </div>
@@ -156,7 +208,7 @@
                                     <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                                 <div class="align-self-center m-l-20">
                                     <h3 class="m-b-0 text-success">5</h3>
-                                    <h5 class="text-muted m-b-0">Total Staff</h5></div>
+                                    <h5 class="text-muted m-b-0">Blog Post</h5></div>
                             </div>
                         </div>
                     </div>
@@ -168,8 +220,8 @@
                                 <div class="p-10 bg-inverse">
                                     <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0">{{$categories}}</h3>
-                                    <h5 class="text-muted m-b-0">Total Categories</h5></div>
+                                    <h3 class="m-b-0">0</h3>
+                                    <h5 class="text-muted m-b-0">All Subscriber</h5></div>
                             </div>
                         </div>
                     </div>
@@ -181,8 +233,8 @@
                                 <div class="p-10 bg-primary">
                                     <h3 class="text-white box m-b-0"><i class="ti-wallet"></i></h3></div>
                                 <div class="align-self-center m-l-20">
-                                    <h3 class="m-b-0 text-primary">{{$brands}}</h3>
-                                    <h5 class="text-muted m-b-0">Total Brands</h5></div>
+                                    <h3 class="m-b-0 text-primary">0</h3>
+                                    <h5 class="text-muted m-b-0">Withdraw Request</h5></div>
                             </div>
                         </div>
                     </div>

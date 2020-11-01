@@ -7,7 +7,6 @@
 @section('content')
 <div class="breadcrumbs">
 	<div class="container">
-	  
 		<ul class="breadcrumb-cate">
 		    <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
 		    <li><a href="#">My account</a></li>
@@ -15,64 +14,85 @@
 	</div>
 </div>
 <!-- Main Container  -->
-<div class="main-container container">
+<div class="container">
 
 	<div class="row">
 		<!--Right Part Start -->
 		@include('users.inc.sidebar')
 		<!--Right Part End -->
 		<!--Middle Part Start-->
-		<div class="col-md-9 sticky-conent" id="content">
-			<h2 class="title">My Account</h2>
-			<p class="lead">Hello, <strong>Jhone Cary!</strong> - To update your account information.</p>
-			<form>
+		<div id="content" class="col-md-9 sticky-conent">
+		
+			<form action="{{ route('user.profileUpdate') }}" method="post" data-parsley-validate>
+				@csrf
 				<div class="row">
-					<div class="col-sm-6">
+						<div class="col-sm-12">
 						<fieldset id="personal-details">
-							<legend>Personal Details</legend>
-							<div class="form-group required">
-								<label for="input-firstname" class="control-label">First Name</label>
-								<input type="text" class="form-control" id="input-firstname" placeholder="First Name" value="" name="firstname">
-							</div>
-							<div class="form-group required">
-								<label for="input-lastname" class="control-label">Last Name</label>
-								<input type="text" class="form-control" id="input-lastname" placeholder="Last Name" value="" name="lastname">
-							</div>
-							<div class="form-group required">
-								<label for="input-email" class="control-label">E-Mail</label>
-								<input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="" name="email">
-							</div>
-							<div class="form-group required">
-								<label for="input-telephone" class="control-label">Telephone</label>
-								<input type="tel" class="form-control" id="input-telephone" placeholder="Telephone" value="" name="telephone">
-							</div>
+							<legend>Personal Details</legend></fieldset>
+						</div>
+						<div class="col-sm-4">
 							<div class="form-group">
-								<label for="input-fax" class="control-label">Fax</label>
-								<input type="text" class="form-control" id="input-fax" placeholder="Fax" value="" name="fax">
+								<label for="name" class="control-label required">Full Name</label>
+								<input type="text" class="form-control" id="name" placeholder="Full Name" value="{{ $user->name }}" name="name">
 							</div>
-						</fieldset>
-						<br>
-					</div>
-					<div class="col-sm-6">
-						<fieldset>
-							<legend>Change Password</legend>
-							<div class="form-group required">
-								<label for="input-password" class="control-label">Old Password</label>
-								<input type="password" class="form-control"  placeholder="Old Password" value="" name="old-password">
-							</div>
-							<div class="form-group required">
-								<label for="input-password" class="control-label">New Password</label>
-								<input type="password" class="form-control"  placeholder="New Password" value="" name="new-password">
-							</div>
-							<div class="form-group required">
-								<label for="input-confirm" class="control-label">New Password Confirm</label>
-								<input type="password" class="form-control" id="input-confirm" placeholder="New Password Confirm" value="" name="new-confirm">
-							</div>
-						</fieldset>
-						<fieldset>
-							<legend>Newsletter</legend>
+						</div>
+						
+						<div class="col-sm-4">
 							<div class="form-group">
-								<label class="col-md-2 col-sm-3 col-xs-3 control-label">Subscribe</label>
+								<label for="mobile" class="control-label required">Mobile Number</label>
+								<input type="text" class="form-control" id="mobile" placeholder="Enter Mobile" value="{{ $user->mobile }}" name="mobile">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="input-email" class="control-label required">E-Mail Address</label>
+								<input type="email" class="form-control" id="input-email" placeholder="E-Mail" value="{{ $user->email }}" name="email">
+							</div>
+						</div>
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="birthday" class="control-label">Birthday</label>
+								<input type="date" class="form-control" id="birthday" placeholder="birthday" value="{{ $user->birthday }}" name="birthday">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="blood" class="control-label">Blood Group</label>
+								<select name="blood" class="form-control">
+									<option value="">Select</option>
+									<option @if( $user->blood == 'A+') selected @endif value="A+">A+</option>
+									<option @if( $user->blood == 'A-') selected @endif value="A-">A-</option>
+									<option @if( $user->blood == 'B+') selected @endif value="B+">B+</option>
+									<option @if( $user->blood == 'B-') selected @endif value="B-">B-</option>
+									<option @if( $user->blood == 'O+') selected @endif value="O+">O+</option>
+									<option @if( $user->blood == 'O-') selected @endif value="O-">O-</option>
+									<option @if( $user->blood == 'AB+') selected @endif value="AB+">AB+</option>
+									<option @if( $user->blood == 'AB-') selected @endif value="AB-">AB-</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="gender" class="control-label">Gender</label>
+								<select name="gender" id="gender" class="form-control">
+									<option value="">Select</option>
+									<option @if( $user->gender == 'male') selected @endif value="male">Male</option>
+									<option @if( $user->gender == 'female') selected @endif value="female">Female</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="about" class="control-label">About </label>
+								<textarea class="form-control" id="user_dsc" name="user_dsc">{{ $user->user_dsc }}</textarea>
+							</div>
+						</div>
+						<div class="col-sm-6">
+						
+							<div class="form-group">
+								<label class="control-label">Subscribe Newsletter</label>
 								<div class="col-md-10 col-sm-9 col-xs-9">
 									<label class="radio-inline">
 										<input type="radio" value="1" name="newsletter"> Yes
@@ -82,136 +102,117 @@
 									</label>
 								</div>
 							</div>
-						</fieldset>
+							
+						</div>
+						
 					</div>
-				</div>
+					<div class="buttons clearfix">
+						<div class="pull-right">
+							<input type="submit" class="btn btn-md btn-primary" value="Save Changes">
+						</div>
+					</div>
+			</form>
+
+			<form action="{{ route('user.addressUpdate') }}" method="post" data-parsley-validate>
+				@csrf
 				<div class="row">
-					<div class="col-sm-6">
-						<fieldset id="address">
-							<legend>Payment Address</legend>
+						<div class="col-sm-12">
+							<fieldset id="personal-details">
+							<legend>Payment Address</legend></fieldset>
+						</div>
+						<div class="col-sm-4">
+						<div class="form-group ">
+							<span class="required">Select Your Rejion</span>
+							<select name="region" onchange="get_city(this.value)" required id="input-payment-country" class="form-control">
+								<option value=""> Please Select  </option>
+								@foreach($states as $state)
+								<option @if($user->region == $state->id) selected @endif value="{{$state->id}}"> {{$state->name}} </option>
+								@endforeach
+							</select>
+						</div>
+						</div>
+						<div class="col-sm-4">
 							<div class="form-group">
-								<label for="input-company" class="control-label">Company</label>
-
-								<input type="text" class="form-control"  placeholder="Company" value="" name="company">
-
-							</div>
-							<div class="form-group required">
-								<label for="input-address-1" class="control-label">Address 1</label>
-								<input type="text" class="form-control"  placeholder="Address 1" value="" name="address_1">
-							</div>
-							<div class="form-group required">
-								<label for="input-city" class="control-label">City</label>
-								<input type="text" class="form-control" placeholder="City" value="" name="city">
-							</div>
-							<div class="form-group required">
-								<label for="input-postcode" class="control-label">Post Code</label>
-								<input type="text" class="form-control"  placeholder="Post Code" value="" name="postcode">
-							</div>
-							<div class="form-group required">
-								<label for="input-country" class="control-label">Country</label>
-								<select class="form-control" name="country_id">
-									<option value=""> --- Please Select --- </option>
-									<option value="244">Aaland Islands</option>
-									<option value="1">Afghanistan</option>
-									<option value="2">Albania</option>
-									<option value="3">Algeria</option>
-									<option value="4">American Samoa</option>
-									<option value="5">Andorra</option>
-									<option value="6">Angola</option>
-									<option value="7">Anguilla</option>
-									<option value="8">Antarctica</option>
-									<option value="9">Antigua and Barbuda</option>
-									<option value="10">Argentina</option>
-									<option value="11">Armenia</option>
-									<option value="12">Aruba</option>
-							   
+								<span class="required">City</span>
+								<select name="city" onchange="get_area(this.value)"  required id="show_city" class="form-control">
+									
+									<option value="">Please Select</option>
+									@foreach($cities as $city)
+									<option @if($user->city == $city->id) selected @endif value="{{$city->id}}"> {{$city->name}} </option>
+									@endforeach
 								</select>
 							</div>
-							<div class="form-group required">
-								<label for="input-zone" class="control-label">Region / State</label>
-								<select class="form-control" name="zone_id">
-									<option value=""> --- Please Select --- </option>
-									<option value="3513">Aberdeen</option>
-									<option value="3514">Aberdeenshire</option>
-									<option value="3515">Anglesey</option>
-									<option value="3516">Angus</option>
-									<option value="3517">Argyll and Bute</option>
-									<option value="3518">Bedfordshire</option>
-									<option value="3519">Berkshire</option>
-							 
-								</select>
-							</div>
-						</fieldset>
-					</div>
-					<div class="col-sm-6">
-						<fieldset id="shipping-address">
-							<legend>Shipping Address</legend>
-							<div class="form-group">
-								<label for="input-company" class="control-label">Company</label>
-								<input type="text" class="form-control" id="input-company" placeholder="Company" value="" name="company">
-							</div>
-							<div class="form-group required">
-								<label for="input-address-1" class="control-label">Address 1</label>
-								<input type="text" class="form-control" id="input-address-1" placeholder="Address 1" value="" name="address_1">
-							</div>
-							<div class="form-group required">
-								<label for="input-city" class="control-label">City</label>
-								<input type="text" class="form-control" id="input-city" placeholder="City" value="" name="city">
-							</div>
-							<div class="form-group required">
-								<label for="input-postcode" class="control-label">Post Code</label>
-								<input type="text" class="form-control" id="input-postcode" placeholder="Post Code" value="" name="postcode">
-							</div>
-							<div class="form-group required">
-								<label for="input-country" class="control-label">Country</label>
-								<select class="form-control" id="input-country" name="country_id">
-									<option value=""> --- Please Select --- </option>
-									<option value="244">Aaland Islands</option>
-									<option value="1">Afghanistan</option>
-									<option value="2">Albania</option>
-									<option value="3">Algeria</option>
-									<option value="4">American Samoa</option>
-									<option value="5">Andorra</option>
-									<option value="6">Angola</option>
-									<option value="7">Anguilla</option>
-									<option value="8">Antarctica</option>
-									<option value="9">Antigua and Barbuda</option>
-									<option value="10">Argentina</option>
-									<option value="11">Armenia</option>
-									<option value="12">Aruba</option>
+						</div>
+						<div class="col-sm-4">
+						<div class="form-group ">
+							<span class="required">Area</span>
+							<select name="area" required id="show_area" class="form-control">
+									<option value="">Please Select</option>
+									@foreach($areas as $area)
+									<option @if($user->area == $area->id) selected @endif value="{{$area->id}}"> {{$area->name}} </option>
+									@endforeach
+							</select>
+						</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group ">
+								<span class="required">Address</span>
+								<textarea class="form-control" id="address" placeholder="For example: #road:2, #sector: 3, Dhaka-1215" name="address">{{ $user->address }}</textarea>
 								
-								</select>
 							</div>
-							<div class="form-group required">
-								<label for="input-zone" class="control-label">Region / State</label>
-								<select class="form-control" id="input-zone" name="zone_id">
-									<option value=""> --- Please Select --- </option>
-									<option value="3513">Aberdeen</option>
-									<option value="3514">Aberdeenshire</option>
-									<option value="3515">Anglesey</option>
-									<option value="3516">Angus</option>
-									<option value="3517">Argyll and Bute</option>
-									<option value="3518">Bedfordshire</option>
-									<option value="3519">Berkshire</option>
-								   
-								</select>
-							</div>
-						</fieldset>
+						</div>
+						
 					</div>
-				</div>
-
-
-
-				<div class="buttons clearfix">
-					<div class="pull-right">
-						<input type="submit" class="btn btn-md btn-primary" value="Save Changes">
+					<div class="buttons clearfix">
+						<div class="pull-right">
+							<input type="submit" class="btn btn-md btn-primary" value="Save Changes">
+						</div>
 					</div>
-				</div>
 			</form>
 		</div>
 		<!--Middle Part End-->
-		
 	</div>
 </div>
 <!-- //Main Container -->
+@endsection
+
+@section('js')
+
+<script type="text/javascript">
+	 function get_city(id, type=''){
+       
+        var  url = '{{route("checkout.get_city", ":id")}}';
+        url = url.replace(':id',id);
+        $.ajax({
+            url:url,
+            method:"get",
+            success:function(data){
+                if(data.status){
+                    $("#show_city"+type).html(data.allcity);
+                    $("#show_city"+type).focus();
+                }else{
+                    $("#show_city"+type).html('<option>City not found</option>');
+                }
+            }
+        });
+    }  	 
+
+    function get_area(id, type=''){
+           
+        var  url = '{{route("get_area", ":id")}}';
+        url = url.replace(':id',id);
+        $.ajax({
+            url:url,
+            method:"get",
+            success:function(data){
+                if(data){
+                    $("#show_area"+type).html(data);
+                    $("#show_area"+type).focus();
+                }else{
+                    $("#show_area"+type).html('<option>Area not found</option>');
+                }
+            }
+        });
+    }  
+</script>
 @endsection

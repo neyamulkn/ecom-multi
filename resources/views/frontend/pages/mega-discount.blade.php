@@ -18,18 +18,16 @@
     @include('frontend.sliders.slider2')
     <div class="container">
         <div class="row">
-         
-            <div id="content" class="col-md-12 col-sm-12 col-xs-12" >
+             <h1 style="padding-top: 10px"> Mega Discount</h1>
+            <div  class="col-md-12 col-sm-12 col-xs-12" >
 
-                <div id="pageLoading"></div>
-                
                 <div class="products-category">
                      
                     @if(count($products)>0)
                         
                         <div class="products-list grid row number-col-6 so-filter-gird">
                             @foreach($products as $product)
-                            <div class="product-layout col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                            <div class="product-layout col-lg-2 col-md-3 col-sm-3 col-xs-6">
                                 @include('frontend.homepage.products')
                             </div>
                             @endforeach

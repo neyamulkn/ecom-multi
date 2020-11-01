@@ -224,15 +224,48 @@ class AjaxController extends Controller
     public function satusActiveDeactive(Request $request){
         $status = DB::table($request->table)->where('id', $request->id)->first();
         $field =  ($request->field) ? $request->field : 'status';
-        if($status){
-            if($status->$field == 1){
-                DB::table($request->table)->where('id', $request->id)->update([$field => 0]);
-            }else{
-                DB::table($request->table)->where('id', $request->id)->update([$field => 1]);
-            }
-            $output = array( 'status' => true,  'message'  => $field. ' update successful.');
+        //check number(1) or string(active)
+        $value_type =  is_numeric($status->status)  ? 1 : 'active';
+
+        if(is_numeric($status->status)){
+            $value =  ($status->$field == 1)  ? 0 : 1;
         }else{
-            $output = array( 'status' => false,  'message'  => $field. ' can\'t update.!');
+            $value =  ($status->$field == 'active')  ? 'pending' : 'active';
+        }
+        if($status){
+            if($status->$field == $value_type){
+                DB::table($request->table)->where('id', $request->id)->update([$field => $value]);
+            }else{
+                DB::table($request->table)->where('id', $request->id)->update([$field => $value]);
+            }
+            $output = array( 'status' => true, 'message' => $field. ' update successful.');
+        }else{
+            $output = array( 'status' => false, 'message' => $field. ' can\'t update.!');
+        }
+        return response()->json($output);
+    }
+    // Status approve Unapprove function
+    public function approveUnapprove(Request $request){
+        $status = DB::table($request->table)->where('id', $request->id)->first();
+
+        $field =  ($request->field) ? $request->field : 'status';
+        //check number(1) or string(active)
+        $value_type =  is_numeric($status->status)  ? 1 : 'active';
+
+        if(is_numeric($status->status)){
+            $value =  ($status->$field == 1)  ? 0 : 1;
+        }else{
+            $value =  ($status->$field == 'active')  ? 'unapprove' : 'active';
+        }
+        if($status){
+            if($status->$field == $value_type){
+                DB::table($request->table)->where('id', $request->id)->update([$field => $value]);
+            }else{
+                DB::table($request->table)->where('id', $request->id)->update([$field => $value]);
+            }
+            $output = array( 'status' => true, 'message' => ' Approve successful.');
+        }else{
+            $output = array( 'status' => false, 'message' => 'Sorry can\'t approve.!');
         }
         return response()->json($output);
     }
@@ -280,7 +313,7 @@ class AjaxController extends Controller
     //get products by anyone field
     public function getProductsByField (Request $request, $field){
         $output = '';
-        $products = Product::where($field, $request->id)->where('status', 1)->get();
+        $products = Product::where($field, $request->id)->where('status', 'active')->get();
         if(count($products)>0){
             $output .= ' <option value="">Select Product</option>';
             foreach ($products as $source) {

@@ -2,7 +2,6 @@
 @extends('layouts.frontend')
 @section('title', 'Register | '.Config::get('siteSetting.site_name'))
 @section('css-top')
- <link href="{{asset('css/pages/login-register-lock.css')}}" rel="stylesheet">
 
 <style type="text/css">
     @media (min-width: 1200px){
@@ -84,9 +83,7 @@
                             </div>
                         
                             <div class="form-group text-center">
-                                <div class="col-xs-12 p-b-20">
-                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Sign Up</button>
-                                </div>
+                                <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Sign Up</button>
                             </div> 
                             <div id="column-login" style="margin:15px 0" class="col-sm-8 pull-right">
                                 <div class="row">
