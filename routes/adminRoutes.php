@@ -116,9 +116,6 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 
 	Route::get('homepage/section/sorting', 'HomepageSectionController@homepageSectionSorting')->name('admin.homepageSectionSorting');
 
-
-
-
 	// offer routes
 	Route::get('offer', 'OfferController@index')->name('admin.offer');
 	Route::post('offer/store', 'OfferController@store')->name('admin.offer.store');
@@ -212,8 +209,6 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 
 	Route::get('shipping/method', 'ShippingChargeController@shipping_method')->name('shipping');
 
-	Route::get('shipping/method', 'ShippingChargeController@shipping_method')->name('shipping');
-
 	//location all routes
 
 	//state
@@ -248,10 +243,21 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 
 	Route::get('order/{status?}', 'AdminOrderController@orderHistory')->name('admin.orderList');
 	Route::get('order/invoice/{order_id?}', 'AdminOrderController@orderInvoice')->name('admin.orderInvoice');
-	Route::get('order/return/{order_id?}', 'AdminOrderController@orderReturn')->name('admin.orderReturn');
+	
 	//change order status
 	Route::get('order/status/change', 'AdminOrderController@changeOrderStatus')->name('admin.changeOrderStatus');
 	Route::get('order/cancel/{order_id?}', 'AdminOrderController@orderCancel')->name('admin.orderCancel');
+
+
+	// area route
+	Route::get('return/order/reason', 'RefundReasonController@index')->name('returnReason');
+	Route::post('return/order/reason/store', 'RefundReasonController@store')->name('returnReason.store');
+	Route::get('return/order/reason/edit/{id}', 'RefundReasonController@edit')->name('returnReason.edit');
+	Route::post('return/order/reason/update', 'RefundReasonController@update')->name('returnReason.update');
+	Route::get('return/order/reason/delete/{id}', 'RefundReasonController@delete')->name('returnReason.delete');
+
+
+	Route::get('order/return/{order_id?}', 'AdminOrderController@orderReturn')->name('admin.orderReturn');
 
 
 });

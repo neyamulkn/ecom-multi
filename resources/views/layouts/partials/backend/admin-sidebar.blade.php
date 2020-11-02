@@ -58,7 +58,14 @@
                         <li><a href="#">Currencies</a></li>
                         <li><a href="#">SMS Setting</a></li>
                         <li><a href="#">Footer Setting</a></li>
-                       
+                    </ul>
+                </li>
+                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Return</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{route('admin.refundRequest')}}">Return Request</a></li>
+                        <li><a href="{{route('admin.refundApproved')}}">Return Approved</a></li>
+                        <li><a href="{{route('returnReason')}}">Return Reason</a></li>
+                        <li><a href="#">Return Setting</a></li>
                     </ul>
                 </li>
 

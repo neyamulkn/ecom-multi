@@ -1,7 +1,11 @@
  @extends('layouts.frontend')
 @section('title', 'Order information | '. Config::get('siteSetting.site_name') )
 @section('css')
-
+<style type="text/css">
+  .table-responsive>.table>tbody>tr>td, .table-responsive>.table>tbody>tr>th, .table-responsive>.table>tfoot>tr>td, .table-responsive>.table>tfoot>tr>th, .table-responsive>.table>thead>tr>td, .table-responsive>.table>thead>tr>th{white-space: initial;}
+  .return-request p{margin: 0 !important;}
+  .return-conversation{padding: 10px; border-bottom: 1px solid #ccc;}
+</style>
 @endsection
 @section('content')
   <div class="breadcrumbs">
@@ -19,129 +23,186 @@
   	<div class="row">
       @include('users.inc.sidebar')
   		<!--Middle Part Start-->
-  		<div id="content" class="col-md-9 sticky-content">
-  			<h2 class="title"><a href="{{ route('user.orderDetails', 'afsdfsd') }}"> <i class="fa fa-angle-left"></i>  Product Returns </a></h2>
-  			<p>Please complete the form below to request product returns.</p>
-
-  			<form class="form-horizontal">
+  		<div id="content" class="col-md-9 sticky-content return-request">
+        @if($checkReturn)
+  			<h2 class="title"><a href="{{ route('user.orderDetails', $order_detail->order_id) }}"> <i class="fa fa-angle-left"></i> Return Request Send</a></h2>
+  			<p><strong>Request Send ON : </strong> {{Carbon\Carbon::parse($checkReturn->created_at)->format('d m, Y h:m:i A')}}</p>
+         <p><strong>Request Reason: </strong> {{$checkReturn->return_reason}}</p>
+        <p><strong>Request Type: </strong> {{$checkReturn->return_type}}</p>
+       
+        <p><strong>Request Status: </strong>  @if($checkReturn->refund_status == 1)
+                  <span class="label label-success">Approved</span>
+                  @elseif($checkReturn->refund_status == 3)
+                   <span class="label label-danger">Reject</span>
+                  @else
+                  <span class="label label-info">Pending</span>
+                  @endif</p>
+        
+          <fieldset>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left">Product</td>
+                    <td class="text-center">Price</td>
+                    <td class="text-center">Quantity</td>
+                    <td class="text-center">Order Status</td>
+                  </tr>
+                </thead>
+                <tbody>
+                                           
+                  <tr>
+                    <td class="text-left">
+                      <img width="50" src="{{ asset('upload/images/product/thumb/'.$order_detail->feature_image) }}">
+                       <a href="{{route('product_details', $order_detail->slug)}}">{{Str::limit($order_detail->title, 50)}}</a><br>
+                          @foreach(json_decode($order_detail->attributes) as $key=>$value)
+                          <small> {{$key}} : {{$value}} </small>
+                          @endforeach
+                    </td>
+                    <td class="text-center">{{$checkReturn->refund_amount}}</td>
+                    <td class="text-center" style="width: 90px;"> {{$checkReturn->qty}} </td>
+                    <td class="text-center" style="width: 90px;"> <span class="label label-info">{{ $order_detail->shipping_status }}</span></td>
+                  
+                  </tr>
+                 
+                </tbody>
+              
+                </table>
+            </div>
+          </fieldset>
+  			
   				<fieldset>
-  					<legend>Order Information</legend>
-  					<div class="form-group required">
-  						<label for="input-firstname" class="col-sm-2 control-label">First Name</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-firstname" placeholder="First Name" value="" name="firstname">
+  					<legend>Additonal Information</legend>
+  				  
+            @foreach($checkReturn->refundConversations as $conversation)
+            <div class="return-conversation">
+              <p>{{ $conversation->explain_issue }}</p>
+              <img width="100" src="{{ asset('upload/images/refund_image/'.$conversation->image) }}"> 
+            </div>
+            @endforeach
+  					<!-- <div class="form-group">
+  						<div class="col-sm-8">
+                <label for="input-explain" class=" control-label">Please explain the return issue in detail.</label>
+  							<textarea required class="form-control" id="input-explain" placeholder="Write Explain return issue." rows="3" name="explain_issue"></textarea>
   						</div>
-  					</div>
-  					<div class="form-group required">
-  						<label for="input-lastname" class="col-sm-2 control-label">Last Name</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-lastname" placeholder="Last Name" value="" name="lastname">
-  						</div>
-  					</div>
-  					<div class="form-group required">
-  						<label for="input-email" class="col-sm-2 control-label">E-Mail</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-email" placeholder="E-Mail" value="" name="email">
-  						</div>
-  					</div>
-  					<div class="form-group required">
-  						<label for="input-telephone" class="col-sm-2 control-label">Telephone</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-telephone" placeholder="Telephone" value="" name="telephone">
-  						</div>
-  					</div>
-  					<div class="form-group required">
-  						<label for="input-order-id" class="col-sm-2 control-label">Order ID</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-order-id" placeholder="Order ID" value="" name="order_id">
-  						</div>
-  					</div>
-  					<div class="form-group">
-  						<label for="input-date-ordered" class="col-sm-2 control-label">Order Date</label>
-  						<div class="col-sm-3">
-  							<div class="input-group date">
-  								<input type="text" class="form-control" id="input-date-ordered" data-date-format="YYYY-MM-DD" placeholder="Order Date" value="" name="date_ordered"><span class="input-group-btn">
-  						<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-  						</span>
-  							</div>
-  						</div>
-  					</div>
+              <div class="col-sm-5">
+                  <label for="return_image" class="control-label">Add Images</label>
+                  <input type="file" id="return_image"  multiple name="return_image">
+              </div>
+  					</div> -->
+           
   				</fieldset>
-  				<fieldset>
-  					<legend>Product Information</legend>
-  					<div class="form-group required">
-  						<label for="input-product" class="col-sm-2 control-label">Product Name</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-product" placeholder="Product Name" value="" name="product">
-  						</div>
-  					</div>
-  					<div class="form-group required">
-  						<label for="input-model" class="col-sm-2 control-label">Product Code</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-model" placeholder="Product Code" value="" name="model">
-  						</div>
-  					</div>
-  					<div class="form-group">
-  						<label for="input-quantity" class="col-sm-2 control-label">Quantity</label>
-  						<div class="col-sm-10">
-  							<input type="text" class="form-control" id="input-quantity" placeholder="Quantity" value="1" name="quantity">
-  						</div>
-  					</div>
-  					<div class="form-group required">
-  						<label class="col-sm-2 control-label">Reason for Return</label>
-  						<div class="col-sm-10">
-  							<div class="radio">
-  								<label>
-  									<input type="radio" value="1" name="return_reason_id"> Dead On Arrival</label>
-  							</div>
-  							<div class="radio">
-  								<label>
-  									<input type="radio" value="3" name="return_reason_id"> Order Error</label>
-  							</div>
-  							<div class="radio">
-  								<label>
-  									<input type="radio" value="2" name="return_reason_id"> Received Wrong Item</label>
-  							</div>
-  							<div class="radio">
-  								<label>
-  									<input type="radio" value="5" name="return_reason_id"> Other
-  								</label>
-  							</div>
+        <!--     <div class="col-sm-8">
+      				<div class="buttons clearfix">
+      					<div class="pull-left"><a href="{{ route('user.orderDetails', $order_detail->order_id) }}" class="btn btn-default">Cancel</a>
+      					</div>
+      					<div class="pull-right">
+      						<input type="submit" class="btn btn-primary" value="Confirm Return">
+      					</div>
+      				</div>
+          </div> -->
+  			
+        @else
+          <h2 class="title"><a href="{{ route('user.orderDetails', $order_detail->order_id) }}"> <i class="fa fa-angle-left"></i> Send Return Request</a></h2>
+          <span><strong>Order Id:</strong> {{$order_detail->order_id}}</span>
+          
+          <form action="{{ route('user.sendReturn_request') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+            @csrf
+            <fieldset>
+              <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-left">Product</td>
+                      <td class="text-center">Price</td>
+                      <td class="text-center">Quantity</td>
+                      <td class="text-center">Order Status</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                                             
+                    <tr>
+                      <td class="text-left">
+                        <img width="50" src="{{ asset('upload/images/product/thumb/'.$order_detail->feature_image) }}">
+                         <a href="{{route('product_details', $order_detail->slug)}}">{{Str::limit($order_detail->title, 50)}}</a><br>
+                            @foreach(json_decode($order_detail->attributes) as $key=>$value)
+                            <small> {{$key}} : {{$value}} </small>
+                            @endforeach
+                      </td>
+                      <td class="text-center">{{$order_detail->price}}</td>
+                      <td class="text-center" style="width: 90px;">
+                        <select name="qty" required="" class="form-control">
+                          <option value="">Select</option>
+                          @for($i=1; $i<=$order_detail->qty; $i++)
+                          <option @if($i == $order_detail->qty) selected @endif value="{{$i}}">{{$i}}</option>
+                          @endfor
+                        </select>
+                      </td>
+                      <td class="text-center" style="width: 90px;"> <span class="label label-info">{{ $order_detail->shipping_status }}</span></td>
+                    
+                    </tr>
+                   
+                  </tbody>
+                
+                  </table>
+              </div>
+            </fieldset>
+          
+            <fieldset>
+              <legend>Please complete the form below to request product returns.</legend>
+              
+              <div class="form-group">
+                <div class="col-sm-4">
+                  <label>What do you want in return.?</label>
+                  <input type="hidden" name="order_id" value="{{ $order_detail->order_id }}">
+                  <input type="hidden" name="product_id" value="{{ $order_detail->product_id }}">
+                  <p>
+                    <label class="radio-inline">
+                      <input type="radio" required checked="checked" value="refund" name="return_type"> Refund
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" required value="replacement" name="return_type"> Replacement
+                    </label>
+                  </p>
+                </div>
 
-  						</div>
-  					</div>
-  					<div class="form-group required">
-  						<label class="col-sm-2 control-label">Product is opened</label>
-  						<div class="col-sm-10">
-  							<label class="radio-inline">
-  								<input type="radio" value="1" name="opened"> Yes
-  							</label>
-  							<label class="radio-inline">
-  								<input type="radio" checked="checked" value="0" name="opened"> No
-  							</label>
-  						</div>
-  					</div>
-  					<div class="form-group">
-  						<label for="input-comment" class="col-sm-2 control-label">Please explain the issue in detail</label>
-  						<div class="col-sm-10">
-  							<textarea class="form-control" id="input-comment" placeholder="Other details" rows="10" name="comment"></textarea>
-  						</div>
-  					</div>
-  				</fieldset>
-  				<div class="buttons clearfix">
-  					<div class="pull-left"><a class="btn btn-default buttonGray">Back</a>
-  					</div>
-  					<div class="pull-right">
-              <p>only refund allowed as per return policy <a href="#">View Return Policy</a></p>
-  						<input type="submit" class="btn btn-primary" value="Submit">
-  					</div>
-  				</div>
-  			</form>
+                <div class="col-sm-4">
+                  <label >Reason for Return</label>
+                  <select name="return_reason" required class="form-control">
+                    <option value="">Select Reason</option>
+                    @foreach($reasons as $reason)
+                      <option value="{{ $reason->reason }}">{{ $reason->reason }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
 
-
+              <div class="form-group">
+                <div class="col-sm-8">
+                  <label for="input-explain" class=" control-label">Please explain the return issue in detail.</label>
+                  <textarea required class="form-control" id="input-explain" placeholder="Write Explain return issue." rows="3" name="explain_issue"></textarea>
+                </div>
+                <div class="col-sm-5">
+                    <label for="return_image" class="control-label">Add Images</label>
+                    <input type="file" id="return_image"  multiple name="return_image">
+                </div>
+              </div>
+              <p><input required type="checkbox" id="refund_policy" name="refund_policy"> <label for="refund_policy"> Only refund allowed as per return policy</label> <a href="#">View Return Policy</a></p>
+            </fieldset>
+              <div class="col-sm-8">
+                <div class="buttons clearfix">
+                  <div class="pull-left"><a href="{{ route('user.orderDetails', $order_detail->order_id) }}" class="btn btn-default">Cancel</a>
+                  </div>
+                  <div class="pull-right">
+                    <input type="submit" class="btn btn-primary" value="Confirm Return">
+                  </div>
+                </div>
+            </div>
+          </form>
+        @endif
   		</div>
   		<!--Middle Part End-->
-  		
+  	
   	</div>
   </div>
   <!-- //Main Container -->

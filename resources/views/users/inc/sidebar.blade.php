@@ -15,12 +15,10 @@
                 <li><a href="{{route('wishlists')}}">Wish List </a></li>
                 <li><a href="{{route('productCompare')}}">Compare</a></li>
                 <li><a href="{{route('user.orderHistory')}}">Order History </a></li>
-                <li><a href="#">Downloads </a></li>
-                <li><a href="#">Recurring payments </a></li>
-                <li><a href="#">Reward Points </a></li>
-                <li><a href="#">Returns </a></li>
-                <li><a href="#">Transactions </a></li>
-                <li><a href="#">Newsletter </a></li>
+                <li><a href="{{route('user.return_request')}}">Return Request</a></li>
+               <!--  <li><a href="#">Transactions </a></li> -->
+         <!--        <li><a href="#">Newsletter </a></li> -->
+               <!--  <li><a href="#">Reward Points </a></li> -->
                 <li><a href="{{route('user.change-password')}}">Change Password </a></li>
                 <li><a href="{{route('userLogout')}}">Logout</a></li>
                  

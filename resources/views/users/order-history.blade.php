@@ -7,8 +7,7 @@
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
 
 <style type="text/css">
-	
-	<style type="text/css">
+
     /*delete confirm popup*/
 
     .modal-confirm {
@@ -147,8 +146,10 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item text-inverse" title="View order" data-toggle="tooltip" href="{{route('user.orderDetails', $order->order_id)}}" data-original-title="View"><i class="fa fa-eye"></i> View Details</a></li>
-                                          
+                                            
+                                            @if($order->order_status != 'delivered')
                                             <li><a title="Cancel Order" data-target="#orderCancel" onclick="orderCancelPopup('{{ route("user.orderCancel", $order->order_id ) }}')" data-toggle="modal" class="dropdown-item" ><i class="fa fa-trash"></i> Cancel order</a></li>
+                                            @endif
                                         </ul>
                                     </div> 
 								</td>

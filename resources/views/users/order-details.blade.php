@@ -92,10 +92,10 @@
 				    <li  @if($order->order_status == 'pending' && $order->payment_method != 'pending') class="orderprocess" @endif @if($order->order_status != 'pending' && $order->payment_method != 'pending') class="active" @endif >Order placed</li>
 
 				    @if($order->order_status != 'cancel')
-				    <li  @if($order->order_status == 'on-review') class="orderprocess" @endif  @if($order->order_status == 'on-review' || $order->order_status == 'on-review' || $order->order_status == 'complete') class="active" @endif>Processing</li>
+				    <li  @if($order->order_status == 'on-review') class="orderprocess" @endif  @if($order->order_status == 'on-delivery' || $order->order_status == 'on-review' || $order->order_status == 'delivered') class="active" @endif>Processing</li>
 
-				    <li  @if($order->order_status == 'complete') class="orderprocess" @endif class="">On Delivery</li>
-				    <li>Complete</li>
+				    <li  @if($order->order_status == 'on-delivery') class="orderprocess" @endif   @if($order->order_status == 'delivered') class="active" @endif>On Delivery</li>
+				    <li @if($order->order_status == 'delivered') class="active" @endif >Delivered</li>
 				  	@else
 				    <li class="active">Cancel</li>
 				    @endif
@@ -177,47 +177,47 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($order->order_details as $item)
+							@foreach($order->order_details as $order_detail)
                                          
 							<tr>
 								<td class="text-left">
-									<img width="50" src="{{ asset('upload/images/product/thumb/'.$item->product->feature_image) }}">
-									 <a href="{{route('product_details', $item->product->slug)}}">{{Str::limit($item->product->title, 50)}}</a><br>
-                                    @foreach(json_decode($item->attributes) as $key=>$value)
+									<img width="50" src="{{ asset('upload/images/product/thumb/'.$order_detail->product->feature_image) }}">
+									 <a href="{{route('product_details', $order_detail->product->slug)}}">{{Str::limit($order_detail->product->title, 50)}}</a><br>
+                                    @foreach(json_decode($order_detail->attributes) as $key=>$value)
                                     <small> {{$key}} : {{$value}} </small>
                                     @endforeach
 								</td>
 								
-								<td class="text-right">{{$item->qty}}</td>
-								<td class="text-right">{{$order->currency_sign. $item->price}}</td>
-								<td class="text-right">{{$order->currency_sign. $item->price*$item->qty}}</td>
+								<td class="text-right">{{$order_detail->qty}}</td>
+								<td class="text-right">{{$order->currency_sign. $order_detail->price}}</td>
+								<td class="text-right">{{$order->currency_sign. $order_detail->price*$order_detail->qty}}</td>
 							
 								<td style="width: 150px; white-space: nowrap;">
 									
                                     <ul>
-                                    	@if($item->shipping_status == 'deliverd')
+                                    	@if($order_detail->shipping_status == 'deliverd')
                                     	<li><a title="Cancel Order" data-toggle="tooltip" data-original-title=" Write Product Review"><i class="fa fa-edit"></i> Write Review</a></li>
                                     	@endif
 
-                                        <li><a onclick="addToCart({{$item->product_id}})" title="" data-toggle="tooltip" data-original-title="Reorder"><i class="fa fa-shopping-cart"></i> Reorder</a></li>
+                                        <li><a onclick="addToCart({{$order_detail->product_id}})" title="" data-toggle="tooltip" data-original-title="Reorder"><i class="fa fa-shopping-cart"></i> Reorder</a></li>
                                         
-		                        	@if($item->shipping_status != 'cancel')
+		                        	@if($order_detail->shipping_status != 'cancel' && $order->payment_method != 'pending')
 
-		                        		@if($item->product->refundable == 1)
-			                        		<?php 
-						                        $current_time = strtotime(Carbon\Carbon::parse(now())->format('Y-m-d'));
-						                        $refund_time = strtotime(Carbon\Carbon::parse($item->shipping_date)->addDays(7)->format('Y-m-d'));
-			                        		?>
-			                        		@if($current_time<=$refund_time && $item->shipping_status == 'deliverd')
-	                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', $order->order_id)}}" data-original-title="Return ? Replace Order"><i class="fa fa-reply"></i> Return / Replace <br/> Eligible til {{Carbon\Carbon::parse($item->shipping_date)->addDays(7)->format('d m, Y')}} </a></li>
-	                                      	
-	                                      	@else
-	                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', $order->order_id)}}" data-original-title="Return"><i class="fa fa-reply"></i> Return / Replace</a></li>
-	                                      	@endif
+		                        		<?php 
+					                        $current_time = strtotime(Carbon\Carbon::parse(now())->format('Y-m-d'));
+					                        $refund_time = strtotime(Carbon\Carbon::parse($order_detail->shipping_date)->addDays(7)->format('Y-m-d'));
+		                        		?>
+		                        		@if($current_time<=$refund_time && $order_detail->shipping_status == 'deliverd')
+                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', [$order->order_id, $order_detail->product->slug])}}" data-original-title="Return ? Replace Order"><i class="fa fa-reply"></i> Return / Replace <br/> Eligible til {{Carbon\Carbon::parse($order_detail->shipping_date)->addDays(7)->format('d m, Y')}} </a></li>
+                                      	
+                                      	@else
+                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', [$order->order_id, $order_detail->product->slug])}}" data-original-title="Return"><i class="fa fa-reply"></i> Return / Replace</a></li>
                                       	@endif
-
-                                        <li><a title="Cancel Order" data-toggle="tooltip" data-original-title=" Cancel order"><i class="fa fa-trash"></i> Cancel</a></li>
                                     @endif
+
+                                    	@if($order_detail->product->shipping_status != 'delivered' || $order_detail->product->shipping_status != 'cancel')
+                                        <li><a title="Cancel Order" data-toggle="tooltip" data-original-title=" Cancel order"><i class="fa fa-trash"></i> Cancel</a></li>
+                                        @endif
                                     </ul>
                                    
 								</td>
