@@ -141,7 +141,7 @@
                                                     <select name="status" class="form-control">
                                                         <option value="">Select Status</option>
                                                         <option value="pending" {{ (Request::get('status') == 'pending') ? 'selected' : ''}} >Pending</option>
-                                                        <option value="accepted" {{ (Request::get('status') == 'accepted') ? 'selected' : ''}}>Accepted</option>
+                                                        <option value="processing" {{ (Request::get('status') == 'processing') ? 'selected' : ''}}>Accepted</option>
                                                         <option value="delivered" {{ (Request::get('status') == 'delivered') ? 'selected' : ''}}>Delivered</option>
                                                         <option value="cancel" {{ (Request::get('status') == 'cancel') ? 'selected' : ''}}>Cancel</option>
                                                         <option value="all" {{ (Request::get('status') == "all") ? 'selected' : ''}}>All</option>
@@ -225,8 +225,8 @@
                                                     <td>
                                                         <select style="background: #f3ca03;color: #fff" name="status" id="order_status" onchange="changeOrderStatus(this.value, '{{$order->order_id}}', 'order_status')">
                                                             <option value="pending" @if($order->order_status == 'pending') selected @endif>Pending</option>
-                                                            <option value="accepted" @if($order->order_status == 'accepted') selected @endif>Accepted</option>
-                                                            <option value="on-review" @if($order->order_status == 'on-review') selected @endif>On Review</option>
+                                                            <option value="processing" @if($order->order_status == 'processing') selected @endif>Accepted</option>
+                                                           
                                                             <option value="on-delivery" @if($order->order_status == 'on-delivery') selected @endif>On Delivery</option>
                                                             <option value="delivered" @if($order->order_status == 'delivered') selected @endif>Delivered</option>
                                                            @if($order->order_status == 'cancel')
@@ -236,7 +236,7 @@
                                                     </td>
                                                     <td>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             Action
                                                         </button>
                                                         <div class="dropdown-menu">

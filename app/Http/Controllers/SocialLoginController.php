@@ -32,7 +32,6 @@ class SocialLoginController extends Controller
     //handle Provider Callback response
     public function handleProviderCallback($provider)
     {
-
         try{
             $socialUser = Socialite::driver($provider)->user();
         }

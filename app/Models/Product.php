@@ -20,13 +20,19 @@ class Product extends Model
     public function get_childcategory(){
         return $this->belongsTo(Category::class, 'childcategory_id');
     }
+
     public function get_brand(){
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
-    public function get_features(){
-        return $this->hasMany(ProductFeature::class, 'product_id', 'id');
+    public function get_variations(){
+        return $this->hasMany(ProductVariation::class, 'product_id', 'id');
     }
+
+    public function get_features(){
+        return $this->hasMany(ProductFeature::class, 'product_id');
+    }
+
     public function get_galleryImages(){
         return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
@@ -42,4 +48,9 @@ class Product extends Model
     public function reviews(){
         return $this->hasMany(Review::class);
     }
+    public function videos(){
+        return $this->hasMany(ProductVideo::class);
+    }
+
+
 }

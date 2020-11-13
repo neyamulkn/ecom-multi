@@ -297,13 +297,31 @@ class HomeController extends Controller
     //disply product details by product id/slug
     public function product_details($slug)
     {
-        $data['product'] = Product::with('reviews.review_image_video', 'reviews.user:id,name,phato', 'reviews.review_comments.user', 'user:id,name','get_category:id,name','get_features')
+        $data['product'] = Product::with('reviews.review_image_video', 'reviews.user:id,name,phato', 'reviews.review_comments.user:id,name,phato', 'user:id,name','get_category:id,name', 'get_features','get_variations.get_variationDetails')
             ->where('slug', $slug)->first();
 
         if($data['product']) {
 
             $data['product']->increment('views'); // news view count
-            $data['related_products'] = Product::where('category_id', $data['product']->category_id)->where('id', '!=', $data['product']->id)->where('status', 'active')->take(8)->get();
+            $related_products = Product::where('status', 'active');
+            if($data['product']->childcategory_id != null){
+                $category_feild = 'childcategory_id';
+                $category_id = $data['product']->childcategory_id;
+            }elseif($data['product']->subcategory_id != null){
+                $category_feild = 'subcategory_id';
+                $category_id = $data['product']->subcategory_id;
+            }else{
+                $category_feild = 'category_id';
+                $category_id = $data['product']->category_id;
+            }
+
+            $data['related_products'] = $related_products->where($category_feild, $category_id)->selectRaw('id,title,slug,feature_image,selling_price,summery')->where('id', '!=', $data['product']->id)->take(8)->get();
+
+            $data['best_sales'] = Product::where('status', 'active')
+                ->where('id', '!=', $data['product']->id)
+                ->where($category_feild, $category_id)
+                ->selectRaw('id,title,selling_price,discount, slug, feature_image' )
+                ->orderBy('sales', 'desc')->take(12)->get();
 
             return view('frontend.products.product_details')->with($data);
         }else{

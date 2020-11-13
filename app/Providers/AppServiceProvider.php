@@ -30,10 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $siteSetting = GeneralSetting::first();
 
         Config::set('siteSetting', $siteSetting);
-        $site = [
-            'currency_symble' => $siteSetting->currency_symble,
-            'STRIPE_KEY' => '',
-        ];
-        view()->share('site', $site);
+
+        view()->share('site', $siteSetting);
     }
 }

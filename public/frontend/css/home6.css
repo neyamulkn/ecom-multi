@@ -2437,7 +2437,9 @@ div.required .control-label:before {
       padding: 0 0 5px 0; }
     .best-seller .so-extraslider .extraslider-inner .item .item-wrap.style1 .media-body .item-info .item-title a {
       text-transform: capitalize;
-      font-size: 15px;
+      font-size: 12px;
+      display: block;
+      line-height: 14px;
       font-weight: normal; }
     .best-seller .so-extraslider .extraslider-inner .item .item-wrap.style1 .media-body .item-info .item-title a:hover {
       color: #1d4c9e; }
@@ -7325,9 +7327,7 @@ footer a:hover {
  [2] BLOCK SEARCH
  [3] SOCIAL FOOTER
  ==============================================*/
-@media (min-width: 1400px) {
-  .layout-6 .container {
-    width: 1615px !important; } }
+
 
 h1 {
   font-size: 36px; }

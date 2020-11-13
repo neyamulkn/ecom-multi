@@ -359,7 +359,7 @@
                       <div class="so-loadeding"></div>
                       <div class="large-image  class-honizol">
 
-                       <img class="product-image-zoom" src="{{asset('upload/images/product/zoom/'. $product->feature_image)}}" data-zoom-image="{{asset('upload/images/product/'. $product->feature_image)}}" title="image">
+                       <img class="product-image-zoom" src="{{asset('upload/images/product/'. $product->feature_image)}}" data-zoom-image="{{asset('upload/images/product/'. $product->feature_image)}}" title="image">
                       </div>
                       <div id="thumb-slider" class="full_slider category-slider-inner products-list yt-content-slider" data-rtl="no" data-autoplay="no" data-pagination="no" data-delay="4" data-speed="0.6" data-margin="10" data-items_column0="3" data-items_column1="3" data-items_column2="3" data-items_column3="3" data-items_column4="2" data-arrows="yes" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
                           <div class="owl2-item " >
@@ -427,18 +427,20 @@
                           <div class="reward"><span>Reward Points:</span> 400</div>
                         </div> -->
                         <!-- //get feature attribute-->
-                        @foreach ($product->get_features->where('attribute_id', '!=', null) as $feature)
+
+                     
+                        @foreach ($product->get_variations as $variation)
                           <!-- show attribute name -->
-                          <?php $i=1; $attribute_name = str_replace(' ', '', $feature->get_attribute->name); ?>
-                          @if($feature->get_attribute->display_type==2)
+                          <?php $i=1; $attribute_name = str_replace(' ', '', $variation->attribute_name); ?>
+                          @if($variation->in_display==2)
 
                           <div class="product-size attribute-select">
-                              <span class="attribute_title"> {{$feature->get_attribute->name}}: </span>
+                              <span class="attribute_title"> {{$variation->attribute_name}}: </span>
                               <select name="{{$attribute_name}}">
                                   <!-- get feature details -->
-                                  @foreach($feature->get_featureDetails as $featureDetail)
+                                  @foreach($variation->$get_variationDetails as $variationDetail)
 
-                                    <option value="{{ $featureDetail->get_attributeValue->name}}">{{ $featureDetail->get_attributeValue->name}}</option>
+                                    <option value="{{ $variationDetail->attributeValue_name}}">{{ $variationDetail->attributeValue_name}}</option>
 
                                   @endforeach
                               </select>
@@ -446,17 +448,17 @@
                           @else
                           <div class="product-size">
                             <ul>
-                                <li class="attribute_title">{{$feature->get_attribute->name}}: </li>
+                                <li class="attribute_title">{{$variation->attribute_name}}: </li>
                                 <li class="attributes {{$attribute_name}}">
                                 <!-- get feature details -->
-                                 @foreach($feature->get_featureDetails as $featureDetail)
+                                 @foreach($variation->$get_variationDetails as $variationDetail)
                                   <!-- show feature attribute value name -->
 
-                                    <label @if($featureDetail->color) style="background:{{$featureDetail->color}}; color:#ebebeb; " @endif class="attributes_value @if($i == 1) active @endif" for="{{$attribute_name.$featureDetail->get_attributeValue->id}}" >
+                                    <label @if($variationDetail->color) style="background:{{$variationDetail->color}}; color:#ebebeb; " @endif class="attributes_value @if($i == 1) active @endif" for="{{$attribute_name.$variationDetail->id}}" >
                                     <span class="selected"></span>
-                                    <input @if($i == 1) checked @endif onclick="changeColor('{{$attribute_name}}', {{$featureDetail->get_attributeValue->id}})" id="{{$attribute_name.$featureDetail->get_attributeValue->id}}" value="{{ $featureDetail->get_attributeValue->name}}" name="{{$attribute_name}}"  type="{{($feature->get_attribute->display_type==3) ? 'radio' : 'radio'}}" />
+                                    <input @if($i == 1) checked @endif onclick="changeColor('{{$attribute_name}}', {{$variationDetail->id}})" id="{{$attribute_name.$variationDetail->id}}" value="{{ $variationDetail->attributeValue_name}}" name="{{$attribute_name}}"  type="{{($variation->in_display==3) ? 'radio' : 'radio'}}" />
 
-                                    {{ $featureDetail->get_attributeValue->name}}</label>
+                                    {{ $variationDetail->attributeValue_name}}</label>
                                     <?php $i++; ?>
 
                                   @endforeach
@@ -650,10 +652,10 @@
                       <div class="tab-pane" id="tab-specification">
                         <div class="row">
                           <div class="col-md-8" >
-                          @foreach($product->get_features->where('attribute_id', '=', null) as $feature)
+                          @foreach($product->get_features as $feature)
 
                             <div class="col-6 col-md-6">
-                                <strong>{{$feature->name}}: </strong> {{$feature->value}}
+                                <strong>{{ $feature->name }}: </strong> {{$feature->value}}
                             </div>
                           @endforeach
                           </div>
@@ -763,11 +765,12 @@
                       </div>
                   </div>
                   <div class="col-md-12">
+                    @if(count($product->reviews)>0)
                       <div class="review-wrapper blog-listitem">
                         @foreach($product->reviews->toArray() as $review)
                           <div class="single-review">
                               <div class="review-img">
-                                  <img width="50" height="50" src="{{asset('upload/users/avatars/'.$review['user']['phato'])}}" alt="" />
+                                  <img width="40" height="40" src="{{asset('upload/users/avatars/'.$review['user']['phato'])}}" alt=" " />
                               </div>
                               <div class="review-content">
                                   <div class="review-top-wrap">
@@ -778,9 +781,9 @@
                                             @endfor
                                           </div>
                                            By <a href="#">{{$review['user']['name']}}</a> | {{Carbon\Carbon::parse($review['created_at'])->diffForHumans()}}
-                                           <div style="float: right;">
+                                           <!-- <div style="float: right;">
                                               <a href="#">Reply</a>
-                                          </div>
+                                          </div> -->
                                       </div>
                                       
                                   </div>
@@ -809,260 +812,93 @@
                               </div>
                           </div>
                         @endforeach
-                         <div class="single-review">
-                              <div class="review-img">
-                                  <img width="50" src="{{asset('frontend')}}/images/testimonial-image/1.png" alt="" />
-                              </div>
-                              <div class="review-content">
-                                  <div class="review-top-wrap">
-                                      <div class="review-left">
-                                          <div class="rating-product">
-                                              <i class="fa fa-star checked"></i>
-                                              <i class="fa fa-star checked"></i>
-                                              <i class="fa fa-star checked"></i>
-                                              <i class="fa fa-star checked"></i>
-                                              <i class="fa fa-star "></i>
-                                          </div>
-                                      </div>
-                                      <div class="review-left">
-                                          <a href="#">Reply</a>
-                                      </div>
-                                  </div>
-                                  By <a href="#">White Lewis</a> | 4 weeks ago
-                                  <div class="review-bottom">
-                                      <p class="more">
-                                          Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper euismod vehicula. Phasellus quam nisi, congue id nulla.Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper euismod vehicula. Phasellus quam nisi, congue id nulla.Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper euismod vehicula. Phasellus quam nisi, congue id nulla.
-                                      </p>
-                                  </div>
-                              </div>
-                          </div>
-
                       </div>
+                    @else
+                    <div style="text-align: center;">No product reviews</div>
+                    @endif
                   </div>
               </div>
             </div>
             <div class="col-md-3 sticky-content">
+              @if(count($best_sales)>0)
               <div class="moduletable module so-extraslider-ltr best-seller best-seller-custom">
                 <h3 class="modtitle"><span>Best Sellers</span></h3>
                 <div class="modcontent">
                   <div id="so_extra_slider" class="so-extraslider buttom-type1 preset00-1 preset01-1 preset02-1 preset03-1 preset04-1 button-type1">
                     <div class="extraslider-inner " >
-                      <div class="item ">
-                        <div class="item-wrap style1 ">
-                          <div class="item-wrap-inner">
-                           <div class="media-left">
-                            <div class="item-image">
-                               <div class="item-img-info product-image-container ">
-                                <div class="box-label">
-                                </div>
-                                <a class="lt-image" data-product="104" href="#" target="_self" title="Toshiba Pro 21&quot;(21:9) FHD  IPS LED 1920X1080 HDMI(2)">
-                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/25.jpg" alt="Toshiba Pro 21&quot;(21:9) FHD  IPS LED 1920X1080 HDMI(2)">
-                                </a>
-                               </div>
-                            </div>
-                           </div>
-                           <div class="media-body">
+                        <div class="item ">
+                          @foreach($best_sales as $product)
+                          <div class="item-wrap style1 ">
+                            <div class="item-wrap-inner">
+                             <div class="media-left">
+                              <div class="item-image">
+                                 <div class="item-img-info product-image-container ">
+                                  <div class="box-label">
+                                  </div>
+                                  <a class="lt-image" data-product="66" href="{{ route('product_details', $product->slug) }}" >
+                                  <img src="{{asset('upload/images/product/thumb/'. $product->feature_image)}}" alt="">
+                                  </a>
+                                 </div>
+                              </div>
+                             </div>
+                             <div class="media-body">
                               <div class="item-info">
-                               <!-- Begin title -->
-                               <div class="item-title">
-                               <a href="product.html" target="_self" title="Toshiba Pro 21&quot;(21:9) FHD  IPS LED 1920X1080 HDMI(2) ">
-                                Toshiba Pro 21"(21:9) FHD  IPS LED 1920X1080 HDMI(2)
-                                </a>
-                               </div>
-                               <!-- Begin ratting -->
-                               <div class="rating">
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-half-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                               </div>
-                               <!-- Begin item-content -->
-                               <div class="price">
-                                <span class="old-price product-price">$62.00</span>
-                                <span class="price-old">$337.99</span>
-                               </div>
-                            </div>
-                           </div>
-                           <!-- End item-info -->
-                          </div>
-                          <!-- End item-wrap-inner -->
-                        </div>
-                         <!-- End item-wrap -->
-                        <div class="item-wrap style1 ">
-                          <div class="item-wrap-inner">
-                           <div class="media-left">
-                            <div class="item-image">
-                               <div class="item-img-info product-image-container ">
-                                <div class="box-label">
-                                </div>
-                                <a class="lt-image" data-product="66" href="#" title="Compact Portable Charger (Power Bank) with Premium">
-                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/19.jpg" alt="Compact Portable Charger (Power Bank) with Premium">
-                                </a>
-                               </div>
-                            </div>
-                           </div>
-                           <div class="media-body">
-                            <div class="item-info">
-                               <!-- Begin title -->
-                               <div class="item-title">
-                                <a href="product.html" target="_self" title="Compact Portable Charger (Power Bank) with Premium ">
-                                Compact Portable Charger (Power Bank) with Premium
-                                </a>
-                               </div>
-                               <!-- Begin ratting -->
-                               <div class="rating">
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                               </div>
-                               <!-- Begin item-content -->
-                               <div class="price">
-                                <span class="old-price product-price">$74.00</span>
-                                <span class="price-old">$241.99</span>
-                               </div>
-                            </div>
-                           </div>
-                           <!-- End item-info -->
-                          </div>
-                          <!-- End item-wrap-inner -->
-                         </div>
-                         <div class="item-wrap style1 ">
-                          <div class="item-wrap-inner">
-                           <div class="media-left">
-                            <div class="item-image">
-                               <div class="item-img-info product-image-container ">
-                                <div class="box-label">
-                                </div>
-                                <a class="lt-image" data-product="66" href="#" title="Compact Portable Charger (Power Bank) with Premium">
-                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/19.jpg" alt="Compact Portable Charger (Power Bank) with Premium">
-                                </a>
-                               </div>
-                            </div>
-                           </div>
-                           <div class="media-body">
-                            <div class="item-info">
-                               <!-- Begin title -->
-                               <div class="item-title">
-                                <a href="product.html" target="_self" title="Compact Portable Charger (Power Bank) with Premium ">
-                                Compact Portable Charger (Power Bank) with Premium
-                                </a>
-                               </div>
-                               <!-- Begin ratting -->
-                               <div class="rating">
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                               </div>
-                               <!-- Begin item-content -->
-                               <div class="price">
-                                <span class="old-price product-price">$74.00</span>
-                                <span class="price-old">$241.99</span>
-                               </div>
-                            </div>
-                           </div>
-                           <!-- End item-info -->
-                          </div>
-                        </div>
-                        <!-- End item-wrap-inner -->
-                         <!-- End item-wrap -->
-                         <div class="item-wrap style1 ">
-                          <div class="item-wrap-inner">
-                           <div class="media-left">
-                            <div class="item-image">
-                               <div class="item-img-info product-image-container ">
-                                <div class="box-label">
-                                </div>
-                                <a class="lt-image" target="_self" title="Philipin Tour Group Manila/ Pattaya / Mactan ">
-                                <img src="{{asset('frontend')}}/image/catalog/demo/product/travel/8.jpg" alt="Philipin Tour Group Manila/ Pattaya / Mactan ">
-                                </a>
-                               </div>
-                            </div>
-                           </div>
-                           <div class="media-body">
-                            <div class="item-info">
-                               <!-- Begin title -->
-                               <div class="item-title">
-                                <a href="product.html" target="_self" title="Philipin Tour Group Manila/ Pattaya / Mactan  ">
-                                Philipin Tour Group Manila/ Pattaya / Mactan
-                                </a>
-                               </div>
-                               <!-- Begin ratting -->
-                               <div class="rating">
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                               </div>
-                               <!-- Begin item-content -->
-                               <div class="price">
-                                <span class="old-price product-price">$74.00</span>
-                                <span class="price-old">$122.00</span>
-                               </div>
-                            </div>
-                           </div>
-                           <!-- End item-info -->
-                          </div>
-                          <!-- End item-wrap-inner -->
-                         </div>
-                         <!-- End item-wrap -->
-                         <div class="item-wrap style1">
-                          <div class="item-wrap-inner">
-                           <div class="media-left">
-                            <div class="item-image">
-                               <div class="item-img-info product-image-container ">
-                                <div class="box-label">
-                                </div>
-                                <a class="lt-image" data-product="78" href="#">
-                                <img src="{{asset('frontend')}}/image/catalog/demo/product/electronic/4.jpg" alt="Portable  Compact Charger (External Battery) t45">
-                                </a>
-                               </div>
-                            </div>
-                           </div>
-                           <div class="media-body">
-                            <div class="item-info">
-                               <!-- Begin title -->
-                               <div class="item-title">
-                                <a href="product.html" target="_self" title="Portable  Compact Charger (External Battery) t45 ">
-                                Portable  Compact Charger (External Battery) t45
-                                </a>
-                               </div>
-                               <!-- Begin ratting -->
-                               <div class="rating">
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                               </div>
-                               <!-- Begin item-content -->
-                               <div class="price">
-                                <span class="old-price product-price">$74.00</span>
-                                <span class="price-old">$122.00</span>
-                               </div>
-                            </div>
-                           </div>
-                           <!-- End item-info -->
-                          </div>
-                          <!-- End item-wrap-inner -->
-                         </div>
-                         <!-- End item-wrap -->
-                        </div>
+                                 <!-- Begin title -->
+                                 <div class="item-title">
+                                  <a href="{{ route('product_details', $product->slug) }}" target="_self">
+                                 {{Str::limit($product->title, 20)}}
+                                  </a>
+                                 </div>
+                                 <!-- Begin ratting -->
+                                 <div class="rating">
+                                 {{\App\Http\Controllers\HelperController::ratting(round($product->reviews->avg('ratting'), 1))}}
+                                 </div>
+                                 <!-- Begin item-content -->
+                                 <div class="price">
+                                 
+                                   @php
+                                      $discount =  \App\Http\Controllers\OfferController::discount($product->id, Session::get('offerId'));
+                                      @endphp
 
+                                  @if($discount)
+                                      <span class="price-new  product-price">{{Config::get('siteSetting.currency_symble')}}{{ $discount['discount_price'] }}</span>
+                                      <span class="price-old">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span>
+                                  @else
+                                      <span class="price-new  product-price">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span>
+                                  @endif
+                                 </div>
+                              </div>
+                             </div>
+                             <!-- End item-info -->
+                            </div>
+                            <!-- End item-wrap-inner -->
+                          </div>
+                          @endforeach
+                        </div>
                     </div>
                   </div>
                 </div>
              </div>
+             @endif
             </div>
           </div>
         </div>
     </section>
-    @include('frontend.review.review')
+     @if(count($related_products)>0)
+     <section style="margin-bottom: 10px;">
+        <div class="container">
+          <div class="products-list grid row number-col-6 so-filter-gird" >
+             <h3 class="modtitle" style="margin:10px 0 0">Related Products</h3>
+              @foreach($related_products as $product)
+              <div class="product-layout col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                  @include('frontend.products.products')
+              </div>
+              @endforeach
+          </div>
+        </div>
+      </section>
+      @endif
+     @include('frontend.review.review')
     <div class="modal fade" id="video_pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg" role="document">
        <div class="modal-content" style="background-color: inherit;border:none;box-shadow: none;">

@@ -37,12 +37,6 @@ class AdminOrderController extends Controller
         return view('404');
     }
 
-    //order return
-    public function orderReturn ($order_id)
-    {
-        return view('users.order-return');
-    }
-
 
     // change Order Status function
     public function changeOrderStatus(Request $request){

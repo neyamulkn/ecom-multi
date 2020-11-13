@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\GeneralSetting;
 use App\Models\RefundReason;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class RefundReasonController extends Controller
 {
+
+    public function refundConfig(){
+        return view('admin.refund.returnConfigure');
+    }
+
     //return lists
     public function index()
     {

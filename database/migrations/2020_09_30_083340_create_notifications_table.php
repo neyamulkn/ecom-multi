@@ -15,7 +15,7 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 15);
+            $table->string('type', 15)->comment('product, order, adminPay, wallet, refund, blTransfer');
             $table->integer('fromUser')->nullable();
             $table->integer('toUser')->nullable();
             $table->string('item_id', 10)->nullable();

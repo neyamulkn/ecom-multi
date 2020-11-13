@@ -22,6 +22,31 @@
                 }
             });
         }
+    </script>     
+
+    <script type="text/javascript">
+        // delete product feature detail
+        function deleteDataCommon(table,id, field=''){
+            if(confirm('Are you sure delete.?')) {
+                var route = '{{ route("deleteDataCommon") }}';
+                route = route.replace(":id", id);
+                $.ajax({
+                    url:route,
+                    method:"get",
+                    data:{table:table,id:id,field:field},
+                    success:function(data){
+                        if(data.status){
+                            $("#"+table+id).remove();
+                            toastr.success(data.msg);
+                        }else{
+                            toastr.error(data.msg);
+                        }
+                    }
+                });
+             }else{
+                return false;
+            }
+        }
     </script>    
 
     <script type="text/javascript">

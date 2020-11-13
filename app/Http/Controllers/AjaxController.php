@@ -12,6 +12,10 @@ use App\Models\Page;
 use App\Models\PredefinedFeature;
 use App\Models\Product;
 use App\Models\ProductAttribute;
+use App\Models\ProductFeature;
+use App\Models\ProductFeatureDetail;
+use App\Models\ProductVariation;
+use App\Models\ProductVariationDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +41,7 @@ class AjaxController extends Controller
     	$subchildcategories = Category::where('subcategory_id', $subcat_id)->get();
         $output = '';
         if(count($subchildcategories)>0){
-            $output .= '<option value="">Select Subcategory</option>';
+            $output .= '<option value="">Select child category</option>';
             foreach($subchildcategories as $subchildcategory){
                 $output .='<option '. (old("subcategory") == $subchildcategory->id ? "selected" : "" ).' value="'.$subchildcategory->id.'">'.$subchildcategory->name.'</option>';
             }
@@ -74,9 +78,9 @@ class AjaxController extends Controller
         $cities = City::where('state_id', $id)->get();
         $output = '';
         if(count($cities)>0){
-            $output .= '<option value="">Select area</option>';
+            $output .= '<option value="">Select city</option>';
             foreach($cities as $city){
-                $output .='<option '. (old("area") == $city->id ? "selected" : "" ).' value="'.$city->id.'">'.$city->name.'</option>';
+                $output .='<option value="'.$city->id.'">'.$city->name.'</option>';
             }
         }
         echo $output;
@@ -124,43 +128,62 @@ class AjaxController extends Controller
     }
 
 
-    // get brand
-    public function getBrand($category_id){
-    	$brands = Brand::where('category_id', $category_id)->orWhere('category_id', 0)->get();
-    	$output = '';
-    	if(count($brands)>0){
-    		$output = '
-	                <div class="form-group">
-	                    <label class="required" for="brand">Brand </label>
-	                    <select name="brand" style="width:100%" id="brand" class="form-control custom-select">
-	                       <option value="">Select Brand</option>.';
-	                      		foreach ($brands as $brand) {
-	                      			$output .= '<option value="'.$brand->id.'">'.$brand->name.'</option>';
-	                      		}
-	                    $output .= '</select>
-	                </div>
-	            ';
-    	}
-    	echo $output;
-    }
-
     public function getFeature($category_id){
         $getFeature = PredefinedFeature::where('category_id', $category_id)->get();
 
         $output = '';
         if(count($getFeature)>0){
-            $output = '<div class="form-group row">';
+            $output = '<div class="row">';
             foreach ($getFeature as $feature) {
-                $output .=  '<span class="col-4 col-sm-2 required text-right col-form-label">'.$feature->name.' </span>
-                <input type="hidden" value="'.$feature->name.'" class="form-control"  name="FeatureName[]"  placeholder="Enter name">
+                $output .=  '<div style="margin-bottom:10px;" class="col-4 col-sm-2 '.($feature->is_required == null ?: "required").' text-right col-form-label">'.$feature->name.'
+                <input type="hidden" value="'.$feature->name.'" class="form-control"  name="features['.$feature->id.']"></div>
                 <div class="col-8 col-sm-4">
-                    <input type="text" required name="FeatureValue[]" class="form-control"  placeholder="Input value here">
+                    <input type="text" '.($feature->is_required == null ?: "required").' name="featureValue['.$feature->id.']" class="form-control"  placeholder="Input value here">
                 </div>';
             }
             $output .= '</div>';
         }
         echo $output;
     }
+
+    // delete Variation
+    public function deleteVariation($id)
+    {
+        $delete = ProductVariation::where('id', $id)->delete();
+        if($delete){
+            ProductVariationDetails::where('variation_id', $id)->delete();
+            $output = [
+                'status' => true,
+                'msg' => 'Variation deleted successfully.'
+            ];
+        }else{
+            $output = [
+                'status' => false,
+                'msg' => 'Variation cannot deleted.'
+            ];
+        }
+        return response()->json($output);
+    }
+
+    // delete Data Common
+    public function deleteDataCommon(Request $request)
+    {
+        $field = ($request->field) ? $request->field : 'id';
+        $delete = $status = DB::table($request->table)->where($field, $request->id)->delete();
+        if($delete){
+            $output = [
+                'status' => true,
+                'msg' => 'Data deleted successfully.'
+            ];
+        }else{
+            $output = [
+                'status' => false,
+                'msg' => 'Data cannot deleted.'
+            ];
+        }
+        return response()->json($output);
+    }
+
 
     public function getMenuSourch($type){
         $getSources = [];

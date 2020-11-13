@@ -170,13 +170,8 @@
                                             Product Attribute & Features
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                <div class="checkbox2">
-                                                    <input type="checkbox" id="productVariation" name="productVariation" value="1">
-                                                    <label for="productVariation">Add Product Variant</label>
-                                              </div>      
-                                            </div> 
-                                            <div id="productVariationField" style="display: none;">
+                                           
+                                            <div id="productVariationField" >
                                                 <div id="getAttributesByCategory"></div>
                                                 <div id="getAttributesBySubcategory"></div>
                                                 <div id="getAttributesByChildcategory"></div>
@@ -188,7 +183,6 @@
                                             <!-- Allow attribute checkbox button -->
                                             <div class="form-group">
                                                 <div class="checkbox2">
-                                                    
                                                     <label for="predefinedFeature">Product Features</label>
                                                 </div>
                                             </div>
@@ -196,9 +190,9 @@
                                             <div id="PredefinedFeatureBycategory"></div>
                                             <div id="PredefinedFeatureBySubcategory"></div>
                                             <div id="PredefinedFeatureByChildcategory"></div>
-                                            <div class="form-group row"><span class="col-4 col-sm-2 text-right col-form-label">Feature name</span> <div class="col-8 col-sm-4"> <input type="text" class="form-control"  name="FeatureName[]"  placeholder="Feature name"> </div><span class="col-4 col-sm-2 text-right col-form-label">Feature Value</span> <div class="col-7 col-sm-3"> <input type="text" name="FeatureValue[]" class="form-control"  placeholder="Input value here"> </div> <div class="col-1"><button class="btn btn-success" type="button" onclick="extraPredefinedFeature();"><i class="fa fa-plus"></i></button></div></div>
+                                           <!--  <div class="form-group row"><span class="col-4 col-sm-2 text-right col-form-label">Feature name</span> <div class="col-8 col-sm-4"> <input type="text" class="form-control"  name="extraFeatureName[]"  placeholder="Feature name"> </div><span class="col-4 col-sm-2 text-right col-form-label">Feature Value</span> <div class="col-7 col-sm-3"> <input type="text" name="extraFeatureValue[]" class="form-control"  placeholder="Input value here"> </div> <div class="col-1"><button class="btn btn-success" type="button" onclick="extraPredefinedFeature();"><i class="fa fa-plus"></i></button></div></div>
                                             <div id="extraPredefinedFeature"></div>
-                                            <div class="row justify-content-md-center"><div class="col-md-4"> <span  style="cursor: pointer;" class="btn btn-info" onclick="extraPredefinedFeature()"><i class="fa fa-plus"></i> Add More Feature </span></div></div> <hr/>';
+                                            <div class="row justify-content-md-center"><div class="col-md-4"> <span  style="cursor: pointer;" class="btn btn-info btn-sm" onclick="extraPredefinedFeature()"><i class="fa fa-plus"></i> Add More Feature </span></div></div> <hr/> -->
             
                                         </div>
                                         
@@ -211,7 +205,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="required">Product Description</label>
-                                               <textarea name="description" class="summernote form-control">{{old('description')}}</textarea>
+                                               <textarea required="" name="description" class="summernote form-control">{{old('description')}}</textarea>
                                            </div>
                                         </div>
                                           
@@ -221,7 +215,7 @@
                                                     Shipping & Delivery
                                                 </div>
                                                
-                                                <div class="col-md-12">
+                                                <!-- <div class="col-md-12">
                                                    <div class="row">
                                                         <div class="col-md-12">
                                                             <label class="required" >Product Package</label>
@@ -258,13 +252,13 @@
                                                        
                                                     </div>
                                                 </div>
-
+ -->
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         
                                                         <div class="checkbox2">
-                                                          <input type="checkbox" id="ship_time" value="1"> 
-                                                          <label class="required" for="ship_time">Allow Shipping Charge</label>
+                                                          <input type="checkbox" required id="ship_time" value="1"> 
+                                                          <label class="required"  for="ship_time">Allow Shipping Charge</label>
                                                         </div>
                                                                   
                                                     </div> 
@@ -272,7 +266,7 @@
 
                                                         <div class="form-group">
                                                             <div class="checkbox2 shipping-method">
-                                                                <label for="free_shipping"><input type="radio" name="shipping_method" id="free_shipping" required value="free"> 
+                                                                <label for="free_shipping"><input  type="radio" name="shipping_method" id="free_shipping" required value="free"> 
                                                                 Free Shipping</label>
 
                                                                 <label for="Flate_shipping"><input type="radio" name="shipping_method" id="Flate_shipping" required value="Flate"> 
@@ -344,7 +338,17 @@
                                             </div>
                                         </div>
                                        
-                                        <div class="col-md-12" id="brand"></div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="required" for="brand">Brand </label>
+                                                <select name="brand" id="brand" style="width:100%" id="brand" class="form-control custom-select">
+                                                   <option value="">Select Brand</option>
+                                                   @foreach($brands as $brand)
+                                                   <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                                   @endforeach
+                                               </select>
+                                           </div>
+                                        </div>
 
                                     	<div class="col-md-12">
                                             <div class="form-group"> 
@@ -381,7 +385,7 @@
                                             </div> 
                                             <div id="video_display"  style="display: none;">
                                                 <div id="extra_video_fields"></div>
-                                                <div class="form-group" style="text-align: center;"><span  style="cursor: pointer;" class="btn btn-info" onclick="extra_video_fields()"><i class="fa fa-plus"></i> Add More </span>
+                                                <div class="form-group" style="text-align: center;"><span  style="cursor: pointer;" class="btn btn-info btn-sm" onclick="extra_video_fields()"><i class="fa fa-plus"></i> Add More </span>
                                                 </div>
 
                                             </div>
@@ -445,8 +449,6 @@
                 $('#getAttributesBySubcategory').html(' ');
                 $('#getAttributesByChildcategory').html(' ');
 
-          	//get brand by category
-                getBrand(id);
             //get product feature by sub category
                 getFeature(id, 'PredefinedFeatureBycategory');
             //when category change reset feature
@@ -477,8 +479,7 @@
         function get_subchild_category(id=''){
             //enable loader
             document.getElementById('pageLoading').style.display ='block';
-            //get brand
-            getBrand(id);
+           
             //get product feature by sub category
             getFeature(id, 'PredefinedFeatureBySubcategory');
             //when sub category change reset feature 
@@ -534,26 +535,7 @@
                 }
             });
         }           
-
-        // get brand by Category 
-        function getBrand(id){
-
-            var  url = '{{route("getBrand", ":id")}}';
-            url = url.replace(':id',id);
-            $.ajax({
-                url:url,
-                method:"get",
-                success:function(data){
-                	
-                    if(data){
-                        $("#brand").html(data);
-                    }else{
-                        $("#brand").html('');
-                    }
-                }
-            });
-        }          
-
+        
         // get feature by Category 
         function getFeature(id, category){
 
@@ -604,7 +586,7 @@
     });     
 
     $("#Location_shipping").change(function() {
-        if(this.checked) { $("#shipping-field").html('<div class="col-md-3"><span class="required">Select Specific Region</span><select required name="region_id" id="region_id" class="form-control custom-select"> @foreach($regions as $region) <option value="{{$region->id}}">{{$region->name}}</option> @endforeach </select></div><div class="col-md-2"><span class="required">Shipping Cost</span><input class="form-control" name="shipping_cost" placeholder="Exm: 50" min="1" type="number"></div></div><div class="col-md-3"><span>Others region shipping cost</span><input class="form-control" name="shipping_time" placeholder="Exm: 55" min="1" type="number"></div><div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" placeholder="Exm: 3-4 days" type="text"></div>'); }
+        if(this.checked) { $("#shipping-field").html('<div class="col-md-3"><span class="required">Select Specific Region</span><select required name="ship_region_id" id="ship_region_id" class="form-control custom-select"> @foreach($regions as $region) <option value="{{$region->id}}">{{$region->name}}</option> @endforeach </select></div><div class="col-md-2"><span class="required">Shipping Cost</span><input class="form-control" name="shipping_cost" placeholder="Exm: 50" min="1" type="number"></div></div><div class="col-md-3"><span>Others region shipping cost</span><input class="form-control" name="other_region_cost" placeholder="Exm: 55" min="1" type="number"></div><div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" placeholder="Exm: 3-4 days" type="text"></div>'); }
         else { $("#shipping-field").html(''); }
     });    
 
@@ -618,7 +600,7 @@
         var divtest = document.createElement("div");
         divtest.setAttribute("class", "form-group removeclass" + shipping);
         var rdiv = 'removeclass' + shipping;
-        divtest.innerHTML = '<div class="col-md-4"><span class="required">Select Region</span><select required name="video_type" id="video_type" class="form-control custom-select"><option value="1">Youtube</option> <option value="2">Vimeo</option></select></div><div class="col-md-2"><span class="required">Shipping Cost</span><input class="form-control" name="shipping_time" id="ship_time" placeholder="Exm: 50" value="" min="1" type="number"></div><div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" id="ship_time" value="Exm: 3-4 days" type="text"></div><div class="col-1"><button class="btn btn-danger" type="button" onclick="remove_shipping_fields(' + shipping + ');"><i class="fa fa-times"></i></button></div>';
+        divtest.innerHTML = '<div class="col-md-4"><span class="required">Select Region</span><select required name="video_provider[]" id="video_provider" class="form-control custom-select"><option value="1">Youtube</option> <option value="2">Vimeo</option></select></div><div class="col-md-2"><span class="required">Shipping Cost</span><input class="form-control" name="shipping_time" id="ship_time" placeholder="Exm: 50" value="" min="1" type="number"></div><div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" id="ship_time" value="Exm: 3-4 days" type="text"></div><div class="col-1"><button class="btn btn-danger" type="button" onclick="remove_shipping_fields(' + shipping + ');"><i class="fa fa-times"></i></button></div>';
 
         objTo.appendChild(divtest)
     }
@@ -629,10 +611,7 @@
 	    else { $("#seoField").hide(); }
 	});    
 
-    $("#productVariation").change(function() {
-        if(this.checked) { $("#productVariationField").show(); }
-        else { $("#productVariationField").hide(); }
-    });
+ 
     </script>
 
     <script type="text/javascript">
@@ -647,7 +626,7 @@
         var divtest = document.createElement("div");
         divtest.setAttribute("class", " removeclass" + extraAttribute);
         var rdiv = 'removeclass' + extraAttribute;
-        divtest.innerHTML = '<div class="form-group row"><span class="col-4 col-sm-2 text-right col-form-label">Feature name</span> <div class="col-8 col-sm-4"> <input type="text" class="form-control"  name="FeatureName[]"  placeholder="Feature name"> </div><span class="col-4 col-sm-2 text-right col-form-label">Feature Value</span> <div class="col-7 col-sm-3"> <input type="text" name="FeatureValue[]" class="form-control"  placeholder="Input value here"> </div> <div class="col-1"><button class="btn btn-danger" type="button" onclick="remove_extraPredefinedFeature(' + extraAttribute + ');"><i class="fa fa-times"></i></button></div></div>';
+        divtest.innerHTML = '<div class="form-group row"><span class="col-4 col-sm-2 text-right col-form-label">Feature name</span> <div class="col-8 col-sm-4"> <input type="text" class="form-control"  name="Features[]" placeholder="Feature name"> </div><span class="col-4 col-sm-2 text-right col-form-label">Feature Value</span> <div class="col-7 col-sm-3"> <input type="text" name="FeatureValue[]" class="form-control"  placeholder="Input value here"> </div> <div class="col-1"><button class="btn btn-danger" type="button" onclick="remove_extraPredefinedFeature(' + extraAttribute + ');"><i class="fa fa-times"></i></button></div></div>';
 
         objTo.appendChild(divtest)
     }
@@ -662,7 +641,7 @@
 
         if(this.checked) { 
             $("#video_display").show(); 
-            $("#extra_video_fields").html('<div class="row" style="align-items: center"><div class="col-10"><div class="form-group"><span for="video_type" class="required">Video Type</span><select required name="video_type" id="video_type" class="form-control custom-select"><option value="1">Youtube</option> <option value="2">Vimeo</option></select><span class="required">Video link</span><input class="form-control" name="video_link" id="video_link" required placeholder="Exm: https://www.youtube.com" value="" type="text"></div></div><div class="col-1"><button class="btn btn-success" type="button" onclick="extra_video_fields()"><i class="fa fa-plus"></i></button></div></div>'); 
+            $("#extra_video_fields").html('<div class="row" style="align-items: center"><div class="col-10"><div class="form-group"><span for="video_provider" class="required">Video Type</span><select required name="video_provider[]" id="video_provider" class="form-control custom-select"><option value="youtube">Youtube</option> <option value="vimeo">Vimeo</option></select><span class="required">Video link</span><input class="form-control" name="video_link[]" id="video_link" required placeholder="Exm: https://www.youtube.com" value="" type="text"></div></div><div class="col-1"><button class="btn btn-success" type="button" onclick="extra_video_fields()"><i class="fa fa-plus"></i></button></div></div>'); 
         }
         else {  
            
@@ -681,7 +660,7 @@
         var divtest = document.createElement("div");
         divtest.setAttribute("class", "form-group removeclass" + product_video);
         var rdiv = 'removeclass' + product_video;
-        divtest.innerHTML = '<div class="row" style="align-items: center"><div class="col-10"><div class="form-group"><span for="video_type" class="required">Video Type</span><select required name="video_type" id="video_type" class="form-control custom-select"><option value="1">Youtube</option> <option value="2">Vimeo</option></select><span class="required">Video link</span><input class="form-control" required name="video_link" id="video_link" placeholder="Exm: https://www.youtube.com" value="" type="text"></div></div><div class="col-1"><button class="btn btn-danger" type="button" onclick="remove_extra_video_fields(' + product_video + ');"><i class="fa fa-times"></i></button></div></div>';
+        divtest.innerHTML = '<div class="row" style="align-items: center"><div class="col-10"><div class="form-group"><span for="video_provider" class="required">Video Type</span><select required name="video_provider[]" id="video_provider" class="form-control custom-select"><option value="1">Youtube</option> <option value="2">Vimeo</option></select><span class="required">Video link</span><input class="form-control" required name="video_link[]" id="video_link" placeholder="Exm: https://www.youtube.com" value="" type="text"></div></div><div class="col-1"><button class="btn btn-danger" type="button" onclick="remove_extra_video_fields(' + product_video + ');"><i class="fa fa-times"></i></button></div></div>';
 
         objTo.appendChild(divtest)
     }

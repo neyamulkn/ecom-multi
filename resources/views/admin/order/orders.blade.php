@@ -6,95 +6,7 @@
     <link rel="stylesheet" type="text/css"
         href="{{asset('assets')}}/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
 
-    <style type="text/css">
 
-    /*delete confirm popup*/
-
-    .modal-confirm {
-        color: #636363;
-        width: 400px;
-    }
-    .modal-confirm .modal-content {
-        padding: 20px;
-        border-radius: 5px;
-        border: none;
-        text-align: center;
-        font-size: 14px;
-    }
-    .modal-confirm .modal-header {
-        border-bottom: none;
-        position: relative;
-    }
-    .modal-confirm h4 {
-        text-align: center;
-        font-size: 26px;
-    }
-    .modal-confirm .close {
-        position: absolute;
-        top: -5px;
-        right: -2px;
-    }
-    .modal-confirm .modal-body {
-        color: #999;
-    }
-    .modal-confirm .modal-footer {
-        border: none;
-        text-align: center;
-        border-radius: 5px;
-        font-size: 13px;
-        padding: 10px 15px 25px;
-    }
-    .modal-confirm .modal-footer a {
-        color: #999;
-    }
-    .modal-confirm .icon-box {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto;
-        border-radius: 50%;
-        z-index: 9;
-        text-align: center;
-        border: 3px solid #f15e5e;
-    }
-    .modal-confirm .icon-box i {
-        color: #f15e5e;
-        font-size: 46px;
-        display: inline-block;
-        margin-top: 13px;
-    }
-    .modal-confirm .btn {
-        color: #fff;
-        border-radius: 4px;
-        background: #60c7c1;
-        text-decoration: none;
-        transition: all 0.4s;
-        line-height: normal;
-        min-width: 120px;
-        border: none;
-        min-height: 40px;
-        border-radius: 3px;
-        margin: 0 5px;
-        outline: none !important;
-    }
-    .modal-confirm .btn-info {
-        background: #c1c1c1;
-    }
-    .modal-confirm .btn-info:hover, .modal-confirm .btn-info:focus {
-        background: #a8a8a8;
-    }
-    .modal-confirm .btn-danger {
-        background: #f15e5e;
-    }
-    .modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
-        background: #ee3535;
-    }
-    .trigger-btn {
-        display: inline-block;
-        margin: 100px auto;
-    }
-    .display-5{font-size: 2rem !important;}
-    /*delete confirm popup*/
-</style>
 @endsection
 @section('content')
 
@@ -124,16 +36,16 @@
                 <!-- End Bread crumb and right sidebar toggle -->
                
                 <?php 
-                    $all = $pending = $accepted = $on_review = $on_delivery = $delivered = 0;
+                    $all = $pending = $accepted = $on_delivery = $delivered = $cancel = 0;
                     foreach($orders as $order_status){
           
                         if($order_status->order_status == 'pending'){ $pending +=1 ; }
-                        if($order_status->order_status == 'accepted'){ $accepted +=1 ; }
-                        if($order_status->order_status == 'on-review'){ $on_review +=1 ; }
+                        if($order_status->order_status == 'processing'){ $accepted +=1 ; }
                         if($order_status->order_status == 'on-delivery'){ $on_delivery +=1 ; }
                         if($order_status->order_status == 'delivered'){ $delivered +=1 ; }
+                        if($order_status->order_status == 'cancel'){ $cancel +=1 ; }
                     }
-                    $all = $pending+$accepted +$on_review+ $on_delivery+ $delivered;
+                    $all = $pending+$accepted +$on_delivery+ $delivered;
 
                 ?>
                 <div class="row">
@@ -173,18 +85,7 @@
                         </div>
                     </div>
                     </div>
-                    <!-- Column -->
-                    <div class="col-md-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">On Review</h5>
-                            <div class="d-flex no-block align-items-center">
-                                <span class="display-5 text-warning"><i class="fa fa-hourglass-half"></i></span>
-                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$on_review}}</a>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+                  
                     <!-- Column -->
                     <div class="col-md-2">
                     <div class="card">
@@ -201,9 +102,21 @@
                     <div class="col-md-2">
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">Cancel</h5>
+                            <div class="d-flex no-block align-items-center">
+                                <span class="display-5 text-danger"><i class="fa fa-times"></i></span>
+                                <a href="javscript:void(0)" class="link display-5 ml-auto">{{$cancel}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-body">
                             <h5 class="card-title">Complete</h5>
                             <div class="d-flex no-block align-items-center">
-                                <span class="display-5 text-success"><i class="fa fa-check-circle"></i></span>
+                                <span class="display-5 text-success"><i class="fa fa-handshake"></i></span>
                                 <a href="javscript:void(0)" class="link display-5 ml-auto">{{$delivered}}</a>
                             </div>
                         </div>
@@ -226,7 +139,8 @@
                                                     <select name="status" class="form-control">
                                                         <option value="">Select Status</option>
                                                         <option value="pending" {{ (Request::get('status') == 'pending') ? 'selected' : ''}} >Pending</option>
-                                                        <option value="accepted" {{ (Request::get('status') == 'accepted') ? 'selected' : ''}}>Accepted</option>
+                                                        <option value="processing" {{ (Request::get('status') == 'processing') ? 'selected' : ''}}>Accepted</option>
+                                                        <option value="on-delivery" {{ (Request::get('status') == 'delivered') ? 'selected' : ''}}>On Delivery</option>
                                                         <option value="delivered" {{ (Request::get('status') == 'delivered') ? 'selected' : ''}}>Delivered</option>
                                                         <option value="cancel" {{ (Request::get('status') == 'cancel') ? 'selected' : ''}}>Cancel</option>
                                                         <option value="all" {{ (Request::get('status') == "all") ? 'selected' : ''}}>All</option>
@@ -312,8 +226,8 @@
                                                         <td>
                                                             <select style="background: #f3ca03;color: #fff" name="status" id="order_status" onchange="changeOrderStatus(this.value, '{{$order->order_id}}', 'order_status')">
                                                                 <option value="pending" @if($order->order_status == 'pending') selected @endif>Pending</option>
-                                                                <option value="accepted" @if($order->order_status == 'accepted') selected @endif>Accepted</option>
-                                                                <option value="on-review" @if($order->order_status == 'on-review') selected @endif>On Review</option>
+                                                                <option value="processing" @if($order->order_status == 'processing') selected @endif>Accepted</option>
+                                                                
                                                                 <option value="on-delivery" @if($order->order_status == 'on-delivery') selected @endif>On Delivery</option>
                                                                 <option value="delivered" @if($order->order_status == 'delivered') selected @endif>Delivered</option>
                                                                @if($order->order_status == 'cancel')
@@ -323,9 +237,8 @@
                                                         </td>
                                                         <td>
 
-
-                                                             <div class="btn-group">
-                                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-defualt dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 Action
                                                             </button>
                                                             <div class="dropdown-menu">
@@ -339,6 +252,7 @@
                                                                 </span>
                                                             </div>
                                                         </div>
+                                                        
                                                         </td>
 
                                                     </tr>

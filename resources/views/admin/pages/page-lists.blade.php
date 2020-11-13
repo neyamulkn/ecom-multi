@@ -52,6 +52,7 @@
                                             <tr>
                                                 <th>Page Title</th>
                                                 <th>Display In</th>
+                                                <th>Is Default</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -65,7 +66,7 @@
                                                     @if($data->main_header == 1) Main Header Menu<br/> @endif
                                                     @if($data->footer == 1) Footer Menu @endif
                                                 </td>
-                                               
+                                                <td>@if($data->is_default ==1)<span class="label label-warning">Default</span>@else<span class="label label-info">Custom</span>@endif</td>
                                                 <td>
                                                     <div class="custom-control custom-switch" style="padding-left: 3.25rem;">
                                                       <input name="status" onclick="satusActiveDeactive('pages', {{$data->id}})"  type="checkbox" {{($data->status == 1) ? 'checked' : ''}} class="custom-control-input" id="status{{$data->id}}">
@@ -73,11 +74,11 @@
                                                     </div>
                                                 </td>
                                                 
-
                                                 <td>
-                                                    
-                                                    <button type="button" onclick="edit('{{$data->id}}')"  data-toggle="modal" data-target="#edit" class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</button>
+                                                    <a href="{{ route('page.edit', $data->slug)}}"  class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</a>
+                                                    @if($data->is_default !=1)
                                                     <button data-target="#delete" onclick='deleteConfirmPopup("{{route("page.delete", $data->id)}}")' class="btn btn-danger btn-sm" data-toggle="modal"><i class="ti-trash" aria-hidden="true"></i> Delete</button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -101,7 +102,6 @@
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
 
-    
        @include('admin.modal.delete-modal')
 
 @endsection
@@ -118,6 +118,25 @@
         
        
     </script>
+
+    <script type="text/javascript">
+        //change status by id
+        function satusActiveDeactive(table, id, field = null){
+            var  url = '{{route("statusChange")}}';
+            $.ajax({
+                url:url,
+                method:"get",
+                data:{table:table,field:field,id:id},
+                success:function(data){
+                    if(data.status){
+                        toastr.success(data.message);
+                    }else{
+                        toastr.error(data.message);
+                    }
+                }
+            });
+        }
+    </script>  
     <script>
         $(document).ready(function(){
             $( "#positionSorting" ).sortable({

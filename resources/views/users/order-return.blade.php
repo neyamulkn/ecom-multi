@@ -30,9 +30,9 @@
          <p><strong>Request Reason: </strong> {{$checkReturn->return_reason}}</p>
         <p><strong>Request Type: </strong> {{$checkReturn->return_type}}</p>
        
-        <p><strong>Request Status: </strong>  @if($checkReturn->refund_status == 1)
+        <p><strong>Request Status: </strong>  @if($checkReturn->refund_status == 'approved')
                   <span class="label label-success">Approved</span>
-                  @elseif($checkReturn->refund_status == 3)
+                  @elseif($checkReturn->refund_status == 'reject')
                    <span class="label label-danger">Reject</span>
                   @else
                   <span class="label label-info">Pending</span>

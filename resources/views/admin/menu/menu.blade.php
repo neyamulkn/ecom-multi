@@ -116,7 +116,7 @@
         </div>
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
-        <!-- update Modal -->
+        <!-- add Modal -->
         <div class="modal fade" id="add" role="dialog"  tabindex="-1" aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
 
@@ -210,10 +210,10 @@
             </div>
           </div>
         <!-- update Modal -->
-        <div class="modal fade" id="edit" role="dialog"  tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal fade" id="edit" role="dialog"  tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <form action="{{route('menu.update')}}"  method="post">
-                      {{ csrf_field() }}
+                {{ csrf_field() }}
                   <!-- Modal content-->
                   <div class="modal-content">
                     <div class="modal-header">
@@ -228,7 +228,7 @@
                   </div>
                 </form>
             </div>
-          </div>
+        </div>
 
         <!-- delete Modal -->
         @include('admin.modal.delete-modal')

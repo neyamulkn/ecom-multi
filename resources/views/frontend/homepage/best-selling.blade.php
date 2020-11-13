@@ -1,8 +1,8 @@
 <?php  
 
 $products = App\Models\Product::where('status', 'active')
-->leftJoin('order_details', 'products.id', 'order_details.product_id')
-->selectRaw('products.id,title,selling_price,discount, slug, feature_image, count(order_details.product_id) total_sale' )->groupBy('order_details.product_id')->orderBy('total_sale', 'desc')->take(10)->get(); 
+->selectRaw('id,title,selling_price,discount,slug, feature_image')
+->orderBy('sales', 'desc')->take(10)->get(); 
 
 ?>
 @if(count($products)>0)

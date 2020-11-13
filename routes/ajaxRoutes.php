@@ -13,8 +13,15 @@ Route::get('get/subchild/category/{subcat_id}', 'AjaxController@get_subchild_cat
 
 Route::get('get/attribute/{cat_id}', 'AjaxController@getAttributeByCategory')->name('getAttributeByCategory');
 Route::get('get/brand/{cat_id}', 'AjaxController@getBrand')->name('getBrand');
+
 // get product feature in product upload
 Route::get('get/feature/{cat_id}', 'AjaxController@getFeature')->name('getFeature');
+
+//delete variation product edit page
+Route::get('product/variation/delete/{id}', 'AjaxController@deleteVariation')->name('deleteVariation');
+//delete data common all table
+Route::get('/delete/data/common', 'AjaxController@deleteDataCommon')->name('deleteDataCommon');
+
 //get menu source
 Route::get('get/menu/sourch/{type}', 'AjaxController@getMenuSourch')->name('getMenuSourch');
 

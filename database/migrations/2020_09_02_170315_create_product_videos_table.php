@@ -15,7 +15,8 @@ class CreateProductVideosTable extends Migration
     {
         Schema::create('product_videos', function (Blueprint $table) {
             $table->id();
-            $table->integer('type')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->string('provider',15)->nullable();
             $table->string('link');
         });
     }

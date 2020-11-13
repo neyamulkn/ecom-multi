@@ -7,14 +7,9 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 //backend common routes
-
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('category/{catslug?}/{subslug?}/{childslug?}', 'HomeController@category')->name('home.category');
@@ -55,7 +50,6 @@ Route::get('about-us', 'HomeController@aboutUs')->name('contactUs');
 Route::get('brand/{slug}', 'HomeController@brandProducts')->name('brandProducts');
 Route::get('more/{slug}', 'HomeController@moreProducts')->name('moreProducts');
 
-
 Route::get('offer', 'OfferController@offers')->name('offers');
 Route::get('offer/{slug}', 'OfferController@offerDetails')->name('offer.details');
 
@@ -66,8 +60,8 @@ Route::get('today-deals', 'FrontPagesController@todayDeals')->name('todayDeals')
 Route::get('mega-discount', 'FrontPagesController@megaDiscount')->name('megaDiscount');
 Route::get('{page}', 'FrontPagesController@page')->name('page');
 
-Route::get('social-login/redirect/{provider}', 'SocialLoginController@redirectToProvider')->name('social.login');
-Route::get('social-login/{provider}/callback', 'SocialLoginController@handleProviderCallback')->name('social.callback');
+Route::get('auth/redirect/{provider}', 'SocialLoginController@redirectToProvider')->name('social.login');
+Route::get('auth/{provider}/callback', 'SocialLoginController@handleProviderCallback')->name('social.callback');
 
 Auth::routes();
 

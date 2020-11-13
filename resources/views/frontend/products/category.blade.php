@@ -35,7 +35,7 @@
     <div class="container product-detail">
         <div class="row">
             <aside class="col-md-3 col-sm-4 col-xs-12 content-aside left_column sidebar-offcanvas sticky-content">
-               
+             
                 <span id="close-sidebar" class="fa fa-times"></span>
                 <div class="module so_filter_wrap filter-horizontal">
                     <h3 class="modtitle"><span>Filter By</span> 

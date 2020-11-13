@@ -33,7 +33,7 @@
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
-                        <th>Sub Total</th>
+                        <th style="text-align: right;">Sub Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,12 +49,12 @@
                         
                         <td>{{$order->currency_sign. $item->price}}</td>
                         <td>{{$item->qty}}</td>
-                        <td>{{$order->currency_sign. $item->price*$item->qty}}</td>
+                        <td style="text-align: right;">{{$order->currency_sign. $item->price*$item->qty}}</td>
                       </tr> 
                     @endforeach
                    
                 </tbody>
-                <tfoot>
+                <tfoot style="text-align: right;">
                     <tr>
                         <td colspan="3"></td>
                         <td ><b>Sub-Total</b>

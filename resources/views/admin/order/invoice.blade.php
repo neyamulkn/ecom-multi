@@ -37,11 +37,7 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="container">
-                        <div class="col-md-12">
-                            <div class="text-right no-print">
-                                <button id="print" class="btn btn-default btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
-                            </div>
-                        </div>
+                       
                         <div class="col-md-12">
                             <div class="card card-body printableArea">
                                 <h3><b>INVOICE NO: </b> <span class="pull-right">#{{$order->order_id}}</span></h3>

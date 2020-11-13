@@ -397,11 +397,9 @@
             url:url,
             method:"get",
             success:function(data){
-                if(data.status){
-                    $("#show_city").html(data.allcity);
-                    $("#shipping_cost").html(data.shipping_cost);
-                    $('#couponAmount').html(data.couponAmount);
-                    $('#grandTotal').html(data.grandTotal);
+                if(data){
+                    $("#show_city").html(data);
+                  
                     $("#show_city").focus();
                 }else{
                     $("#show_city").html('<option>City not found</option>');

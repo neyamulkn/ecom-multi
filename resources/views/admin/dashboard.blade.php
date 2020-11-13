@@ -165,7 +165,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Complete Orders</h5>
                             <div class="d-flex no-block align-items-center">
-                                <span class="display-5 text-success"><i class="fa fa-check-circle"></i></span>
+                                <span class="display-5 text-success"><i class="fa fa-handshake"></i></span>
                                 <a href="javscript:void(0)" class="link display-5 ml-auto">{{$completeOrders}}</a>
                             </div>
                         </div>

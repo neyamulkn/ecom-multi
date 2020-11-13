@@ -92,7 +92,7 @@
 				    <li  @if($order->order_status == 'pending' && $order->payment_method != 'pending') class="orderprocess" @endif @if($order->order_status != 'pending' && $order->payment_method != 'pending') class="active" @endif >Order placed</li>
 
 				    @if($order->order_status != 'cancel')
-				    <li  @if($order->order_status == 'on-review') class="orderprocess" @endif  @if($order->order_status == 'on-delivery' || $order->order_status == 'on-review' || $order->order_status == 'delivered') class="active" @endif>Processing</li>
+				    <li  @if($order->order_status == 'processing') class="orderprocess" @endif  @if($order->order_status == 'on-delivery' || $order->order_status == 'processing' || $order->order_status == 'delivered') class="active" @endif>Processing</li>
 
 				    <li  @if($order->order_status == 'on-delivery') class="orderprocess" @endif   @if($order->order_status == 'delivered') class="active" @endif>On Delivery</li>
 				    <li @if($order->order_status == 'delivered') class="active" @endif >Delivered</li>

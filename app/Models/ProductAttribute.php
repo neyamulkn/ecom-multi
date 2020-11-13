@@ -13,6 +13,10 @@ class ProductAttribute extends Model
     public function get_category(){
         return $this->belongsTo(Category::class, 'category_id');
     }
+    public function variations(){
+        return $this->hasMany(ProductVariation::class, 'attribute_id');
+    }
+
 
     public function get_attrValues(){
         return $this->hasMany(ProductAttributeValue::class, 'attribute_id');

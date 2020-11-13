@@ -8,9 +8,39 @@ Route::get('/register', 'Admin\AdminLoginController@RegisterForm')->name('adminR
 Route::post('/register', 'Admin\AdminLoginController@register')->name('adminRegister');
 Route::get('/logout', 'Admin\AdminLoginController@logout')->name('adminLogout');
 
+
+Route::group(['middleware' => ['auth:admin', 'admin']], function(){
+
+	//setting
+	Route::get('general/setting', 'GeneralSettingController@generalSetting')->name('generalSetting');
+	Route::post('general/setting/update/{id}', 'GeneralSettingController@generalSettingUpdate')->name('generalSettingUpdate');
+
+	Route::get('logo/setting', 'GeneralSettingController@logoSetting')->name('logoSetting');
+	Route::post('logo/setting/update/{id}', 'GeneralSettingController@logoSettingUpdate')->name('logoSettingUpdate');
+	
+	Route::get('social/setting', 'GeneralSettingController@socialSetting')->name('socialSetting');
+	Route::post('social/setting/update/{id}', 'GeneralSettingController@socialSettingUpdate')->name('socialSettingUpdate');
+	
+	Route::get('footer/setting', 'GeneralSettingController@footerSetting')->name('footerSetting');
+	Route::post('footer/setting/update/{id}', 'GeneralSettingController@footerSettingUpdate')->name('footerSettingUpdate');
+
+	Route::get('refund/request/{status?}', 'RefundController@adminReturnRequestList')->name('admin.refundRequest');
+	Route::get('refund/request/status/{id}', 'RefundController@refundRequestStatus')->name('admin.refundRequestStatus');
+	Route::get('refund/request/details/{id}', 'RefundController@refundRequestDetails')->name('admin.refundRequestDetails');
+	Route::get('refund/request/approved/{id}/{status}', 'RefundController@refundRequestApproved')->name('admin.refundRequestApproved');
+
+	Route::get('site/setting/update/status', 'SiteSettingController@siteSettingActiveDeactive')->name('siteSettingActiveDeactive');
+	Route::post('site/setting/update', 'SiteSettingController@siteSettingUpdate')->name('siteSettingUpdate');
+
+
+});
+
 // authenticate routes & check role admin
 Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], function(){
 	Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
+
+	
+	//category routes
 	Route::get('category', 'CategoryController@category')->name('category');
 	Route::get('get/category', 'CategoryController@getcategory')->name('getcategory');
 	Route::post('category/store', 'CategoryController@category_store')->name('category.store');
@@ -85,8 +115,8 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 	Route::get('product/upload', 'ProductController@upload')->name('admin.product.upload');
 	Route::post('product/store', 'ProductController@store')->name('admin.product.store');
 	Route::get('product/{status?}', 'ProductController@index')->name('admin.product.list');
-	Route::get('product/edit/{id}', 'ProductController@edit')->name('admin.product.edit');
-	Route::post('product/update', 'ProductController@update')->name('admin.product.update');
+	Route::get('product/edit/{slug}', 'ProductController@edit')->name('admin.product.edit');
+	Route::post('product/update/{product_id}', 'ProductController@update')->name('admin.product.update');
 	Route::get('product/delete/{id}', 'ProductController@delete')->name('admin.product.delete');
 	//get highlight popup
 	Route::get('product/highlight//popup/{id}', 'ProductController@highlight')->name('product.highlight');
@@ -130,7 +160,7 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 	Route::get('page/create', 'PageController@create')->name('page.create');
 	Route::post('page/store', 'PageController@store')->name('page.store');
 	Route::get('page/list', 'PageController@index')->name('page.list');
-	Route::get('page/{id}/edit', 'PageController@edit')->name('page.edit');
+	Route::get('page/{slug}/edit', 'PageController@edit')->name('page.edit');
 	Route::post('page/update/{id}', 'PageController@update')->name('page.update');
 	Route::get('page/delete/{id}', 'PageController@delete')->name('page.delete');
 	Route::get('page/slug/create', 'PageController@getSlug')->name('page.slug');
@@ -249,7 +279,11 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 	Route::get('order/cancel/{order_id?}', 'AdminOrderController@orderCancel')->name('admin.orderCancel');
 
 
-	// area route
+	// refund Config route
+	Route::get('refund/configuration', 'RefundReasonController@refundConfig')->name('admin.refundConfig');
+	Route::post('refund/configuration/update', 'RefundReasonController@refundConfigUpdate')->name('admin.refundConfigUpdate');
+
+	// refund reason route
 	Route::get('return/order/reason', 'RefundReasonController@index')->name('returnReason');
 	Route::post('return/order/reason/store', 'RefundReasonController@store')->name('returnReason.store');
 	Route::get('return/order/reason/edit/{id}', 'RefundReasonController@edit')->name('returnReason.edit');
@@ -257,9 +291,7 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 	Route::get('return/order/reason/delete/{id}', 'RefundReasonController@delete')->name('returnReason.delete');
 
 
-	Route::get('order/return/{order_id?}', 'AdminOrderController@orderReturn')->name('admin.orderReturn');
-
-
+	
 });
 
 

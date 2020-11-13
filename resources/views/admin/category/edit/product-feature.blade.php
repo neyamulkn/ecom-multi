@@ -35,7 +35,12 @@
     </div>
 </div>
 
+<div class="col-md-4">
+    <div class="form-group">
 
+    <input @if($data->is_required) checked @endif name="is_required" id="is_required" type="checkbox" > <label for="is_required"> Is Requird</label>
+    </div>
+</div>
 <div class="col-md-12 mb-12">
     <div class="form-group">
         

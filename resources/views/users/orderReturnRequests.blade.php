@@ -54,14 +54,13 @@
                 <td class="text-center">{{$returnRequest->return_type}}</td>
                 <td class="text-center"> {{$returnRequest->return_reason}} </td>
                 <td class="text-center" style="width: 90px;"> 
-                  @if($returnRequest->refund_status == 1)
+                  @if($returnRequest->refund_status == 'approved')
                   <span class="label label-success">Approved</span>
-                  @elseif($returnRequest->refund_status == 3)
+                  @elseif($returnRequest->refund_status == 'reject')
                    <span class="label label-danger">Reject</span>
                   @else
                   <span class="label label-info">Pending</span>
                   @endif
-                </td>
                 <td>{{Carbon\Carbon::parse($returnRequest->created_at)->format('d M, Y h:m:i A')}}</td>
                 <td><a href="{{route('user.orderReturn', [$returnRequest->order_id, $returnRequest->slug])}}"> <i class="fa fa-eye"></i> </a> </td>
               </tr>

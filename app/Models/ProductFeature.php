@@ -10,7 +10,7 @@ class ProductFeature extends Model
     public $timestamps = false;
 
     public function get_attribute(){
-        return $this->belongsTo(ProductAttribute::class, 'attribute_id');
+        return $this->belongsTo(ProductAttribute::class, 'attribute_id', 'id');
     }
 
     // get attribute details by feature_id in product front details page

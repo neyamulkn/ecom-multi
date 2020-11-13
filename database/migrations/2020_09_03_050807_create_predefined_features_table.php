@@ -17,10 +17,11 @@ class CreatePredefinedFeaturesTable extends Migration
             $table->id();
             $table->integer('vendor_id')->nullable();
             $table->integer('category_id');
+            $table->tinyInteger('is_required')->nullable();
             $table->string('name',125);
             $table->integer('created_by');
             $table->tinyInteger('status')->default(1);
-            $table->timestamps();
+           
         });
     }
 

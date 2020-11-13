@@ -72,8 +72,8 @@
                             <div class="row justify-content-md-center">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <label class="required" for="page_title">Page Name</label>
-                                        <input type="text" onchange="getSlug(this.value)" value="{{old('page_title')}}" placeholder="Enter page name" name="page_title" required="" id="page_title" class="form-control" >
+                                        <label class="required" for="title">Page Name</label>
+                                        <input type="text" onchange="getSlug(this.value)" value="{{old('title')}}" placeholder="Enter page name" name="title" required="" id="title" class="form-control" >
                                        
                                     </div>
                                    
@@ -81,7 +81,7 @@
 
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <label class="required" for="page_title">Page Slug</label>
+                                        <label class="required" for="title">Page Slug</label>
                                         <input required type="text" id="slugEdit" name="slug"  class="form-control" >
                                     </div>
                                      

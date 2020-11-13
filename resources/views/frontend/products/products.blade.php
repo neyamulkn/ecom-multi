@@ -16,7 +16,7 @@
                     </label><br/>
                     @php
                     $discount =  \App\Http\Controllers\OfferController::discount($product->id, Session::get('offerId'));
-                @endphp
+                    @endphp
 
                 @if($discount)
                     <span class="price-new">{{Config::get('siteSetting.currency_symble')}}{{ $discount['discount_price'] }}</span>

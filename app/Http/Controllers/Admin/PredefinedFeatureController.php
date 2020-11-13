@@ -36,6 +36,7 @@ class PredefinedFeatureController extends Controller
         $data->name = $request->name;
         $data->category_id = $request->category_id;
 
+        $data->is_required = ($request->is_required ? 1 : null);
         $data->status = ($request->status ? 1 : 0);
         $data->created_by = Auth::id();
         $data->vendor_id = ($request->vendor_id ? $request->vendor_id : Auth::guard('vendor')->id());
@@ -70,7 +71,7 @@ class PredefinedFeatureController extends Controller
         $data = PredefinedFeature::find($request->id);
         $data->name = $request->name;
         $data->category_id = $request->category_id;
-
+        $data->is_required = ($request->is_required ? 1 : null);
         $data->status = ($request->status ? 1 : 0);
         $data->created_by = Auth::id();
         $data->vendor_id = ($request->vendor_id ? $request->vendor_id : Auth::guard('vendor')->id());

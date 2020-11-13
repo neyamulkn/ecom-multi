@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\OrderDetail;
 use App\Models\Refund;
 use App\Models\RefundConversation;
 use App\Models\RefundReason;
+use App\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,9 +65,9 @@ class RefundController extends Controller
             $refund->return_reason = $request->return_reason;
             $refund->seller_id = $order_detail->vendor_id;
             $refund->refund_status = 'pending';
-            $send = $refund->save();
+            $store = $refund->save();
 
-            if($send){
+            if($store){
                 $refundConversation = new RefundConversation();
                 $refundConversation->refund_id = $refund->id;
                 $refundConversation->order_id = $order_detail->order_id;
@@ -79,6 +81,14 @@ class RefundController extends Controller
                     $refundConversation->image = $new_image_name;
                 }
                 $refundConversation->save();
+                //insert notification in database
+                Notification::create([
+                    'type' => 'refund',
+                    'fromUser' => Auth::id(),
+                    'toUser' => 0,
+                    'item_id' => $refund->id,
+                    'notify' => 'refund request',
+                ]);
                 Toastr::success('Return request send success.');
             }else{
                 Toastr::error('Return request sending failed.');
@@ -104,14 +114,87 @@ class RefundController extends Controller
     }
 
     //admin return request list
-    public function adminReturnRequestList()
+    public function adminReturnRequestList(Request $request, $status='')
+    {
+        $returnRequests = Refund::join('products', 'refunds.product_id', 'products.id')
+            ->join('order_details', 'refunds.product_id', 'order_details.product_id')
+            ->join('users', 'refunds.user_id', 'users.id');
+
+            if($status || isset($request->status)) {
+                $status = ($request->status) ? $request->status : $status;
+                if ($status != 'all'){
+                    $returnRequests->where('refund_status', $status);
+                }
+            }
+            $returnRequests = $returnRequests->selectRaw('refunds.*, title,slug,feature_image,attributes,name')->get();
+
+        return view('admin.refund.returnRequest')->with(compact('returnRequests'));
+    }
+
+    //seller return request list
+    public function sellerReturnRequestList()
     {
         $returnRequests = Refund::join('products', 'refunds.product_id', 'products.id')
             ->join('order_details', 'refunds.product_id', 'order_details.product_id')
             ->selectRaw('refunds.*, title,slug,feature_image,attributes')
             ->get();
         return view('users.orderReturnRequests')->with(compact('returnRequests'));
-
     }
+
+    //refund request details display
+    public function refundRequestDetails($refund_id){
+        $data['refundDetails'] = Refund::with('refundConversations')
+            ->join('orders', 'refunds.order_id', 'orders.order_id')
+            ->join('products', 'refunds.product_id', 'products.id')
+            ->join('order_details', 'refunds.product_id', 'order_details.product_id')
+            ->where('refunds.id', $refund_id)
+            ->selectRaw('refunds.*,shipping_status,currency_sign, payment_status,billing_name,billing_phone,billing_email, title,slug,feature_image,attributes')->first();
+        return view('admin.refund.returnRequestDetails')->with($data);
+    }
+
+    //refund request approved Or reject
+    public function refundRequestApproved($refund_id, $status){
+        $refund = Refund::find($refund_id);
+        if($refund) {
+//            if ($status == 'approved'){
+//                if ($refund->seller_approval == 1) {
+//                    $seller = Seller::where('user_id', $refund->seller_id)->first();
+//                    if ($seller != null) {
+//                        $seller->admin_to_pay -= $refund->refund_amount;
+//                    }
+//                    $seller->save();
+//                }
+//                $wallet = new Wallet;
+//                $wallet->user_id = $refund->user_id;
+//                $wallet->amount = $refund->refund_amount;
+//                $wallet->payment_method = 'Refund';
+//                $wallet->payment_details = 'Product Money Refund';
+//                $wallet->save();
+//                $user = User::findOrFail($refund->user_id);
+//                $user->wallet_balance += $refund->refund_amount;
+//                $user->save();
+//            }
+
+            $refund->admin_approval = 1;
+            $refund->refund_status = $status;
+            $refund->save();
+
+            //insert notification in database
+            Notification::create([
+                'type' => 'refund',
+                'fromUser' => null,
+                'toUser' => $refund->user_id,
+                'item_id' => $refund->id,
+                'notify' => 'refund request '. $status,
+            ]);
+
+           Toastr::success('refund request '. $status);
+        }else{
+           Toastr::error('Sorry something went wrong.');
+        }
+        return back();
+    }
+
+
 
 }

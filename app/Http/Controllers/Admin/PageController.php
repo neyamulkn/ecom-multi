@@ -30,37 +30,29 @@ class PageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'page_title' => 'required|unique:pages',
+            'title' => 'required',
             'page_dsc' => 'required',
         ]);
 
-        $menu = new Menu();
-        $menu->name = $request->page_title;
-        $menu->menu_source = 'page';
-        $menu->top_header = ($request->top_header ? 1 : null);
-        $menu->main_header = ($request->main_header ? 1 : null);
-        $menu->footer = ($request->footer ? 1 : null);
-        $menu->status = 1;
-        $store = $menu->save();
+        //insert page
+        $data  = new Page();
+        $data->title = $request->title;
+        $data->slug = $this->createSlug('pages', $request->slug);
+        $data->description = $request->page_dsc;
+        $data->meta_title = $request->meta_title;
+        $data->meta_keywords = ($request->meta_keywords) ? implode(',', $request->meta_keywords) : null;
+        $data->meta_description = $request->meta_description;
+        $data->top_header = ($request->top_header ? 1 : null);
+        $data->main_header = ($request->main_header ? 1 : null);
+        $data->footer = ($request->footer ? 1 : null);
+        $data->status = ($request->status ? 1 : 0);
+        $data->created_by = Auth::id();
+        $store = $data->save();
 
         if($store){
-            $data  = new Page();
-            $data->title = $request->page_title;
-            $data->menu_id = $menu->id;
-            $data->slug = $request->slug;
-            $data->description = $request->page_dsc;
-            $data->meta_title = $request->meta_title;
-            $data->meta_keywords = ($request->meta_keywords) ? implode(',', $request->meta_keywords) : null;
-            $data->meta_description = $request->meta_description;
-            $data->top_header = ($request->top_header ? 1 : null);
-            $data->main_header = ($request->main_header ? 1 : null);
-            $data->footer = ($request->footer ? 1 : null);
-            $data->status = ($request->status ? 1 : 0);
-            $data->created_by = Auth::id();
-            $data->save();
             Toastr::success('Page Create Successfully.');
         }else{
-            Toastr::error('Page Cannot Create.!');
+            Toastr::success('Page Can\'t Create.');
         }
 
         return back();
@@ -68,15 +60,37 @@ class PageController extends Controller
 
 
     // View edit data by item ID
-    public function edit(Page $page)
+    public function edit($slug)
     {
-        //
+        $data['data'] = Page::where('slug', $slug)->first();
+        echo view('admin.pages.page-edit')->with($data);
     }
 
     //update page
-    public function update(Request $request, Page $page)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'page_dsc' => 'required',
+        ]);
+
+        $data  = Page::find($id);
+        if($data->is_default !=1){
+            $data->title = $request->title;
+        }
+
+        $data->description = $request->page_dsc;
+        $data->meta_title = $request->meta_title;
+        $data->meta_keywords = ($request->meta_keywords) ? implode(',', $request->meta_keywords) : null;
+        $data->meta_description = $request->meta_description;
+        $data->top_header = ($request->top_header ? 1 : null);
+        $data->main_header = ($request->main_header ? 1 : null);
+        $data->footer = ($request->footer ? 1 : null);
+        $data->status = ($request->status ? 1 : 0);
+        $data->updated_by = Auth::id();
+        $data->save();
+        Toastr::success('Page Update Successfully.');
+
+        return back();
     }
 
     // Delete page

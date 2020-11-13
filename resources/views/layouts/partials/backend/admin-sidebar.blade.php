@@ -32,8 +32,8 @@
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{route('admin.orderList')}}">All Orders</a></li>
                         <li><a href="{{route('admin.orderList', 'pending')}}">Pending Orders</a></li>
-                        <li><a href="{{route('admin.orderList', 'accepted')}}">Accepted Orders</a></li>
-                        <li><a href="{{route('admin.orderList', 'on-review')}}">Processing Orders</a></li>
+                        <li><a href="{{route('admin.orderList', 'processing')}}">Accepted Orders</a></li>
+                        <li><a href="{{route('admin.orderList', 'on-delivery')}}">On Delivery Orders</a></li>
                         <li><a href="{{route('admin.orderList', 'delivered')}}">Completed Orders</a></li>
                         <li><a href="{{route('admin.orderList', 'cancel')}}">Cancel Orders</a></li>
                     </ul>
@@ -60,12 +60,12 @@
                         <li><a href="#">Footer Setting</a></li>
                     </ul>
                 </li>
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Return</span></a>
+                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Refund</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{route('admin.refundRequest')}}">Return Request</a></li>
-                        <li><a href="{{route('admin.refundApproved')}}">Return Approved</a></li>
-                        <li><a href="{{route('returnReason')}}">Return Reason</a></li>
-                        <li><a href="#">Return Setting</a></li>
+                        <li><a href="{{route('admin.refundRequest', 'pending')}}">Pending Request </a></li>
+                        <li><a href="{{route('admin.refundRequest')}}">All Refund Request</a></li>
+                        <li><a href="{{route('returnReason')}}">Refund Reason</a></li>
+                        <li><a href="{{route('admin.refundConfig')}}">Refund Configuration</a></li>
                     </ul>
                 </li>
 
@@ -75,24 +75,11 @@
                         <li><a href="{{route('menu')}}">Menus</a></li>
                         <li><a href="{{route('slider.create')}}">Sliders</a></li>
                         <li><a href="{{route('service.list')}}">Services</a></li>
-                      
-                        <li> <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Banner Section</a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="{{route('banner')}}">All Banner</a></li>
-                                <li><a href="javascript:void(0)">Small Banner</a></li>
-                                <li><a href="javascript:void(0)">Banner 2 Image per row</a></li>
-                                <li><a href="javascript:void(0)">Banner 3 Image per row</a></li>
-                                <li><a href="javascript:void(0)">Left-site Large 1 Image Right-site 2 Image </a></li>
-                                
-                                
-                            </ul>
-                        </li>
-                        <li><a href="javascript:void(0)">Best Seller Section</a></li>
-                        <li><a href="javascript:void(0)">Services Section</a></li>
+                        <li><a href="{{route('banner')}}">All Banner</a></li>
                         <li><a href="javascript:void(0)">Category Section</a></li>
                         <li><a href="javascript:void(0)">Customer Reviews</a></li>
                         <li><a href="javascript:void(0)">Patners</a></li>
-                        <li><a href="#">Footer Setting</a></li>
+                       
                     </ul>
                 </li>
 
@@ -100,11 +87,12 @@
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Settings</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="#">General Setting</a></li>
-                        <li><a href="#">SMS Setting</a></li>
-                        <li><a href="{{route('category')}}">Email Template</a></li>
-                        <li><a href="{{route('subcategory')}}">Email Configuration</a></li>
-                        
+                        <li><a href="{{route('generalSetting')}}">General Setting</a></li>
+                       
+                        <li><a href="{{route('logoSetting')}}">Logo Setting</a></li>
+                        <li><a href="{{route('socialSetting')}}">Social Link</a></li>
+                        <li><a href="{{route('footerSetting')}}">Footer Setting</a></li>
+                       
                     </ul>
                 </li>
 

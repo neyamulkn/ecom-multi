@@ -107,7 +107,7 @@
                                                         </button>
                                                         <div class="dropdown-menu">
                                                             <a class="dropdown-item text-inverse" title="View product" data-toggle="tooltip" href="{{ route('product_details', $product->slug) }}"><i class="ti-eye"></i> View Product</a>
-                                                            <a class="dropdown-item" title="Edit product" data-toggle="tooltip" href=""><i class="ti-pencil-alt"></i> Edit</a>
+                                                            <a class="dropdown-item" title="Edit product" data-toggle="tooltip" href="{{ route('admin.product.edit', $product->slug) }}"><i class="ti-pencil-alt"></i> Edit</a>
                                                             <span title="Highlight product (Ex. Best Seller, Top Rated etc.)" data-toggle="tooltip">
                                                             <a onclick="producthighlight({{ $product->id }})" class="dropdown-item"  href="javascript:void(0)"><i class="ti-pin-alt"></i> Highlight</a></span>
                                                             <span title="Manage Gallery Images" data-toggle="tooltip">
@@ -227,8 +227,6 @@
             success:function(data){
                 if(data){
                     $("#showGallerryImage").html(data);
-                }else{
-                     $('#showGallerryImage').html('Gallery image not fuond. Please upload image.');
                 }
             },
             // $ID = Error display id name
@@ -250,9 +248,9 @@
                 success:function(data){
                     if(data){
                         $('#gelImage'+id).hide();
-                        toastr.success(data.message);
+                        toastr.success(data.msg);
                     }else{
-                        toastr.error(data.message);
+                        toastr.error(data.msg);
                     }
                 }
             });

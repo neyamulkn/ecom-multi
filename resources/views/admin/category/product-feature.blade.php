@@ -51,6 +51,7 @@
                                             <tr>
                                                 <th>Feature Name</th>
                                                 <th>Category</th>
+                                                <th>Required</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -61,7 +62,10 @@
                                                 <td>{{$data->name}}</td>
                                                 <td>{{ ($data->get_category) ? $data->get_category->name : 'All Category'}}</td>
 
-                                                <td>{!!($data->status == 1) ? "<span class='label label-info'>Active</span>" : '<span class="label label-danger">Deactive</span>'!!}
+                                                <td>{!! ($data->is_required == 1) ? "<span class='label label-danger'>Required</span>" : '<span class="label label-info">N/A</span>' !!}
+                                                </td>
+
+                                                <td>{!! ($data->status == 1) ? "<span class='label label-info'>Active</span>" : '<span class="label label-danger">Deactive</span>' !!}
                                                 </td>
                                                 <td>
                                                     
@@ -107,7 +111,7 @@
 
                                     <div class="form-body">
 
-                                        <div class="row justify-content-md-center">
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="name">Product Feature Name</label>
@@ -116,7 +120,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row justify-content-md-center">
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="name">Select Categroy</label>
@@ -133,7 +137,7 @@
 
                                                                     <!-- get sub childcategory -->
                                                                     @if(count($subcategory->get_subcategory)>0)
-                                                                      <optgroup label="&nbsp;&nbsp; ---Sub child category---">
+                                                                      <optgroup label="---Sub child category---">
                                                                         @foreach($subcategory->get_subcategory as $subchildcategory)
 
                                                                             <option @if(Session::get('autoSelectId') == $subchildcategory->id) selected @endif value="{{$subchildcategory->id}}"> &nbsp;---{{$subchildcategory->name}}</option>
@@ -150,7 +154,16 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    
+                                                    <input  name="is_required" id="is_required" type="checkbox" > <label for="is_required"> Is Requird</label>
+                                                </div>
+                                            </div>
                                         </div>
+
+
                                         
                                         <div class="row justify-content-md-center">
                                             <div class="col-md-12">

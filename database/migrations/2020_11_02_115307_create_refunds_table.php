@@ -22,10 +22,10 @@ class CreateRefundsTable extends Migration
             $table->integer('refund_amount');
             $table->string('return_type', 15);
             $table->string('return_reason');
-            $table->integer('seller_id');
+            $table->integer('seller_id')->nullable();
             $table->tinyInteger('seller_approval')->nullable();
             $table->tinyInteger('admin_approval')->nullable();
-            $table->tinyInteger('refund_status')->default(0);
+            $table->string('refund_status',15)->default('pending');
             $table->timestamps();
         });
     }
