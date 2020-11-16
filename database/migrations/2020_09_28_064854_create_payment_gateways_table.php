@@ -21,7 +21,7 @@ class CreatePaymentGatewaysTable extends Migration
             $table->string('public_key', 125)->nullable();
             $table->string('secret_key', 125)->nullable();
             $table->string('method_mode', 6)->nullable();
-            $table->string('method_info', 255)->nullable();
+            $table->text('method_info')->nullable();
             $table->enum('method_for', ['both', 'purchase', 'payment']);
             $table->tinyInteger('is_default')->nullable();
             $table->integer('position')->nullable();

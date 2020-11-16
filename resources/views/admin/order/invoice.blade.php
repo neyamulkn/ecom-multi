@@ -46,7 +46,7 @@
                                     <div class="col-md-12">
                                         <div class="pull-left" style="float: left;">
                                             <div style="width:160px; height: 55px;">
-                                                <img style="height: 100%; width: 100%;" src="{{asset('frontend/image/logo/'.Config::get('siteSetting.logo'))}}" title="Home" alt="Logo">
+                                                <img style="height: 100%; width: 100%;" src="{{asset('upload/images/logo/'.(Config::get('siteSetting.invoice_logo') ? Config::get('siteSetting.invoice_logo'): Config::get('siteSetting.logo')))}}" title="Home" alt="Logo">
                                             </div>
                                         </div>
 

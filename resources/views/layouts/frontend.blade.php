@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <!-- Favicon
             ============================================ -->
-        <link rel="shortcut icon" type="text/css" href="{{asset('frontend')}}/ico/favicon-16x16.png"/>
+        <link rel="shortcut icon" type="text/css" href="{{asset('upload/images/logo/'. Config::get('siteSetting.favicon'))}}"/>
         <!-- Basic page needs
             ============================================ -->
         <title>@yield('title')</title>
@@ -25,6 +25,21 @@
     <body class="common-home res layout-6" >
         <div id="wrapper" class="wrapper-fluid banners-effect-11">
             <div id="app">
+            <?php 
+
+                if(!Session::has('menus')){
+                   $menus =  \App\Models\Menu::with(['get_categories'])->orderBy('position', 'asc')->where('status', 1)->get();
+                    Session::put('menus', $menus);
+                }
+                $menus = Session::get('menus');
+
+                if(!Session::has('categories')){
+                    $categories =  \App\Models\Category::where('parent_id', '=', null)->orderBy('orderBy', 'asc')->where('status', 1)->get();
+                    Session::put('categories', $categories);
+                }
+              $categories = Session::get('categories');
+
+            ?>
             <!-- Header Start -->
             @include('layouts.partials.frontend.header')
          

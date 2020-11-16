@@ -157,7 +157,7 @@
                                 <h5 class="card-title">Earning Points</h5> 
                                 <div class="d-flex  no-block align-items-center">
                                     <span class="icon-box"><i class="fa fa-bookmark"></i></span> 
-                                    <a href="javscript:void(0)" class="link ml-auto">15</a>
+                                    <a href="javscript:void(0)" class="link ml-auto">0</a>
                                 </div>
                             </div>
                         </div>
@@ -195,16 +195,7 @@
                                         <td class="text-center" id="ship_status{{$order->order_id}}">{{$order->order_status}}</td>
                                         
                                         <td class="text-center">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Action <i class="fa fa-angle-down"></i>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item text-inverse" title="View order" data-toggle="tooltip" href="{{route('user.orderDetails', $order->order_id)}}" data-original-title="View"><i class="fa fa-eye"></i> View Details</a></li>
-                                                  
-                                                    <li><a title="Cancel Order" data-target="#orderCancel" onclick="orderCancelPopup('{{ route("user.orderCancel", $order->order_id ) }}')" data-toggle="modal" class="dropdown-item" ><i class="fa fa-trash"></i> Cancel order</a></li>
-                                                </ul>
-                                            </div> 
+                                           <a class="dropdown-item text-inverse" title="View order" data-toggle="tooltip" href="{{route('user.orderDetails', $order->order_id)}}" data-original-title="View"><i class="fa fa-eye"></i> View</a>
                                         </td>
                                     </tr>
                                     @endforeach

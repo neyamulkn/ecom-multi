@@ -39,25 +39,31 @@
 @section('css')
 <style type="text/css">
     .brand-list{border: 2px solid #de560d;}
-    .brand-thumb{position: relative;width: 100%;padding: 3px;height: 110px;
+    .brand-thumb{position: relative;width: 100%;padding: 3px;height: 100px;
     background: #fff;text-align: center;}
     .desc-listcategoreis {
         color: #ffffff;
         text-align: center;
-        padding: 5px;
+        padding: 0px;
         background: #0000006b;
   
     }
     .brand-thumb img{max-height: 100%}
+    .homepage .section{max-height: 400px !important; overflow: hidden;}
+    .homepage .products-list .product-layout {
+      
+        max-width: 230px;
+        max-height: 335px;
+    }
 </style>
 @endsection
 
 @section('content')
-    @if(Config::get('siteSetting.slider'))
+  
     <!-- Slider Arae Start -->
     @include('frontend.sliders.slider2')
     <!-- Slider Arae End -->
-    @endif
+  
     <!-- Main Container  -->
   
   	<div class="so-page-builder">

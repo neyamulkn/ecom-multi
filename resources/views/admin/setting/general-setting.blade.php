@@ -36,7 +36,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('generalSettingUpdate', $setting->id)}}" enctype="multipart/form-data" method="post" id="generalSetting">
+                    <form action="{{route('generalSettingUpdate', $setting->id)}}" method="post" id="generalSetting">
                         @csrf
                        
                         <div class="form-body">
@@ -62,7 +62,7 @@
                                     <div class="form-group row">
                                         <label class="col-md-2 text-right col-form-label" for="email">Email</label>
                                          <div class="col-md-8">
-                                            <input type="email" value="{{$setting->email}}" placeholder="Enter email number" name="email" required="" id="email" class="form-control" >
+                                            <input type="text" value="{{$setting->email}}" placeholder="Enter email number" name="email" required="" id="email" class="form-control" >
                                         </div>
                                     </div>
 

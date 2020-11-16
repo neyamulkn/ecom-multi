@@ -19,10 +19,12 @@ class FrontPagesController extends Controller
     {
         $page = Page::where('slug', $slug)->where('status', 1)->first();
         if($page){
-            return view('frontend.pages.'.$page->slug)->with(compact('page'));
+            $slug = ($page->is_default == 1) ? $page->slug : 'page';
+            return view('frontend.pages.'.$slug)->with(compact('page'));
         }
         return view('404');
     }
+
 
     // today deals
     public function todayDeals()

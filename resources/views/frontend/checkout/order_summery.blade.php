@@ -33,7 +33,7 @@
             <small> {{$key}} : {{$value}} </small>
             @endforeach
         </td>
-		<td class="text-center">{{$site['currency_symble']}}<span class="amount">{{$item->price}}</span></td>
+		<td class="text-center">{{Config::get('siteSetting.currency_symble')}}<span class="amount">{{$item->price}}</span></td>
 		<td class="text-left quantity">
 			<div class="input-group">
 				<input type="text" min="1" id="qtyTotal{{$item->id}}" onchange="cartUpdate({{$item->id}})" name="qtybutton" value="{{$item->qty}}" size="1" class="form-control">
@@ -43,14 +43,14 @@
 				</span>
 			</div>
 		</td>
-		<td class="text-right total">{{$site['currency_symble']}}<span id="subtotal{{$item->id}}">{{$item->price*$item->qty}}</td>
+		<td class="text-right total">{{Config::get('siteSetting.currency_symble')}}<span id="subtotal{{$item->id}}">{{$item->price*$item->qty}}</td>
 	</tr>
 	@endforeach
 </tbody>
 <tfoot>
 	<tr>
 		<td colspan="4" class="text-right"><strong>Sub-Total:</strong></td>
-		<td class="text-right">{{$site['currency_symble']}}<span id="cartTotal">{{$total}}</span></td>
+		<td class="text-right">{{Config::get('siteSetting.currency_symble')}}<span id="cartTotal">{{$total}}</span></td>
 		</tr>
 
 		<tr>
@@ -59,13 +59,13 @@
 		</tr>
 		<tr>
 		<td colspan="4" class="text-right"><strong>Shipping cost(+):</strong></td>
-		<td class="text-right">+{{$site['currency_symble']}}<span id="shipping_cost">{{$total_shipping_cost}}</span></td>
+		<td class="text-right">+{{Config::get('siteSetting.currency_symble')}}<span id="shipping_cost">{{$total_shipping_cost}}</span></td>
 		</tr>
 		<?php $coupon_discount = (Session::get('couponType') == '%') ? ( $total * Session::get('couponAmount')) : Session::get('couponAmount'); ?>
 
 		<tr id="couponSection"  style="display: {{Session::get('couponAmount') ? 'table-row' : 'none'}}">
 		<td class="text-right" colspan="4"><strong>Coupon Discount(-):</strong></td>
-		<td class="text-right">-{{$site['currency_symble']}}<span id="couponAmount">{{ $coupon_discount }}</span> </td>
+		<td class="text-right">-{{Config::get('siteSetting.currency_symble')}}<span id="couponAmount">{{ $coupon_discount }}</span> </td>
 		</tr>
 		
 		<tr ><td colspan="2"></td>
@@ -83,6 +83,6 @@
             </tr>
 		<tr>
 		<td colspan="4" class="text-right"><strong>Total:</strong></td>
-		<td class="text-right">{{$site['currency_symble']}}<span  id="grandTotal">{{ $total + $total_shipping_cost - $coupon_discount }}</td>
+		<td class="text-right">{{Config::get('siteSetting.currency_symble')}}<span  id="grandTotal">{{ $total + $total_shipping_cost - $coupon_discount }}</td>
 		</tr>
 </tfoot>

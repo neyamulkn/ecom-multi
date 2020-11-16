@@ -14,14 +14,13 @@
                     @endforeach
           </td>
           <td class="text-right">x{{$item->qty}}</td>
-          <td class="text-right">{{$site['currency_symble']}}{{$item->price}}</td>
+          <td class="text-right">{{Config::get('siteSetting.currency_symble')}}{{$item->price}}</td>
           <td class="text-center">
             <button type="button" title="Remove" data-target="#delete" data-toggle="modal" onclick='deleteCartItem("{{route("cart.itemRemove", $item->id)}}")' class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
           </td>
         </tr>
         @endforeach
        
-
       </tbody>
     </table>
 

@@ -13,7 +13,7 @@ class AdminOrderController extends Controller
     public function orderHistory(Request $request, $status='')
     {
 
-        $orders = Order::orderBy('id', 'desc')->where('payment_method', '!=', 'pending');
+        $orders = Order::orderBy('order_date', 'desc')->where('payment_method', '!=', 'pending');
         if($request->status){
             $orders = $orders->where('order_status', $request->status)->get();
             return view('admin.order.order-status')->with(compact('orders'));

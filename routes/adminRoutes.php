@@ -19,7 +19,10 @@ Route::group(['middleware' => ['auth:admin', 'admin']], function(){
 	Route::post('logo/setting/update/{id}', 'GeneralSettingController@logoSettingUpdate')->name('logoSettingUpdate');
 	
 	Route::get('social/setting', 'GeneralSettingController@socialSetting')->name('socialSetting');
+	Route::post('social/setting/store', 'GeneralSettingController@socialSettingStore')->name('socialSettingStore');
+	Route::get('social/setting/edit/{id}', 'GeneralSettingController@socialSettingEdit')->name('socialSettingEdit');
 	Route::post('social/setting/update/{id}', 'GeneralSettingController@socialSettingUpdate')->name('socialSettingUpdate');
+	Route::get('social/setting/delete/{id}', 'GeneralSettingController@socialSettingDelete')->name('socialSettingDelete');
 	
 	Route::get('footer/setting', 'GeneralSettingController@footerSetting')->name('footerSetting');
 	Route::post('footer/setting/update/{id}', 'GeneralSettingController@footerSettingUpdate')->name('footerSettingUpdate');
@@ -178,19 +181,16 @@ Route::group(['middleware' => ['auth:admin', 'admin'], 'namespace' => 'Admin'], 
 	Route::get('menu/delete/{id}', 'MenuController@delete')->name('menu.delete');
 
 	// user routes
-	Route::get('user/create', 'UserController@create')->name('user.create');
-	Route::post('user/store', 'UserController@store')->name('user.store');
-	Route::get('user/list', 'UserController@index')->name('user.list');
-	Route::get('user/{id}/edit', 'UserController@edit')->name('user.edit');
-	Route::post('user/update/{id}', 'UserController@update')->name('user.update');
-	Route::get('user/delete/{id}', 'UserController@delete')->name('user.delete');
+	
+	Route::post('customer/store', 'CustomerController@store')->name('customer.create');
+	Route::get('customer/{id}/edit', 'CustomerController@edit')->name('customer.edit');
+	Route::post('customer/update/{id}', 'CustomerController@update')->name('customer.update');
+	Route::get('customer/delete/{id}', 'CustomerController@delete')->name('customer.delete');
 
-	Route::get('user/profile/{username}', 'UserController@user_profile')->name('user.profile');
-	Route::get('user/active', 'UserController@active_user')->name('user.active');
-	Route::get('user/inactive', 'UserController@inactive_user')->name('user.inactive');
-	Route::get('user/block', 'UserController@block_user')->name('user.block');
-	Route::get('user/download', 'UserController@download_user')->name('user.download');
-
+	Route::get('customer/list/{status?}', 'CustomerController@customerList')->name('customer.list');
+	
+	Route::get('customer/profile/{username}', 'CustomerController@customer_profile')->name('customer.profile');
+	
 	// designation routes
 	Route::get('designation/create', 'DesignationController@create')->name('designation.create');
 	Route::post('designation/store', 'DesignationController@store')->name('designation.store');

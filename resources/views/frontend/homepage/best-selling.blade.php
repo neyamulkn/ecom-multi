@@ -13,12 +13,12 @@ $products = App\Models\Product::where('status', 'active')
         <section id="box-link1" class="section-style">
             <div class="nav nav-tabs">
               <span class="title" style="color: {{$section->text_color}} !important;">{{$section->title}}</span> 
-              <span class="moreBtn"><a href="{{route('moreProducts', $section->slug)}}" style="color: {{$section->text_color}} !important;">See More</a></span>
+              <!-- <span class="moreBtn"><a href="{{route('moreProducts', $section->slug)}}" style="color: {{$section->text_color}} !important;">See More</a></span> -->
             </div>
            
               <div class="clearfix module horizontal">
                 <div class="products-category">
-                    <div class="category-slider-inner products-list yt-content-slider releate-products grid" data-rtl="no" data-autoplay="no" data-pagination="no" data-delay="4" data-speed="0.6" data-margin="5" data-items_column0="5" data-items_column1="3" data-items_column2="2" data-items_column3="2" data-items_column4="2" data-arrows="yes" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
+                    <div class="category-slider-inner products-list yt-content-slider releate-products grid" data-rtl="yes" data-autoplay="no" data-pagination="no" data-delay="1" data-speed="0.6" data-margin="5" data-items_column0="5" data-items_column1="3" data-items_column2="2" data-items_column3="2" data-items_column4="2" data-arrows="yes" data-lazyload="yes" data-loop="yes" data-hoverpause="yes">
                       @foreach($products as $product)
                       <div class="item-inner product-thumb trg transition product-layout">
                           @include('frontend.homepage.products')

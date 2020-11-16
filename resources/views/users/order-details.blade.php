@@ -120,7 +120,7 @@
 						<tr>
 							<td style="width: 50%;" class="text-left"> <b>Order ID:</b> #{{$order->order_id}}
 								<br>
-								<b>Order Date:</b> {{Carbon\Carbon::parse($order->order_date)->format('M d, Y')}}
+								<b>Order Date:</b> {{Carbon\Carbon::parse($order->order_date)->format(Config::get('siteSetting.date_format'))}}
 							</td>
 							<td style="width: 50%;" class="text-left"> 
 								<b>Order Status::</b> {{ $order['order_status'] }} <br>
@@ -208,7 +208,7 @@
 					                        $refund_time = strtotime(Carbon\Carbon::parse($order_detail->shipping_date)->addDays(7)->format('Y-m-d'));
 		                        		?>
 		                        		@if($current_time<=$refund_time && $order_detail->shipping_status == 'deliverd')
-                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', [$order->order_id, $order_detail->product->slug])}}" data-original-title="Return ? Replace Order"><i class="fa fa-reply"></i> Return / Replace <br/> Eligible til {{Carbon\Carbon::parse($order_detail->shipping_date)->addDays(7)->format('d m, Y')}} </a></li>
+                                      	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', [$order->order_id, $order_detail->product->slug])}}" data-original-title="Return ? Replace Order"><i class="fa fa-reply"></i> Return / Replace <br/> Eligible til {{Carbon\Carbon::parse($order_detail->shipping_date)->addDays(7)->format(Config::get('siteSetting.date_format'))}} </a></li>
                                       	
                                       	@else
                                       	<li><a title="Return Order" data-toggle="tooltip" href="{{route('user.orderReturn', [$order->order_id, $order_detail->product->slug])}}" data-original-title="Return"><i class="fa fa-reply"></i> Return / Replace</a></li>

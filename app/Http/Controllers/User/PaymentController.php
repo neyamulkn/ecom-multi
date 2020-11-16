@@ -28,7 +28,7 @@ class PaymentController extends Controller
             ->where('user_id', Auth::id())
             ->where('order_id', $orderId)->first();
         if($order){
-            $paymentgateways = PaymentGateway::orderBy('id', 'asc')->where('status', 1)->get();
+            $paymentgateways = PaymentGateway::orderBy('position', 'asc')->where('status', 1)->get();
             return view('frontend.checkout.order-payment')->with(compact('order', 'paymentgateways'));
         }
         return view('404');
@@ -36,6 +36,7 @@ class PaymentController extends Controller
 
     // process payment gateway & redirect specific gateway
     public function orderPayment(Request $request, $orderId){
+
         $order = Order::with('order_details.product:id,title')->where('user_id', Auth::id())->where('order_id', $orderId)->first();
         if($order){
             $data = [
@@ -46,7 +47,6 @@ class PaymentController extends Controller
                 'payment_method' => $request->payment_method
             ];
             Session::put('payment_data', $data);
-
         }else{
             Toastr::error('Payment failed.');
             return redirect()->back();
@@ -68,20 +68,19 @@ class PaymentController extends Controller
             $paypal = new StripeController();
             return $paypal->masterCardPayment();
         }
-        elseif($request->payment_method == 'bkash_rocket'){
-            echo $request->payment_method;
-        }
         elseif($request->payment_method == 'manual'){
-            $order->update([
-                'payment_method' => $request->payment_method,
-                'order_date' => now(),
-                'payment_status' => 'pending',
-            ]);
+
+            Session::put('payment_data.payment_method', $request->manual_method_name);
+            Session::put('payment_data.status', 'success');
+            Session::put('payment_data.trnx_id', $request->trnx_id);
+            Session::put('payment_data.payment_info', $request->payment_info);
+            //redirect payment success method
+            return $this->paymentSuccess();
 
         }else{
-
+            Toastr::error('Please select payment method');
         }
-
+        return back();
     }
 
     //payment status success then update payment status
@@ -89,13 +88,15 @@ class PaymentController extends Controller
 
         $payment_data = Session::get('payment_data');
         //clear session payment data
-       // Session::forget('payment_data');
+        Session::forget('payment_data');
         if($payment_data && $payment_data['status'] == 'success') {
             $order = Order::where('user_id', Auth::id())
                 ->where('order_id', $payment_data['order_id'])->update([
                     'payment_method' => $payment_data['payment_method'],
                     'tnx_id' => (isset($payment_data['trnx_id'])) ? $payment_data['trnx_id'] : null,
                     'order_date' => now(),
+                    'payment_status' => (isset($payment_data['payment_status'])) ? $payment_data['payment_status'] : 'pending',
+                    'payment_info' => (isset($payment_data['payment_info'])) ? $payment_data['payment_info'] : null,
                 ]);
 
                 //when one order multi payment work this
@@ -131,8 +132,6 @@ class PaymentController extends Controller
 
             //send notification in email
             //Mail::to(Auth::user()->email)->send(new OrderMail($order));
-            //destroy payment data
-            Session::forget('payment_data');
             Toastr::success('Thanks Your order submitted successfully');
 
             return view('frontend.checkout.payemnt-confirmation')->with(compact('order'));

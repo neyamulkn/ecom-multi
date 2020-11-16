@@ -50,13 +50,11 @@ class PaypalController extends Controller
         );
         $this->_api_context->setConfig($settings);
 
-
     }
 
     public function paypalPayment()
     {
         try {
-
         $payment_data = Session::get('payment_data');
 
         $payer = new Payer();
@@ -70,7 +68,6 @@ class PaypalController extends Controller
 
         $itemList = new ItemList();
         $itemList->setItems(array($item));
-
 
         $amount = new Amount();
         $amount->setCurrency($payment_data['currency'])
@@ -147,6 +144,7 @@ class PaypalController extends Controller
             //after payment success update payment status
             $trnx_id = Session::get('paypal_payment_id');
             Session::put('payment_data.trnx_id', $trnx_id);
+            Session::put('payment_data.payment_status', 'paid');
             Session::put('payment_data.status', 'success');
             $paymentController = new PaymentController();
             //redirect payment success method

@@ -21,7 +21,6 @@
          
             <div id="content" class="col-md-9 col-sm-9 col-xs-12 sticky-content" >
 
-                <div id="pageLoading"></div>
                 <div class="category-ksh form-group">
                   <div class="row">
                     <div class="col-sm-12">
@@ -53,9 +52,17 @@
                               </div>
                             <div class="col-sm-6 col-md-6 col-lg-6 text-right">Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of total {{$products->total()}} entries ({{$products->lastPage()}} Pages)</div>
                         </div>
+                    @else
+                        <div style="text-align: center;">
+                            <i style="font-size: 80px;" class="fa fa-shopping-cart"></i>
+                            <h1>Sorry Products Not Found!!.</h1>
+                           
+                            Click here <a href="{{url('/')}}">Continue Shopping</a>
+                        </div>
                     @endif
                 </div>
             </div>
+            @if(count($products)>0)
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  sticky-content">
                 <?php $related_products = App\Models\Product::whereNotIn('id', explode(',', $section->product_id))->where('subcategory_id', $products[0]->subcategory_id)->orderBy('id', 'desc')->paginate(5);
                                 ?>
@@ -112,6 +119,7 @@
                 </div>
                 @endif
             </div>
+            @endif
         </div>
     </div>
     

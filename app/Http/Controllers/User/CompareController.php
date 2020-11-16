@@ -28,12 +28,12 @@ class CompareController extends Controller
 
             $output = array(
                 'status' => 'success',
-                'msg' => Config::get('siteSetting.compare_success')
+                'msg' => 'Product Added To Compare'
             );
         }else{
             $output = array(
                 'status' => 'success',
-                'msg' => Config::get('siteSetting.compare_error')
+                'msg' => 'Already Added To Compare !!'
             );
         }
 
@@ -49,7 +49,7 @@ class CompareController extends Controller
             session(['compare' => $compare]);
             $output = array(
                 'status' => 'success',
-                'msg' => Config::get('siteSetting.compare_remove')
+                'msg' => 'Product Remove From Compare'
             );
         }else{
             $output = array(

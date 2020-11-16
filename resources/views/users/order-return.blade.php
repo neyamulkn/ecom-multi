@@ -26,7 +26,7 @@
   		<div id="content" class="col-md-9 sticky-content return-request">
         @if($checkReturn)
   			<h2 class="title"><a href="{{ route('user.orderDetails', $order_detail->order_id) }}"> <i class="fa fa-angle-left"></i> Return Request Send</a></h2>
-  			<p><strong>Request Send ON : </strong> {{Carbon\Carbon::parse($checkReturn->created_at)->format('d m, Y h:m:i A')}}</p>
+  			<p><strong>Request Send ON : </strong> {{Carbon\Carbon::parse($checkReturn->created_at)->format(Config::get('siteSetting.date_format') . ' h:m:i A')}}</p>
          <p><strong>Request Reason: </strong> {{$checkReturn->return_reason}}</p>
         <p><strong>Request Type: </strong> {{$checkReturn->return_type}}</p>
        

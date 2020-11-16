@@ -96,7 +96,7 @@ class ProductController extends Controller
         $data->meta_title = $request->meta_title;
         $data->meta_keywords = ($request->meta_keywords) ? implode(',', $request->meta_keywords) : null;
         $data->meta_description = $request->meta_description;
-        $data->status = ($request->status ? 1 : 0);
+        $data->status = ($request->status ? 'active' : 0);
         $data->created_by = Auth::id();
         //if feature image set
         if ($request->hasFile('feature_image')) {
@@ -115,28 +115,31 @@ class ProductController extends Controller
 
         $store = $data->save();
 
-        if($store){
+        if($store) {
+            $total_qty = 0;
             //insert variation
-            if($request->attribute){
-                foreach ($request->attribute as $attribute_id => $attr_value){
+            if ($request->attribute) {
+
+                foreach ($request->attribute as $attribute_id => $attr_value) {
                     //insert product feature name in feature table
                     $feature = new ProductVariation();
                     $feature->product_id = $data->id;
                     $feature->attribute_id = $attribute_id;
                     $feature->attribute_name = $attr_value;
-                    $feature->in_display= 1;
+                    $feature->in_display = 1;
                     $feature->save();
 
-                    for ($i=0; $i< count($request->attributeValue[$attribute_id]); $i++){
+                    for ($i = 0; $i < count($request->attributeValue[$attribute_id]); $i++) {
                         //check weather attribute value set
-                        if(array_key_exists($i, $request->attributeValue[$attribute_id])) {
+                        if (array_key_exists($i, $request->attributeValue[$attribute_id])) {
                             //insert feature attribute details in ProductFeatureDetail table
+                            $quantity = (isset($request->qty[$attribute_id]) && array_key_exists($i, $request->qty[$attribute_id]) ? $request->qty[$attribute_id][$i] : 0);
                             $feature_details = new ProductVariationDetails();
                             $feature_details->product_id = $data->id;
                             $feature_details->variation_id = $feature->id;
                             $feature_details->attributeValue_name = $request->attributeValue[$attribute_id][$i];
                             $feature_details->sku = (isset($request->sku[$attribute_id]) && array_key_exists($i, $request->sku[$attribute_id]) ? $request->sku[$attribute_id][$i] : 0);
-                            $feature_details->quantity = (isset($request->qty[$attribute_id]) && array_key_exists($i, $request->qty[$attribute_id]) ? $request->qty[$attribute_id][$i] : 0);
+                            $feature_details->quantity = $quantity;
                             $feature_details->price = (isset($request->price[$attribute_id]) && array_key_exists($i, $request->price[$attribute_id]) ? $request->price[$attribute_id][$i] : 0);
                             $feature_details->color = (isset($request->color[$attribute_id]) && array_key_exists($i, $request->color[$attribute_id]) ? $request->color[$attribute_id][$i] : null);
 
@@ -155,14 +158,16 @@ class ProductController extends Controller
                             }
                             $feature_details->save();
                         }
+                        //count total stock quantity
+                        $total_qty += $quantity;
                     }
                 }
             }
             //insert additional Feature data
-            if($request->features){
+            if ($request->features) {
                 try {
-                    foreach($request->features as $feature_id => $feature_name){
-                        if($request->featureValue[$feature_id]) {
+                    foreach ($request->features as $feature_id => $feature_name) {
+                        if ($request->featureValue[$feature_id]) {
                             $extraFeature = new ProductFeature();
                             $extraFeature->product_id = $data->id;
                             $extraFeature->feature_id = $feature_id;
@@ -171,7 +176,7 @@ class ProductController extends Controller
                             $extraFeature->save();
                         }
                     }
-                }catch (Exception $exception){
+                } catch (Exception $exception) {
 
                 }
             }
@@ -186,21 +191,29 @@ class ProductController extends Controller
                     $image_resize->save($image_path);
                     $image->move(public_path('upload/images/product/gallery'), $new_image_name);
 
-                    ProductImage::create( [
+                    ProductImage::create([
                         'product_id' => $data->id,
                         'image_path' => $new_image_name
                     ]);
                 }
             }
             //video upload
-            if(isset($request->video_provider)){
-                for ($i=0; $i< count($request->video_provider); $i++) {
+            if (isset($request->video_provider)) {
+                for ($i = 0; $i < count($request->video_provider); $i++) {
                     ProductVideo::create(['product_id' => $data->id,
                         'provider' => $request->video_provider[$i],
                         'link' => $request->video_link[$i]
                     ]);
                 }
             }
+            //update total quantity
+            if ($total_qty != 0){
+                $productStock = Product::find($data->id);
+                $productStock->stock = ($total_qty != 0) ? $total_qty : $request->stock;
+                $productStock->total_stock = ($total_qty != 0) ? $total_qty : $request->stock;
+                $productStock->save();
+            }
+
             Toastr::success('Product Create Successfully.');
         }else{
             Toastr::error('Product Cannot Create.!');
@@ -288,7 +301,7 @@ class ProductController extends Controller
         $data->meta_title = $request->meta_title;
         $data->meta_keywords = ($request->meta_keywords) ? implode(',', $request->meta_keywords) : null;
         $data->meta_description = $request->meta_description;
-        $data->status = ($request->status ? 1 : 0);
+        $data->status = ($request->status ? 'active' : 0);
         $data->created_by = Auth::id();
 
         //if feature image set

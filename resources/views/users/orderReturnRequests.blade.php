@@ -61,7 +61,7 @@
                   @else
                   <span class="label label-info">Pending</span>
                   @endif
-                <td>{{Carbon\Carbon::parse($returnRequest->created_at)->format('d M, Y h:m:i A')}}</td>
+                <td>{{Carbon\Carbon::parse($returnRequest->created_at)->format(Config::get('siteSetting.date_format') . ' h:m:i A')}}</td>
                 <td><a href="{{route('user.orderReturn', [$returnRequest->order_id, $returnRequest->slug])}}"> <i class="fa fa-eye"></i> </a> </td>
               </tr>
              @endforeach

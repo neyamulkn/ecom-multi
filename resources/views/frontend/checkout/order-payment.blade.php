@@ -5,7 +5,8 @@
   <style type="text/css">
       .nav-tabs{background: #f1f1f1;}
       .nav-tabs li a{height: 65px; min-width: 95px;}
-      .box-inner {padding: 15px 8px!important }
+      .box-inner {padding: 15px 8px !important }
+      .checkout-shipping-form p {padding: 3px !important; margin: 0px !important }
   </style>
 @endsection
 @section('content')
@@ -33,7 +34,6 @@
 							<fieldset>
 								<h2 class="secondary-title"><i class="fa fa-map-marker"></i>Select Payment Method</h2>
 								<div class="checkout-shipping-form">
-
 									<div class="box-inner">          
                    <div id="process"></div>            
                       <ul class="nav nav-tabs">
@@ -46,12 +46,12 @@
                         @foreach($paymentgateways as $method)
                           @if($method->is_default == 1)
                           <div id="paymentgateway{{$method->id}}" class="tab-pane fade">
-                               {!! $method->method_info !!}
-                              <form action="{{route('order.payment', [$order['order_id']])}}" method="post"  @if($method->method_slug == 'masterCard') class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{$method->public_key}}"  @endif >
+                              {!! $method->method_info !!}
+                              <form action="{{route('order.payment', [$order['order_id']])}}" method="post" @if($method->method_slug == 'masterCard') class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{$method->public_key}}"  @endif >
                                   @csrf
                                   <input type="hidden"  name="payment_method" value="{{$method->method_slug}}">
                                   @if($method->method_slug == 'masterCard')
-                                     <div class="form-row">                                    
+                                    <div class="form-row">                                    
                                         <div id="card-element" style="width: 100%">
                                              <div class="display-td" >                            
                                                 <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
@@ -59,7 +59,7 @@
                                            
                                               <div class="row">
                                                 <div class="col-lg-8 col-md-8">
-                                                <div class='col-lg-12 col-md-12 col-xs-12 card '> <span class='control-label required'>Card Number</span> <input  autocomplete='off' placeholder='Enter card number' class='form-control card-number' size='20' type='text'> </div> <div class='col-xs-3  cvc '> <span class='control-label required'>CVC</span> <input autocomplete='off' class='form-control card-cvc' maxlength="3" placeholder='ex. 311' size='4' type='text'> </div> <div class='col-xs-4 expiration '> <span class='required control-label'>Month</span>  <input maxlength="2" class='form-control card-expiry-month' placeholder='MM' size='2' type='text'> </div> <div class='col-xs-5 expiration '> <span class='control-label required'>Expiration Year</span> <input class='form-control card-expiry-year' placeholder='YYYY'  size='4' maxlength="4" type='text'> </div>
+                                                <div class='col-lg-12 col-md-12 col-xs-12 card '> <span class='control-label required'>Card Number</span> <input  autocomplete='off' placeholder='Enter card number' class='form-control card-number' required size='20' type='text'> </div> <div class='col-xs-3  cvc '> <span class='control-label required'>CVC</span> <input autocomplete='off' class='form-control card-cvc' maxlength="3" placeholder='ex. 311' required size='4' type='text'> </div> <div class='col-xs-4 expiration '> <span class='required control-label'>Month</span>  <input maxlength="2" required class='form-control card-expiry-month' placeholder='MM' size='2' type='text'> </div> <div class='col-xs-5 expiration '> <span class='control-label required'>Expiration Year</span> <input class='form-control card-expiry-year' placeholder='YYYY' required size='4' maxlength="4" type='text'> </div>
                                               </div>
                                             </div>
                       
@@ -71,7 +71,7 @@
                                         </div>
                                       <!-- Used to display Element errors. -->
                                       <div id="card-errors" role="alert"></div>
-                                  </div>
+                                    </div>
                                 @endif
                                 <div class="text-left">
                                   <span class="secure-checkout-banner1">
@@ -87,27 +87,29 @@
                           </div>
                           @else
                           <div id="paymentgateway{{$method->id}}" class="tab-pane fade">
-                              {!! $method->method_info !!}
-                              <hr>
-                              <i>Write Your Payment Information below.</i>
-                              <textarea style="width: 50%; margin: 0;" rows="1" class="form-control"></textarea></td>
-                              
+                            {!! $method->method_info !!}
+
+                            <form action="{{route('order.payment', [$order['order_id']])}}" method="post">
+                              @csrf
+                           
+                              <input type="hidden"  name="manual_method_name" value="{{$method->method_slug}}">
+                              <strong>Transaction Id</strong>
+                              <p><input type="text" required placeholder="Enter Transaction Id" class="form-control" name="trnx_id"></p>
+                              <strong>Write Your Payment Information below.</strong>
+                              <textarea required name="payment_info" style="margin: 0;" rows="2" placeholder="Write Payment Information" class="form-control"></textarea>
+
                               <div class="text-left">
                                 <span class="secure-checkout-banner1">
-                                  <i class="fa fa-lock"></i>
-                                  Secure checkout
+                                  <i class="fa fa-lock"></i> Secure checkout
                                 </span>
                               </div>
-
                               <div class="text-right">
-                                <form action="{{route('order.payment', [$order['order_id']])}}" method="post">
-                                  @csrf
-                                    <button name="payment_method" value="{{$method->method_slug}}" style="width: 40%" class="btn btn-default"><span><i class="fa fa-money" aria-hidden="true"></i> Pay {{$method->method_name}}</span></button>
-                                </form>
+                                  <button name="payment_method" value="manual" style="width: 40%" class="btn btn-default"><span><i class="fa fa-money" aria-hidden="true"></i> Pay {{$method->method_name}}</span></button>
                               </div>
+                            </form>
                           </div>
                           @endif
-                        @endforeach
+                          @endforeach
                           <div id="wallet" class="active tab-pane fade in">
                               Your wallet balance: {{ Auth::user()->wallet_balance }}
                               <div class="text-left">

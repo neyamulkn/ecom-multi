@@ -36,7 +36,7 @@
                     @endforeach
                     
                 </td>
-                <td class="text-right">{{$site['currency_symble']}}<span class="amount">{{$item->price}}</span></td>
+                <td class="text-right">{{Config::get('siteSetting.currency_symble')}}<span class="amount">{{$item->price}}</span></td>
                 <td class="text-left">
                     <div class="input-group btn-block" style="max-width: 200px;">
                     <input type="number" min="1" style="margin-right: 15px;" id="qtyTotal{{$item->id}}" onchange="cartUpdate({{$item->id}})" name="qtybutton" value="{{$item->qty}}" class="form-control">
@@ -47,7 +47,7 @@
                     </span></div>
                 </td>
                 
-                <td class="text-right">{{$site['currency_symble']}}<span id="subtotal{{$item->id}}">{{$item->price*$item->qty}}</td>
+                <td class="text-right">{{Config::get('siteSetting.currency_symble')}}<span id="subtotal{{$item->id}}">{{$item->price*$item->qty}}</td>
                 
                 <td class="text-right"  data-toggle="tooltip"><button type="button" title="Remove Item" class="btn btn-danger" data-target="#delete" data-toggle="modal" onclick='cartDelete("{{route("cart.itemRemove", $item->id)}}")' data-original-title="Remove"><i class="fa fa-times"></i></button></td>
             </tr>
@@ -68,11 +68,11 @@
         <tbody>
             <tr>
                 <td class="text-right"><strong>Sub-Total:</strong></td>
-                <td class="text-right"><span>{{$site['currency_symble']}}<span id="cartTotal">{{$total}}</span></span></td>
+                <td class="text-right"><span>{{Config::get('siteSetting.currency_symble')}}<span id="cartTotal">{{$total}}</span></span></td>
             </tr>
             <tr>
                 <td class="text-right"><strong>Shipping Fee(+):</strong></td>
-                <td class="text-right">+{{$site['currency_symble']}}{{$total_shipping_cost}}</td>
+                <td class="text-right">+{{Config::get('siteSetting.currency_symble')}}{{$total_shipping_cost}}</td>
             </tr>
 
             <tr>
@@ -84,7 +84,7 @@
 
             <tr id="couponSection"  style="display: {{Session::has('couponAmount') ? 'table-row' : 'none'}}">
                 <td class="text-right"><strong>Coupon Discount(-):</strong></td>
-                <td class="text-right">-{{$site['currency_symble']}}<span id="couponAmount">{{$coupon_discount}}</span> </td>
+                <td class="text-right">-{{Config::get('siteSetting.currency_symble')}}<span id="couponAmount">{{$coupon_discount}}</span> </td>
             </tr>
           
             <tr><td colspan="2">
@@ -101,12 +101,12 @@
             </tr>
             <tr>
                 <td class="text-right"><strong>Grand Total:</strong></td>
-                <td class="text-right">{{$site['currency_symble']}}<span  id="grandTotal">{{$total + $total_shipping_cost - $coupon_discount }}</td>
+                <td class="text-right">{{Config::get('siteSetting.currency_symble')}}<span  id="grandTotal">{{$total + $total_shipping_cost - $coupon_discount }}</td>
             </tr>
         </tbody>
     </table>
 
-    <div><a id="checkout" style="width: 100%" href="{{route('checkout')}}" class="btn btn-success btn-lg">Proceed to Checkout</a></div>
+    <div><a id="checkout" style="margin-bottom:10px;width: 100%" href="{{route('checkout')}}" class="btn btn-success btn-lg">Proceed to Checkout</a></div>
 </div>
 @else
 <div style="text-align: center;">

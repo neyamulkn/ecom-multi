@@ -8,34 +8,37 @@
                     <div class="list-contact hidden-sm hidden-xs">
                         <ul class="top-link list-inline">
 
-                          <li class="account"><a style="color: #fff" href="{{route('vendorRegisterForm')}}">Sell On</a></li>
-                          <li class="account"><a style="color: #fff" href="#">Track Order</a></li>
-                          <li class="account"><a style="color: #fff" href="#">How To Buy</a></li>
+                         <!--  <li class="account"><a style="color: #fff" href="{{route('vendorRegisterForm')}}">Sell On</a></li> -->
+
+                          <li class="account"><a style="color: #fff" href="{{route('orderTracking')}}">Track Order</a></li>
+                          @foreach($menus->where('top_header', 1) as $menu)
+                          <li class="account"><a style="color: #fff" href="{{  route('page', $menu->get_pages->slug)}}">{{$menu->get_pages->title}}</a></li>
+                          @endforeach
                         </ul>
                     </div>
                 </div>
               <div class="header-top-right collapsed-block col-lg-6 col-sm-12 col-md-5 col-xs-12 ">
                   <div class="tabBlock" id="TabBlock-1">
                       <ul class="top-link list-inline">
-
+                          @if(Auth::check()) 
                           <li class="account " id="my_account">
-                              <a href="#" title="My Account" class="btn-xs dropdown-toggle" data-toggle="dropdown"> <span>@if(Auth::check()) {{Auth::user()->name}} @else My Account @endif</span> <span class="fa fa-angle-down"></span></a>
+                              <a href="#" title="My Account" class="btn-xs dropdown-toggle" data-toggle="dropdown"> <span>{{Auth::user()->name}}</span> <span class="fa fa-angle-down"></span></a>
                               <ul class="dropdown-menu ">
-                                  @if(Auth::check())
+                                
                                   <li><a href="{{route('user.myAccount')}}">My Account</a></li>
                                   <li><a href="{{route('user.orderHistory')}}">Order History</a></li>
-                                  <li><a href="#">Transactions</a></li>
+                                <!--   <li><a href="#">Transactions</a></li> -->
                                   <li><a href="{{route('checkout')}}"> Checkout </a></li>
                                   <li> <a href="{{route('userLogout')}}">Logout </a> </li>
-                                  @else
-
-                                  <li> <a href="{{route('login')}}">Login </a> </li>
-                                  <li> <a href="{{route('register')}}">Register </a>  </li>
-                                  @endif
+                                
                               </ul>
                           </li>
+                          @else
+                           <li class="account "> <a href="{{route('login')}}">Login </a> </li>
+                          <li class="account "> <a href="{{route('register')}}">Register </a>  </li>
+                           @endif
                           <!-- LANGUAGE CURENTY -->
-                          <li>
+                       <!--    <li>
                               <div class="pull-left">
                                   <form action="#" method="post" enctype="multipart/form-data" id="form-language">
                                       <div class="btn-group">
@@ -56,7 +59,7 @@
                                       <input type="hidden" name="redirect" value="#">
                                   </form>
                               </div>
-                          </li>
+                          </li> -->
                           <li class="currency">
                               <div class="pull-left">
                                   <form action="#" method="post" enctype="multipart/form-data" id="form-currency">
@@ -88,13 +91,13 @@
           </div>
       </div>
   </div>
-    <!-- //Header Top -->
-    <!-- Header center -->
+  <!-- //Header Top -->
+  <!-- Header center -->
   <div class="header-center">
       <div class="container">
           <div class="row">
               <div class="navbar-logo col-lg-3 col-md-12 col-xs-12">
-                  <a href="{{url('/')}}"><img width="200" height="50" src="{{asset('frontend/image/logo/'.Config::get('siteSetting.logo'))}}" title="Home" alt="Logo"></a>
+                  <a href="{{url('/')}}"><img width="200" height="50" src="{{asset('upload/images/logo/'.Config::get('siteSetting.logo'))}}" title="Home" alt="Logo"></a>
               </div>
               <div class="header-center-right col-lg-6 col-md-7 col-sm-7 col-xs-9">
                   <div class="header_search">
@@ -102,7 +105,7 @@
                           <form method="GET" action="{{ route('product.search') }}">
                               <div id="search0" class="search input-group form-group">
                                   <div title="Select Category" class="select_category filter_type  icon-select">
-                                      <?php $categories =  \App\Models\Category::where('parent_id', '=', null)->orderBy('orderBy', 'asc')->where('status', 1)->get() ?>
+                                      
                                       <select class="no-border" name="cat">
                                           <option value="">All categories</option>
                                           @foreach($categories as $srccategory)
@@ -167,7 +170,7 @@
           </div>
       </div>
   </div>
-    <!-- //Header center -->
+  <!-- //Header center -->
     <!-- Heaader bottom -->
   <div class="header-bottom hidden-compact">
       <div class="container">
@@ -292,163 +295,89 @@
                                             <div class="megamenu-pattern">
                                               <div class="container">
                                                 <ul class="megamenu" data-transition="slide" data-animationtime="500">
-
-                                            
-
-                                                <?php $menus =  \App\Models\Menu::where('main_header', 1)->where('status', 1)->orderBy('position', 'asc')->get() ?>
-                                                @foreach($menus as $menu)
-                                                  @if($menu->menu_source == 'category')
-                                                  <li class="item-style2 content-full feafute with-sub-menu hover">
-                                                    <p class="close-menu"></p>
-                                                      <a class="clearfix">
-                                                      <strong>
-                                                      {{$menu->name}}
-                                                      </strong>
-                                                      @if(count($menu->get_categories)>0)
-                                                        <b class="caret"></b>
-                                                        </a>
-                                                        <div class="sub-menu" style="width: 100%">
-                                                          <div class="content">
-                                                            <div class="categories ">
-                                                              <div class="row">
-                                                                @foreach($menu->get_categories as $category)
-                                                                <div class="col-sm-3 static-menu">
-                                                                  <div class="menu">
-                                                                    <ul>
-                                                                      <li>
-
-                                                                        <a href="{{route('home.category', [$category->get_singleSubcategory->slug, $category->slug])}}" class="main-menu">{{$category->name}}</a>
-                                                                        @if(count($category->get_subchild_category)>0)
+                                                  @if(count($menus)>0)
+                                                    @foreach($menus->where('main_header', 1) as $menu)
+                                                      @if($menu->menu_source == 'category')
+                                                      <li class="item-style2 content-full feafute with-sub-menu hover">
+                                                        <p class="close-menu"></p>
+                                                          <a class="clearfix">
+                                                          <strong>
+                                                          {{$menu->name}}
+                                                          </strong>
+                                                          @if(count($menu->get_categories)>0)
+                                                            <b class="caret"></b>
+                                                            </a>
+                                                            <div class="sub-menu" style="width: 100%">
+                                                              <div class="content">
+                                                                <div class="categories ">
+                                                                  <div class="row">
+                                                                    @foreach($menu->get_categories as $category)
+                                                                    <div class="col-sm-3 static-menu">
+                                                                      <div class="menu">
                                                                         <ul>
-                                                                          @foreach($category->get_subchild_category as $childcategory)
-                                                                          <li><a href="{{route('home.category', [$category->get_singleSubcategory->slug, $childcategory->get_singleChildCategory->slug, $childcategory->slug])}}">{{$childcategory->name}}</a></li>
-                                                                          @endforeach
-                                                                        </ul>
-                                                                        @endif
+                                                                          <li>
 
-                                                                      </li>
-                                                                    </ul>
+                                                                            <a href="{{route('home.category', [$category->get_singleSubcategory->slug, $category->slug])}}" class="main-menu">{{$category->name}}</a>
+                                                                            @if(count($category->get_subchild_category)>0)
+                                                                            <ul>
+                                                                              @foreach($category->get_subchild_category as $childcategory)
+                                                                              <li><a href="{{route('home.category', [$category->get_singleSubcategory->slug, $childcategory->get_singleChildCategory->slug, $childcategory->slug])}}">{{$childcategory->name}}</a></li>
+                                                                              @endforeach
+                                                                            </ul>
+                                                                            @endif
+
+                                                                          </li>
+                                                                        </ul>
+                                                                      </div>
+                                                                    </div>
+                                                                   @endforeach
                                                                   </div>
                                                                 </div>
-                                                               @endforeach
                                                               </div>
                                                             </div>
-                                                          </div>
-                                                        </div>
-                                                      @else
-                                                      </a>
-                                                      @endif
-                                                  </li>
+                                                          @else
+                                                          </a>
+                                                          @endif
+                                                      </li>
 
-                                                  @elseif($menu->menu_source == 'page')
-                                                  <li class="style-page with-sub-menu hover">
-                                                    <p class="close-menu"></p>
-                                                    @if(count($menu->get_pages)>1)
+                                                      @elseif($menu->menu_source == 'page')
+                                                      <li class="style-page with-sub-menu hover">
+                                                        <p class="close-menu"></p>
+                                                        @php
+                                                          $source_id = explode(',', $menu->source_id);
+                                                          $get_pages =  \App\Models\Page::whereIn('id', $source_id)->get();
+                                                         
+                                                        @endphp
+                                                        @if(count($get_pages)>1)
+                                                            <a class="clearfix"><strong>{{$menu->name}} </strong>
+                                                            <b class="caret"></b> </a>
+                                                            <div class="sub-menu" style="width: 40%;">
+                                                              <div class="content" >
+                                                                <div class="row">
 
-                                                    @foreach($menu->get_pages as $page)
-                                                      <a class="clearfix">
-                                                      <strong>
-                                                      {{$menu->name}}
-                                                      </strong>
-                                                      <b class="caret"></b>
-                                                      </a>
-                                                      <div class="sub-menu" style="width: 40%;">
-                                                        <div class="content" >
-                                                          <div class="row">
-                                                            <div class="col-md-6">
-                                                              <ul class="row-list">
-                                                                <li><a class="subcategory_item" href="faq.html">FAQ</a></li>
-                                                                <li><a class="subcategory_item" href="sitemap.html">Site Map</a></li>
-                                                                <li><a class="subcategory_item" href="contact.html">Contact us</a></li>
-                                                                <li><a class="subcategory_item" href="banner-effect.html">Banner Effect</a></li>
-                                                              </ul>
+                                                                  <div class="col-md-6">
+                                                                    <ul class="row-list">
+                                                                       @foreach($get_pages as $page)
+                                                                      <li><a class="subcategory_item" href="{{  route('page', $page->slug)}}">{{$page->title}}</a></li>
+                                                                      @endforeach
+
+                                                                    </ul>
+                                                                  </div>
+                                                                  
+                                                                </div>
+                                                              </div>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                              <ul class="row-list">
-                                                                <li><a class="subcategory_item" href="about-us.html">About Us 1</a></li>
-                                                                <li><a class="subcategory_item" href="about-us-2.html">About Us 2</a></li>
-                                                                <li><a class="subcategory_item" href="about-us-3.html">About Us 3</a></li>
-                                                                <li><a class="subcategory_item" href="about-us-4.html">About Us 4</a></li>
-                                                              </ul>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                      </div>
+                                                        @else
+                                                         <a href="{{  route('page', $get_pages[0]->slug)}}" class="clearfix">
+                                                          <strong> {{$menu->name}} </strong>
+                                                          </a>
+                                                        @endif
+                                                      </li>
+
+                                                      @else @endif
                                                     @endforeach
-                                                    @else
-                                                     <a href="{{ ($menu->get_pages[0]->is_default == 1) ? url($menu->get_pages[0]->slug) : route('page', $menu->get_pages[0]->slug)}}" class="clearfix">
-                                                      <strong>
-                                                      {{$menu->get_pages[0]->title}}
-                                                      </strong>
-                                                      </a>
-                                                    @endif
-                                                  </li>
+                                                @endif
 
-                                                  @else
-                                                    <li class="style-page with-sub-menu hover">
-                                                    <p class="close-menu"></p>
-                                                    @if(count($menu->get_pages)>1)
-
-                                                    @foreach($menu->get_pages as $page)
-                                                      <a class="clearfix">
-                                                      <strong>
-                                                      {{$menu->name}}
-                                                      </strong>
-                                                      <b class="caret"></b>
-                                                      </a>
-                                                      <div class="sub-menu" style="width: 40%;">
-                                                        <div class="content" >
-                                                          <div class="row">
-                                                            <div class="col-md-6">
-                                                              <ul class="row-list">
-                                                                <li><a class="subcategory_item" href="faq.html">FAQ</a></li>
-                                                                <li><a class="subcategory_item" href="sitemap.html">Site Map</a></li>
-                                                                <li><a class="subcategory_item" href="contact.html">Contact us</a></li>
-                                                                <li><a class="subcategory_item" href="banner-effect.html">Banner Effect</a></li>
-                                                              </ul>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                              <ul class="row-list">
-                                                                <li><a class="subcategory_item" href="about-us.html">About Us 1</a></li>
-                                                                <li><a class="subcategory_item" href="about-us-2.html">About Us 2</a></li>
-                                                                <li><a class="subcategory_item" href="about-us-3.html">About Us 3</a></li>
-                                                                <li><a class="subcategory_item" href="about-us-4.html">About Us 4</a></li>
-                                                              </ul>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                    @endforeach
-                                                    @else
-                                                     <a href="{{ url($menu->slug) }}" class="clearfix">
-                                                      <strong>
-                                                      {{$menu->name}}
-                                                      </strong>
-                                                      </a>
-                                                    @endif
-                                                  </li>
-
-
-                                                  @endif
-                                                @endforeach
-
-
-                                                  <!-- <li class="deal-h5 hidden">
-                                                    <p class="close-menu"></p>
-                                                    <a href="#" class="clearfix">
-                                                    <strong>
-                                                    <img src="{{asset('frontend')}}/image/catalog/demo/menu/hot-block.png" alt="">Top Sales
-                                                    </strong>
-                                                    </a>
-                                                  </li>
-                                                  <li class="deal-h5 hidden">
-                                                    <p class="close-menu"></p>
-                                                    <a href="#" class="clearfix">
-                                                    <strong>
-                                                    Today Deals
-                                                    </strong>
-                                                    </a>
-                                                  </li> -->
                                                 </ul>
                                               </div>
                                             </div>

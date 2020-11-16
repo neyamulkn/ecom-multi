@@ -29,6 +29,7 @@ class StripeController extends Controller
             if($payment_success){
                 Session::put('payment_data.trnx_id', $payment_success['balance_transaction']);
                 Session::put('payment_data.status', 'success');
+                Session::put('payment_data.payment_status', 'paid');
                 $paymentController = new PaymentController();
                 //redirect payment success method
                 return $paymentController->paymentSuccess();

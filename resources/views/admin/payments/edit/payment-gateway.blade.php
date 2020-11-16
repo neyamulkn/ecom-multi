@@ -14,6 +14,7 @@
     </div>
 </div>
 
+@if($data->is_default != null)
 <div class="col-md-6">
     <div class="form-group">
         <label for="public_key">Public Key</label>
@@ -27,7 +28,7 @@
         <input name="secret_key" id="secret_key" value="{{$data->secret_key}}" placeholder="Enter secret key" type="text" class="form-control">
     </div>
 </div>
-
+@endif
 
 <div class="col-md-6">
     <div class="form-group"> 

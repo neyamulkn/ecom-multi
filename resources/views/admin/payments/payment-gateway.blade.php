@@ -59,12 +59,10 @@
                                     <table id="myTable" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                 <th>Logo</th>
+                                                <th>Logo</th>
                                                 <th>Name</th>
-                                               
                                                 <th>Details</th>
-                                               
-                                                <th>Use For</th>
+                                              <!--   <th>Use For</th> -->
                                                 <th>Method mode</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -75,11 +73,8 @@
                                             <tr id="item{{$gateway->id}}">
                                                 <td><img src="{{asset('upload/images/payment/'. $gateway->method_logo)}}" width="90" height="45"></td>
                                                 <td>{{$gateway->method_name}}</td>
-                                                
-                                                <td>{{$gateway->custom_method_info}}</td>
-                                                
-                                              
-                                                <td>{{$gateway->method_for}}</td>
+                                                <td>{!! $gateway->method_info !!}</td>
+                                               <!--  <td>{{$gateway->method_for}}</td> -->
                                                 <td>
                                                     <div class="bt-switch">
                                                         
@@ -156,7 +151,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="col-md-12">
+                                        <!-- <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="public_key">Public Key</label>
                                                 <input name="public_key" id="public_key" value="{{old('public_key')}}" placeholder="Enter public key" type="text" class="form-control">
@@ -168,10 +163,8 @@
                                                 <label for="secret_key">Secret Key</label>
                                                 <input name="secret_key" id="secret_key" value="{{old('secret_key')}}" placeholder="Enter secret key" type="text" class="form-control">
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                     
-                                   
                                         <div class="col-md-6">
                                             <div class="form-group"> 
                                                 <label class="dropify_image">Logo</label>

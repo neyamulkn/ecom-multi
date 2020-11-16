@@ -29,7 +29,7 @@
             padding: 5px;
         }
     .closeBtn{position: absolute;right: 0;bottom: 10px;}
-    form label{font-weight: 600;}
+   
     form span{font-size: 12px;}
     #main-wrapper{overflow: visible !important;}
     .shipping-method label{font-size: 13px; font-weight:500; margin-left: 15px; }
@@ -131,7 +131,7 @@
                                                 <label for="subchildcategory">Select Child Category</label>
                                                 <select onchange="getAttributeByCategory(this.value, 'getAttributesByChildcategory')" name="childcategory"  id="subchildcategory" class="form-control custom-select">
                                                    <option value="">Select first sub category</option>
-                                                  
+
                                                 </select>
                                                 @if ($errors->has('childcategory'))
                                                     <span class="invalid-feedback" role="alert">
@@ -170,7 +170,7 @@
                                             Product Attribute & Features
                                         </div>
                                         <div class="col-md-12">
-                                           
+
                                             <div id="productVariationField" >
                                                 <div id="getAttributesByCategory"></div>
                                                 <div id="getAttributesBySubcategory"></div>
@@ -178,7 +178,7 @@
                                             </div>
                                         </div>
 
-                                       
+
                                         <div class="col-md-12">
                                             <!-- Allow attribute checkbox button -->
                                             <div class="form-group">
@@ -186,16 +186,16 @@
                                                     <label for="predefinedFeature">Product Features</label>
                                                 </div>
                                             </div>
-                                            
+
                                             <div id="PredefinedFeatureBycategory"></div>
                                             <div id="PredefinedFeatureBySubcategory"></div>
                                             <div id="PredefinedFeatureByChildcategory"></div>
                                            <!--  <div class="form-group row"><span class="col-4 col-sm-2 text-right col-form-label">Feature name</span> <div class="col-8 col-sm-4"> <input type="text" class="form-control"  name="extraFeatureName[]"  placeholder="Feature name"> </div><span class="col-4 col-sm-2 text-right col-form-label">Feature Value</span> <div class="col-7 col-sm-3"> <input type="text" name="extraFeatureValue[]" class="form-control"  placeholder="Input value here"> </div> <div class="col-1"><button class="btn btn-success" type="button" onclick="extraPredefinedFeature();"><i class="fa fa-plus"></i></button></div></div>
                                             <div id="extraPredefinedFeature"></div>
                                             <div class="row justify-content-md-center"><div class="col-md-4"> <span  style="cursor: pointer;" class="btn btn-info btn-sm" onclick="extraPredefinedFeature()"><i class="fa fa-plus"></i> Add More Feature </span></div></div> <hr/> -->
-            
+
                                         </div>
-                                        
+
                                         <div class="col-md-12">
                                         	<div class="form-group">
                                         		<label class="required" >Short Summery</label>
@@ -208,13 +208,13 @@
                                                <textarea required="" name="description" class="summernote form-control">{{old('description')}}</textarea>
                                            </div>
                                         </div>
-                                          
+
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-md-12 title_head">
                                                     Shipping & Delivery
                                                 </div>
-                                               
+
                                                 <!-- <div class="col-md-12">
                                                    <div class="row">
                                                         <div class="col-md-12">
@@ -226,7 +226,7 @@
                                                                 <input required type="number" min="1" class="form-control"  name="weight"  placeholder="Enter weight">
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div class="col-md-12 nopadding">
                                                              <label class="required">Package Dimensions (cm) </label>
                                                         </div>
@@ -248,35 +248,35 @@
                                                                 <input required type="number" min="1" class="form-control" name="height"  placeholder="Enter Height">
                                                             </div>
                                                         </div>
-                                                       
-                                                       
+
+
                                                     </div>
                                                 </div>
  -->
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        
+
                                                         <div class="checkbox2">
-                                                          <input type="checkbox" required id="ship_time" value="1"> 
+                                                          <input type="checkbox" required id="ship_time" value="1">
                                                           <label class="required"  for="ship_time">Allow Shipping Charge</label>
                                                         </div>
-                                                                  
-                                                    </div> 
+
+                                                    </div>
                                                     <div id="ship_time_display"  style="display: none;">
 
                                                         <div class="form-group">
                                                             <div class="checkbox2 shipping-method">
-                                                                <label for="free_shipping"><input  type="radio" name="shipping_method" id="free_shipping" required value="free"> 
+                                                                <label for="free_shipping"><input  type="radio" name="shipping_method" id="free_shipping" required value="free">
                                                                 Free Shipping</label>
 
-                                                                <label for="Flate_shipping"><input type="radio" name="shipping_method" id="Flate_shipping" required value="Flate"> 
+                                                                <label for="Flate_shipping"><input type="radio" name="shipping_method" id="Flate_shipping" required value="Flate">
                                                                 Flate Shipping</label>
                                                                 <label for="Location_shipping">
-                                                                <input type="radio" name="shipping_method" id="Location_shipping" required value="location"> 
+                                                                <input type="radio" name="shipping_method" id="Location_shipping" required value="location">
                                                                 Location-based shipping</label>
 
                                                                 <label for="Price_shipping">
-                                                                <input type="radio" name="shipping_method" id="Price_shipping" required value="price"> 
+                                                                <input type="radio" name="shipping_method" id="Price_shipping" required value="price">
                                                                 Price-based shipping</label>
                                                             </div>
                                                         </div>
@@ -289,10 +289,10 @@
                                                         <div class="checkbox2">
                                                             <input type="checkbox" id="checkSeo" name="secheck" value="1">
                                                             <label for="checkSeo">Allow Product SEO</label>
-                                                      </div>      
-                                                    </div> 
-                                                    <div  id="seoField" style="display: none;">  
-                                                        
+                                                      </div>
+                                                    </div>
+                                                    <div  id="seoField" style="display: none;">
+
                                                         <div class="form-group">
                                                             <span class="required" for="meta_title">Meta Title</span>
                                                             <input type="text" value="{{old('meta_title')}}"  name="meta_title" id="meta_title" placeholder = 'Enter meta title'class="form-control" >
@@ -308,7 +308,7 @@
                                                             <span class="control-label" for="meta_description">Meta Description</span>
                                                             <textarea class="form-control" name="meta_description" id="meta_description" rows="2" style="resize: vertical;" placeholder="Enter Meta Description">{{old('meta_description')}}</textarea>
                                                         </div>
-                                                 
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -317,11 +317,11 @@
                                 </div>
                                 <div class="col-md-3 sticky-conent">
                                     <div class="row">
-                                        
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="required" for="stock">Product Stock</label>
-                                                <input type="text" value="{{old('stock')}}"  name="stock" id="stock" placeholder = 'Example: 100'class="form-control" >
+                                                <input type="text" value="{{old('stock')}}"  name="stock" id="stock" placeholder = 'Example: 100' class="form-control" >
                                             </div>
                                         </div>
 
@@ -337,7 +337,7 @@
                                                 <input type="date" value="{{old('expired_date')}}" placeholder = 'Enter expired date' name="expired_date" id="expired_date" class="form-control" >
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="required" for="brand">Brand </label>
@@ -351,7 +351,7 @@
                                         </div>
 
                                     	<div class="col-md-12">
-                                            <div class="form-group"> 
+                                            <div class="form-group">
                                                 <label class="dropify_image required">Feature Image</label>
                                                 <input type="file" class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="feature_image" id="input-file-events">
                                             </div>
@@ -363,7 +363,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <div class="form-group"> 
+                                            <div class="form-group">
                                                 <label class="dropify_image">Gallery Image</label>
                                                 <input  type="file" multiple class="dropify" accept="image/*" data-type='image' data-allowed-file-extensions="jpg jpeg png gif"  data-max-file-size="2M"  name="gallery_image[]" id="input-file-events">
                                             </div>
@@ -376,13 +376,13 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                
+
                                                 <div class="checkbox2">
-                                                  <input name="product_video" type="checkbox" id="product_video" value="1"> 
+                                                  <input name="product_video" type="checkbox" id="product_video" value="1">
                                                   <label for="product_video">Add Video</label>
                                                 </div>
-                                                          
-                                            </div> 
+
+                                            </div>
                                             <div id="video_display"  style="display: none;">
                                                 <div id="extra_video_fields"></div>
                                                 <div class="form-group" style="text-align: center;"><span  style="cursor: pointer;" class="btn btn-info btn-sm" onclick="extra_video_fields()"><i class="fa fa-plus"></i> Add More </span>
@@ -390,32 +390,32 @@
 
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                
+
                                                 <label class="switch-box" style="top:-12px;">Status</label>
-                                                
+
                                                     <div class="custom-control custom-switch">
                                                       <input name="status" {{ (old('status') == 'on') ? 'checked' : '' }} checked type="checkbox" class="custom-control-input" id="status">
                                                       <label style="padding: 5px 12px" class="custom-control-label" for="status">Publish/Unpublish</label>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
-                    
+
                         </div><hr>
                         <div class="form-actions pull-right" style="float: right;">
                             <button type="submit"  name="submit" value="save" class="btn btn-success"> <i class="fa fa-save"></i> Save Product </button>
-                            
+
                             <button type="reset" class="btn waves-effect waves-light btn-secondary">Reset</button>
                         </div>
                     </form>
                 </div>
-               
+
             </div>
 
         </div>
@@ -424,13 +424,13 @@
     <!-- End Page wrapper  -->
 
 
-   
+
 @endsection
 
 @section('js')
 
 
-   
+
     <script src="{{asset('assets')}}/node_modules/dropify/dist/js/dropify.min.js"></script>
 
     <script type="text/javascript">
@@ -439,10 +439,10 @@
             get_subcategory({{old('category')}});
         @endif
 
-      
+
         function get_subcategory(id=''){
             document.getElementById('pageLoading').style.display ='block';
-        
+
         	//get attribute by category
                 getAttributeByCategory(id, 'getAttributesByCategory');
           	//when main category change reset attribute fields
@@ -454,49 +454,49 @@
             //when category change reset feature
                 $('#PredefinedFeatureBySubcategory').html(' ');
                 $('#PredefinedFeatureByChildcategory').html(' ');
-        
+
             var  url = '{{route("getSubCategory", ":id")}}';
             url = url.replace(':id',id);
             $.ajax({
                 url:url,
                 method:"get",
                 success:function(data){
-                    
+
                     if(data){
                         $("#subcategory").html(data);
                         $("#subcategory").focus();
-                        
+
                     }else{
                         $("#subcategory").html('<option value="">subcategory not found</option>');
                     }
                     document.getElementById('pageLoading').style.display ='none';
                 }
             });
-        }        
+        }
         @if(old('subcategory'))
             get_subchild_category({{old('subcategory')}});
         @endif
         function get_subchild_category(id=''){
             //enable loader
             document.getElementById('pageLoading').style.display ='block';
-           
+
             //get product feature by sub category
             getFeature(id, 'PredefinedFeatureBySubcategory');
-            //when sub category change reset feature 
+            //when sub category change reset feature
             $('#PredefinedFeatureByChildcategory').html(' ');
 
-        	//get attribute by sub category 
+        	//get attribute by sub category
         	getAttributeByCategory(id, 'getAttributesBySubcategory');
         	//when sub category change reset attribute fields
         	 $('#getAttributesByChildcategory').html(' ');
-        	
+
             var  url = '{{route("getSubChildCategory", ":id")}}';
             url = url.replace(':id',id);
             $.ajax({
                 url:url,
                 method:"get",
                 success:function(data){
-                    
+
                     if(data){
                         $("#subchildcategory").html(data);
                         $("#subchildcategory").focus();
@@ -504,12 +504,12 @@
                         $("#subchildcategory").html('<option value="">Childcategory not found</option>');
                     }
                     document.getElementById('pageLoading').style.display ='none';
-        
+
                 }
             });
-        }  
+        }
 
-        // get Attribute by Category 
+        // get Attribute by Category
         function getAttributeByCategory(id, category){
             //enable loader
             document.getElementById('pageLoading').style.display ='block';
@@ -525,7 +525,7 @@
                 url:url,
                 method:"get",
                 success:function(data){
-                	
+
                     if(data){
                         $("#"+category).html(data);
                     }else{
@@ -534,9 +534,9 @@
                     document.getElementById('pageLoading').style.display ='none';
                 }
             });
-        }           
-        
-        // get feature by Category 
+        }
+
+        // get feature by Category
         function getFeature(id, category){
 
             var  url = '{{route("getFeature", ":id")}}';
@@ -545,7 +545,7 @@
                 url:url,
                 method:"get",
                 success:function(data){
-                   
+
                     if(data){
                         $("#"+category).html(data);
                     }else{
@@ -553,9 +553,9 @@
                     }
                 }
             });
-        }       
+        }
 
-   
+
     </script>
 
     <script>
@@ -568,31 +568,31 @@
     $("#ship_time").change(function() {
 	    if(this.checked) { $("#ship_time_display").show(); }
 	    else { $("#ship_time_display").hide(); }
-	});    
+	});
 
     $("#free_shipping").change(function() {
         if(this.checked) { $("#shipping-field").html('<div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" placeholder="Exm: 3-4 days" type="text"></div>'); }
         else { $("#shipping-field").html(''); }
-       
+
     });
     $("#Flate_shipping").change(function() {
         if(this.checked) { $("#shipping-field").html('<div class="col-md-3"><span class="required">Shipping Cost</span><input class="form-control" name="shipping_cost" placeholder="Exm: 50" min="1" type="number"></div><div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" placeholder="Exm: 3-4 days" type="text"></div>'); }
         else { $("#shipping-field").html(''); }
-    });     
+    });
 
     $("#Price_shipping").change(function() {
         if(this.checked) { $("#shipping-field").html('<div class="col-md-3"><span class="required">Order price above</span><input class="form-control" required name="order_price_above" placeholder="0.00" min="1" type="number"></div><div class="col-md-3><div class="form-group"><div class="checkbox2 shipping-method"><label for="Free_shipping"><span class="required">Shipping Rate</span><br/><br/><input type="checkbox" name="free_shipping" id="Free_shipping" value="1"> Free Shipping</label></div></div></div><div class="col-md-3"><span>Or shipping cost</span><input class="form-control" name="shipping_cost" placeholder="Exm: 3-4 days" type="text"></div><div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" placeholder="Exm: 3-4 days" type="text"></div>'); }
         else { $("#shipping-field").html(''); }
-    });     
+    });
 
     $("#Location_shipping").change(function() {
         if(this.checked) { $("#shipping-field").html('<div class="col-md-3"><span class="required">Select Specific Region</span><select required name="ship_region_id" id="ship_region_id" class="form-control custom-select"> @foreach($regions as $region) <option value="{{$region->id}}">{{$region->name}}</option> @endforeach </select></div><div class="col-md-2"><span class="required">Shipping Cost</span><input class="form-control" name="shipping_cost" placeholder="Exm: 50" min="1" type="number"></div></div><div class="col-md-3"><span>Others region shipping cost</span><input class="form-control" name="other_region_cost" placeholder="Exm: 55" min="1" type="number"></div><div class="col-md-3"><span>Estimated Shipping Time</span><input class="form-control" name="shipping_time" placeholder="Exm: 3-4 days" type="text"></div>'); }
         else { $("#shipping-field").html(''); }
-    });    
+    });
 
 
     var shipping = 1;
-    //add dynamic shipping 
+    //add dynamic shipping
     function shipping_fields() {
 
         shipping++;
@@ -609,9 +609,9 @@
 	$("#checkSeo").change(function() {
 	    if(this.checked) { $("#seoField").show(); }
 	    else { $("#seoField").hide(); }
-	});    
+	});
 
- 
+
     </script>
 
     <script type="text/javascript">
@@ -634,17 +634,17 @@
     function remove_extraPredefinedFeature(rid) {
         $('.removeclass' + rid).remove();
     }
-  
+
 
     //Allow checkbox check/uncheck handle
     $("#product_video").change(function() {
 
-        if(this.checked) { 
-            $("#video_display").show(); 
-            $("#extra_video_fields").html('<div class="row" style="align-items: center"><div class="col-10"><div class="form-group"><span for="video_provider" class="required">Video Type</span><select required name="video_provider[]" id="video_provider" class="form-control custom-select"><option value="youtube">Youtube</option> <option value="vimeo">Vimeo</option></select><span class="required">Video link</span><input class="form-control" name="video_link[]" id="video_link" required placeholder="Exm: https://www.youtube.com" value="" type="text"></div></div><div class="col-1"><button class="btn btn-success" type="button" onclick="extra_video_fields()"><i class="fa fa-plus"></i></button></div></div>'); 
+        if(this.checked) {
+            $("#video_display").show();
+            $("#extra_video_fields").html('<div class="row" style="align-items: center"><div class="col-10"><div class="form-group"><span for="video_provider" class="required">Video Type</span><select required name="video_provider[]" id="video_provider" class="form-control custom-select"><option value="youtube">Youtube</option> <option value="vimeo">Vimeo</option></select><span class="required">Video link</span><input class="form-control" name="video_link[]" id="video_link" required placeholder="Exm: https://www.youtube.com" value="" type="text"></div></div><div class="col-1"><button class="btn btn-success" type="button" onclick="extra_video_fields()"><i class="fa fa-plus"></i></button></div></div>');
         }
-        else {  
-           
+        else {
+
             $("#extra_video_fields").html('');
             $("#video_display").hide();
         }
@@ -670,7 +670,7 @@
     }
 
     </script>
-   
+
    <script src="{{asset('assets')}}/node_modules/summernote/dist/summernote-bs4.min.js"></script>
     <script>
     $(function() {
@@ -706,6 +706,6 @@
       }
     });
     </script>
- 
+
 @endsection
 

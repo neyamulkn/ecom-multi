@@ -6,7 +6,7 @@
             ->orderBy('total_order', 'desc')->take(12)->get(); ?>
 @if(count($brands)>0)
 
-<section class="section" style="background:{{$section->background_color}}">
+<section style="background:{{$section->background_color}}">
   <div class="container">
         <div class="row">
             <div class="col-md-12 catalog">
@@ -20,7 +20,7 @@
                         <img src="{{asset('upload/images/brand/thumb/'.$brand->logo)}}" >
                     </div>
                     <div class="desc-listcategoreis" >
-                        <span style="font-weight: bold;font-size: 16px">{{$brand->name}}</span><br/>
+                        <span style="font-weight: bold;font-size: 14px">{{$brand->name}}</span><br/>
                         <span>{{ count($brand->products)}} Products</span>
                            
                     </div>

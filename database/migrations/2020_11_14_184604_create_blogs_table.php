@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSocialsTable extends Migration
+class CreateBlogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,18 @@ class CreateSocialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('socials', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 10);
             $table->integer('user_id')->nullable();
-            $table->string('social_name', 25);
-            $table->string('icon', 25);
-            $table->string('link');
-            $table->string('background', 15)->default('#00aced');
-            $table->string('text_color', 15)->default('#fff');
+            $table->integer('category_id')->nullable();
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description');
+            $table->string('image')->nullable();
+            $table->string('video')->nullable();
+            $table->integer('views')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -33,6 +35,6 @@ class CreateSocialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('socials');
+        Schema::dropIfExists('blogs');
     }
 }

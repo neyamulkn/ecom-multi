@@ -72,7 +72,7 @@
                 </div>
                 <div class="row">
                     <!-- Column -->
-                    <div class="col-lg-3 col-md-6">
+              <!--       <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row">
@@ -83,12 +83,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Column -->
 
               
                     <!-- Column -->
-                    <div class="col-lg-3 col-md-6">
+               <!--      <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row">
@@ -99,10 +99,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Column -->
                     <!-- Column -->
-                    <div class="col-lg-3 col-md-6">
+                 <!--    <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row">
@@ -113,11 +113,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Column -->
 
                     <!-- Column -->
-                    <div class="col-lg-3 col-md-6">
+           <!--          <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row">
@@ -128,7 +128,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Column -->
                 
                 </div>

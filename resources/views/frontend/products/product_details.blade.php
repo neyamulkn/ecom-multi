@@ -438,7 +438,7 @@
                               <span class="attribute_title"> {{$variation->attribute_name}}: </span>
                               <select name="{{$attribute_name}}">
                                   <!-- get feature details -->
-                                  @foreach($variation->$get_variationDetails as $variationDetail)
+                                  @foreach($variation->get_variationDetails as $variationDetail)
 
                                     <option value="{{ $variationDetail->attributeValue_name}}">{{ $variationDetail->attributeValue_name}}</option>
 
@@ -451,7 +451,7 @@
                                 <li class="attribute_title">{{$variation->attribute_name}}: </li>
                                 <li class="attributes {{$attribute_name}}">
                                 <!-- get feature details -->
-                                 @foreach($variation->$get_variationDetails as $variationDetail)
+                                 @foreach($variation->get_variationDetails as $variationDetail)
                                   <!-- show feature attribute value name -->
 
                                     <label @if($variationDetail->color) style="background:{{$variationDetail->color}}; color:#ebebeb; " @endif class="attributes_value @if($i == 1) active @endif" for="{{$attribute_name.$variationDetail->id}}" >
@@ -512,7 +512,7 @@
                   <div class="delivery-header">
                     <div class="delivery_header_title">Delivery Options</div>
                   </div>
-                  <div class="delivery_header">
+  <!--                 <div class="delivery_header">
                       <div class="delivery_location">
                         <div class="location_icon">
                           <i class="fa fa-map-marker"></i>
@@ -541,7 +541,7 @@
                             </div>
                         </div>
                       </div>
-                  </div>
+                  </div> -->
                   <div class="delivery_header">
                     <div class="delivery_location">
                           <div class="location_icon">
@@ -575,9 +575,9 @@
                 <div class="seller-option">
                   Sold By
                   <div class="seller-header">
-                     <i class="fa-shopping-bag"></i> SkySara
+                     <i class="fa-shopping-bag"></i> {{$_SERVER['SERVER_NAME']}}
 
-                      <span style="float: right;"><i class="fa fa-comments"></i> Chat Now</span>
+                      <!-- <span style="float: right;"><i class="fa fa-comments"></i> Chat Now</span> -->
                   </div>
 
 
@@ -603,7 +603,7 @@
 
                           </div>
 
-                            <div class="contact-seller">
+                           <!--  <div class="contact-seller">
                               <ul class="list">
                                 <li>
                                   <a class="view-stor btn" href="javascript:;" data-toggle="modal" data-target="#comment-log-reg">
@@ -624,7 +624,7 @@
                                   </a>
                                 </li>
                               </ul>
-                          </div>
+                          </div> -->
                       </div>
                   </div>
                 </div>
@@ -640,7 +640,7 @@
                        <li class="active"><a data-toggle="tab" href="#tab-description">Description</a></li>
 
                        <li><a href="#tab-specification" data-toggle="tab">Specification</a></li>
-                       <li><a href="#tab-review" data-toggle="tab">Buy & Return Policy</a></li>
+                      <!--  <li><a href="#tab-review" data-toggle="tab">Buy & Return Policy</a></li> -->
                     </ul>
                     <div class="tab-content ">
                       <div class="tab-pane active" id="tab-description">
@@ -755,13 +755,13 @@
                   <div class="col-md-12">
                       <div class="review-filterSort">
                           <span class="title">Product Reviews</span>
-                          <div class="filterSort">
+                          <!-- <div class="filterSort">
                               <i class="fa fa-sort"></i><span> Filter:</span><span class="condition">All star</span>
                           </div>
                           <div class="filterSort">
                               <i class="fa fa-sort"></i><span> Sort:</span>
                               <span class="condition">Relevance</span>
-                          </div>
+                          </div> -->
                       </div>
                   </div>
                   <div class="col-md-12">

@@ -65,7 +65,7 @@
                                             <tr style="background:{{$data->background_color}};color: {{$data->text_color}}" id="item{{$data->id}}">
                                                 <td>{{$data->title}}</td>
                                                 <td>{{str_replace('_', ' ', $data->type)}}</td>
-                                               <td><span class="label label-info"> {!!($data->is_default == 1) ? 'Default' : 'Custom' !!}</span>
+                                               <td>{!!($data->is_default == 1) ? '<span class="label label-info"> Default</span>' : '<span class="label label-danger">Custom</span>' !!}
                                                 </td>
                                                 <td>
                                                     <div class="custom-control custom-switch" style="padding-left: 3.25rem;">
@@ -74,8 +74,10 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button type="button" onclick="edit('{{$data->id}}')"  data-toggle="modal" data-target="#edit" class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</button>
+                                                 <!--    <button type="button" onclick="edit('{{$data->id}}')"  data-toggle="modal" data-target="#edit" class="btn btn-info btn-sm"><i class="ti-pencil" aria-hidden="true"></i> Edit</button> -->
+                                                 @if($data->is_default != 1)
                                                     <button title="Delete" data-target="#delete" onclick="deleteConfirmPopup('{{route("admin.homepageSection.delete", $data->id)}}')" class="btn btn-danger btn-sm" data-toggle="modal"><i class="ti-trash" aria-hidden="true"></i> </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach

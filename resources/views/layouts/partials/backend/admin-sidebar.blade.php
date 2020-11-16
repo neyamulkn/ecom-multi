@@ -42,32 +42,16 @@
                 <li> <a class="waves-effect waves-dark" href="{{route('admin.offer')}}" aria-expanded="false"><i class="fa fa-people-carry"></i><span class="hide-menu">Manage Offers</span></a></li>
 
 
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Location</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{route('state')}}">State</a></li>
-                        <li><a href="{{route('city')}}">City</a></li>
-                        <li><a href="{{route('area')}}">Area</a></li>
-                        
-                    </ul>
-                </li>
-
+               
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Payment Settings</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{route('paymentGateway')}}">Payment Gateway</a></li>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">Currencies</a></li>
-                        <li><a href="#">SMS Setting</a></li>
-                        <li><a href="#">Footer Setting</a></li>
+                      <!--   <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Currencies</a></li> -->
+                        
                     </ul>
                 </li>
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Refund</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{route('admin.refundRequest', 'pending')}}">Pending Request </a></li>
-                        <li><a href="{{route('admin.refundRequest')}}">All Refund Request</a></li>
-                        <li><a href="{{route('returnReason')}}">Refund Reason</a></li>
-                        <li><a href="{{route('admin.refundConfig')}}">Refund Configuration</a></li>
-                    </ul>
-                </li>
+               
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-align-left"></i><span class="hide-menu">Home Page Setting</span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -76,9 +60,9 @@
                         <li><a href="{{route('slider.create')}}">Sliders</a></li>
                         <li><a href="{{route('service.list')}}">Services</a></li>
                         <li><a href="{{route('banner')}}">All Banner</a></li>
-                        <li><a href="javascript:void(0)">Category Section</a></li>
+                       <!--  <li><a href="javascript:void(0)">Category Section</a></li>
                         <li><a href="javascript:void(0)">Customer Reviews</a></li>
-                        <li><a href="javascript:void(0)">Patners</a></li>
+                        <li><a href="javascript:void(0)">Patners</a></li> -->
                        
                     </ul>
                 </li>
@@ -91,8 +75,8 @@
                        
                         <li><a href="{{route('logoSetting')}}">Logo Setting</a></li>
                         <li><a href="{{route('socialSetting')}}">Social Link</a></li>
-                        <li><a href="{{route('footerSetting')}}">Footer Setting</a></li>
-                       
+                       <!--  <li><a href="{{route('footerSetting')}}">Footer Setting</a></li>
+                        -->
                     </ul>
                 </li>
 
@@ -114,6 +98,14 @@
                     </ul>
                 </li> -->
 
+                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-map"></i><span class="hide-menu">Location</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{route('state')}}">State</a></li>
+                        <li><a href="{{route('city')}}">City</a></li>
+                        <li><a href="{{route('area')}}">Area</a></li>
+                    </ul>
+                </li>
+
                 
 
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-users"></i><span class="hide-menu">Customers </span></a>
@@ -125,7 +117,16 @@
                     </ul>
                 </li>
 
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-user"></i><span class="hide-menu">Manage Staff </span></a>
+                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-settings"></i><span class="hide-menu">Refund</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{route('admin.refundRequest', 'pending')}}">Pending Request </a></li>
+                        <li><a href="{{route('admin.refundRequest')}}">All Refund Request</a></li>
+                        <li><a href="{{route('returnReason')}}">Refund Reason</a></li>
+                        <li><a href="{{route('admin.refundConfig')}}">Refund Configuration</a></li>
+                    </ul>
+                </li>
+
+   <!--              <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-user"></i><span class="hide-menu">Manage Staff </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="#">Add New Staff</a></li>
                         <li><a href="#">All Staff</a></li>
@@ -157,7 +158,7 @@
                         <li><a href="#">Compose Mail</a></li>
                     </ul>
                 </li>
-
+ -->
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-newspaper"></i><span class="hide-menu">Manage Pages</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{route('page.create')}}">Add New Page</a></li>
@@ -168,36 +169,27 @@
 
                
 
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-bar-chart"></i><span class="hide-menu">Reports</span></a>
+                <!-- <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-bar-chart"></i><span class="hide-menu">Reports</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="#">Sales Reports</a></li>
                         <li><a href="#">Order Reports</a></li>
                         <li><a href="#">Transection</a></li>
-                        <li><a href="#">Compose Mail</a></li>
                     </ul>
-                </li>
+                </li> -->
 
-              
-
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-server"></i><span class="hide-menu">Stock</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="#">Mailbox</a></li>
-                        <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                        <li><a href="#">Compose Mail</a></li>
-                    </ul>
-                </li>
+            
 
                 <li> <a class="waves-effect waves-dark" href="{{route('coupon')}}" aria-expanded="false"><i class="fa fa-people-carry"></i><span class="hide-menu">Manage Coupon</span></a></li>
 
                 <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="fa fa-people-carry"></i><span class="hide-menu">Subscriptions</span></a></li>
                 
-                <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-shine"></i><span class="hide-menu">Manage Roles</span></a>
+<!--                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-shine"></i><span class="hide-menu">Manage Roles</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{route('role.create')}}">Create Role</a></li>
                         <li><a href="#">Role Permission</a></li>
                        
                     </ul>
-                </li>
+                </li> -->
              
                
                 <li> <a class="waves-effect waves-dark" href="{{ route('adminLogout') }}"  aria-expanded="false"><i class="fa fa-power-off text-success"></i><span class="hide-menu">Log Out</span></a></li>

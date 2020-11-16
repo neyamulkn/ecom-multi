@@ -10,22 +10,22 @@
               <div class="row row_q34c  border ">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col_5j8y col-style">
                   <div class="contactinfo">
-                    <img width="200" src="{{asset('frontend')}}/image/logo/logo-footer.png" title="Your Store - Layout 6" alt="Your Store - Layout 6">
+                    <img width="200" src="{{ asset('upload/images/logo/'.Config::get('siteSetting.logo') )}}" title="" alt="">
                     
-                    <p>Plaza Jacinto Benavente 08950 Esplugues de LLobregat (Barcelona)</p>
+                    <p>{{Config::get('siteSetting.footer')}}</p>
                     <div class="content-footer">
 
                       <div class="address">
                         <label><i class="fa fa-map-marker" aria-hidden="true"></i></label>
-                        <span>Eco Sayan Tex, S.L.B 67162776</span>
+                        <span>{{Config::get('siteSetting.address')}}</span>
                       </div>
                       <div class="phone">
                         <label><i class="fa fa-phone" aria-hidden="true"></i></label>
-                        <span>+34640691007 (Whatsapp)</span>
+                        <span>{{Config::get('siteSetting.phone')}}</span>
                       </div>
                       <div class="email">
                         <label><i class="fa fa-envelope"></i></label>
-                        <a href="#">{{ 'contact@'.$_SERVER['SERVER_NAME']}}.com</a>
+                        <a href="#">{{Config::get('siteSetting.email')}}</a>
                       </div>
                     </div>
                   </div>
@@ -94,7 +94,7 @@
                               <div class="item">
                                 <div class="media-left">
                                   <a href="#" target="_self">
-                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/8-65x50.jpg" alt="Aestibulum ipsum a ornare car" class="media-object"/>
+                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/8-65x50.jpg" alt="" class="media-object"/>
                                   </a>
                                 </div>
                                 <div class="media-body">
@@ -120,7 +120,7 @@
                               <div class="item">
                                 <div class="media-left">
                                   <a href="#" target="_self">
-                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/8-65x50.jpg" alt="Aestibulum ipsum a ornare car" class="media-object"/>
+                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/8-65x50.jpg" alt="" class="media-object"/>
                                   </a>
                                 </div>
                                 <div class="media-body">
@@ -143,7 +143,7 @@
                               <div class="item">
                                 <div class="media-left">
                                   <a href="#" target="_self">
-                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/9-65x50.jpg" alt="Aestibulum ipsum a ornare lectus" class="media-object"/>
+                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/9-65x50.jpg" alt="" class="media-object"/>
                                   </a>
                                 </div>
                                 <div class="media-body">
@@ -166,7 +166,7 @@
                               <div class="item">
                                 <div class="media-left">
                                   <a href="#" target="_self">
-                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/5-65x50.jpg" alt="Baby Came Back! Missed Out? Grab Your" class="media-object"/>
+                                  <img src="{{asset('frontend')}}/image/catalog/demo/blog/5-65x50.jpg" alt="" class="media-object"/>
                                   </a>
                                 </div>
                                 <div class="media-body">
@@ -214,28 +214,18 @@
                     <div class="footer-social">
                       <h3 class="block-title hidden">Follow us</h3>
                       <div class="socials">
-                        <a href="https://www.facebook.com/SmartAddons.page" class="facebook" target="_blank">
-                          <i class="fa fa-facebook"></i>
+                        @php
+                          if(!Session::has('socialLists')){
+                              Session::put('socialLists', App\Models\Social::where('status', 1)->get());
+                          }
+                        @endphp
+                        @foreach(Session::get('socialLists') as $social)
+                        <a href="{{$social->link}}" class="facebook" target="_blank">
+                          <i class="fa {{$social->icon}}" style="background:{{$social->background}}; color:{{$social->text_color}}"></i>
                           <p>on</p>
-                          <span class="name-social">Facebook</span>
+                          <span class="name-social">{{$social->social_name}}</span>
                         </a>
-                        <a href="https://twitter.com/smartaddons" class="twitter" target="_blank">
-                          <i class="fa fa-twitter"></i>
-                          <p>on</p>
-                          <span class="name-social">Twitter</span>
-                        </a>
-                        <a href="https://plus.google.com/u/0/+SmartAddons-Joomla-Magento-WordPress/posts" class="google" target="_blank">
-                          <i class="fa fa-google-plus"></i>
-                          <p>on</p>
-                          <span class="name-social">Google +</span>
-                        </a>
-                        <a href="#" class="dribbble" target="_blank"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                        <a href="#" class="instagram" target="_blank">
-                          <i class="fa fa-instagram" aria-hidden="true"></i>
-                          <p>on</p>
-                          <span class="name-social">Instagram</span>
-                        </a>
-                        <a href="#" class="pinterest" target="_blank"><i class="fa fa-pinterest"></i></a>   <a href="#" class="linkedIn" target="_blank"><i class="fa fa-linkedin"></i></a>   
+                        @endforeach
                       </div>
                     </div>
                   </div>

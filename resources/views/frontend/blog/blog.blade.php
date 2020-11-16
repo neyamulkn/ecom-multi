@@ -11,14 +11,47 @@
             </ul>
         </div>
     </div>
-    <div class="container">
+    <a href="javascript:void(0)" class="btn btn-info open-sidebar hidden-lg hidden-md"><i class="fa fa-bars"></i> Sidebar</a>
+    <div class="container product-detail ">
         <div class="row">
-            <div id="content" class="col-sm-12">
+            <aside class="col-md-3 col-sm-4 col-xs-12 content-aside left_column sidebar-offcanvas sticky-content">
+             
+                <span id="close-sidebar" class="fa fa-times"></span>
+                <div class="module so_filter_wrap filter-horizontal">
+                    <h3 class="modtitle"><span>Category</span></h3>
+                    <div class="modcontent">
+                        <ul>
+                        <li class="so-filter-options">
+                               
+                                <div class="so-filter-content-opts" style="display: block;">
+                                    <?php $categories =  \App\Models\Category::where('parent_id', '=', null)->orderBy('orderBy', 'asc')->where('status', 1)->get() ?> 
+                                <div class="mod-content box-category">
+                                 <ul class="accordion" id="accordion-category">
+                                    @foreach($categories as $category )
+                                  <li class="panel">
+                                    @if($category)<a href="#">{{$category->name}}</a>@endif
+                                  
+                                  </li>
+                                  @endforeach
+                                 </ul>
+                              </div>
+                             
+                            </div>
+
+                        </li>
+                        
+                            
+                        </ul>
+                       
+                    </div>
+                </div>
+            </aside>
+            <div id="content" class="col-sm-9 sticky-content">
                 <div class="blog-header">
                     <h3>Simple Blog</h3>
                 </div>
                 <div class="blog-listitem row">
-                    <div class="blog-item col-md-6 col-sm-6">
+                      <div class="blog-item col-md-4 col-sm-4 col-xs-6">
                         <div class="blog-item-inner">
                             <div class="itemBlogImg left-block">
                                 <div class="article-image banners">
@@ -32,11 +65,7 @@
                             <div class="itemBlogContent right-block ">
                                 <div class="blog-content">
                                     <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
+                                        
                                     </div>
                                     <div class="article-title font-title">
                                         <h4><a href="blog-detail.html">Baby came back! missed out? grab your</a></h4>
@@ -56,269 +85,12 @@
                         </div>
                     </div>
                     
-                    <div class="blog-item col-md-6 col-sm-6">
-                        <div class="blog-item-inner">
-                            <div class="itemBlogImg left-block ">
-                                <div class="article-image banners ">
-                                    <div>
-                                        <a class="popup-gallery" href="{{asset('frontend')}}/image/catalog/demo/blog/8.jpg"><img src="{{asset('frontend')}}/image/catalog/demo/blog/8.jpg" alt="Nure caten raverunt lector legere erd"></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="itemBlogContent right-block ">
-                                <div class="blog-content">
-                                    <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="article-title font-title">
-                                        <h4><a href="blog-detail.html">Nure caten raverunt lector legere erd</a></h4>
-                                    </div>
-                                    <p class="article-description">
-                                         Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis eli...
-                                    </p>
-                                    <div class="blog-meta">
-                                        <span class="author"><span>Post by </span>Admin</span> / &nbsp;
-                                        <span class="comment_count"><a href="#">0 Comments</a></span>
-                                    </div>
-                                    <div class="readmore hidden">
-                                        <a class="btn-readmore font-title" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-item col-md-6 col-sm-6">
-                        <div class="blog-item-inner">
-                            <div class="itemBlogImg left-block ">
-                                <div class="article-image banners ">
-                                    <div>
-                                        <a class="popup-gallery" href="{{asset('frontend')}}/image/catalog/demo/blog/8.jpg"><img src="{{asset('frontend')}}/image/catalog/demo/blog/8.jpg" alt="Aestibulum ipsum a ornare car"></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="itemBlogContent right-block ">
-                                <div class="blog-content">
-                                    <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="article-title font-title">
-                                        <h4><a href="blog-detail.html">Aestibulum ipsum a ornare car</a></h4>
-                                    </div>
-                                    <p class="article-description">
-                                        Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis eli...
-                                    </p>
-                                    <div class="blog-meta">
-                                        <span class="author"><span>Post by </span>Admin</span> / &nbsp;
-                                        <span class="comment_count"><a href="#">2 Comments</a></span>
-                                    </div>
-                                    <div class="readmore hidden">
-                                        <a class="btn-readmore font-title" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-item col-md-6 col-sm-6">
-                        <div class="blog-item-inner">
-                            <div class="itemBlogImg left-block ">
-                                <div class="article-image banners ">
-                                    <div>
-                                        <a class="popup-gallery" href="{{asset('frontend')}}/image/catalog/demo/blog/9.jpg"><img src="{{asset('frontend')}}/image/catalog/demo/blog/9.jpg" alt="Aestibulum ipsum a ornare lectus"></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="itemBlogContent right-block ">
-                                <div class="blog-content">
-                                    <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="article-title font-title">
-                                        <h4><a href="blog-detail.html">Aestibulum ipsum a ornare lectus</a></h4>
-                                    </div>
-                                    <p class="article-description">
-                                        Morbi tempus, non ullamcorper euismod, erat odio suscipit purus, nec ornare lacus turpis ac purus. Mauris cursus in mi vel dignissim. Morbi mollis eli...
-                                    </p>
-                                    <div class="blog-meta">
-                                        <span class="author"><span>Post by </span>Admin</span> / &nbsp;
-                                        <span class="comment_count"><a href="#">0 Comments</a></span>
-
-                                    </div>
-                                    <div class="readmore hidden">
-                                        <a class="btn-readmore font-title" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-item col-md-6 col-sm-6">
-                        <div class="blog-item-inner">
-                            <div class="itemBlogImg left-block ">
-                                <div class="article-image banners ">
-                                    <div>
-                                        <a class="popup-gallery" href="{{asset('frontend')}}/image/catalog/demo/blog/4.jpg"><img src="{{asset('frontend')}}/image/catalog/demo/blog/4.jpg" alt="Aestibulum ipsum a ornare lectus"></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="itemBlogContent right-block ">
-                                <div class="blog-content">
-                                    <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="article-title font-title">
-                                        <h4><a href="blog-detail.html">Nire Tmas Kite Traverunt Lector</a></h4>
-                                    </div>
-                                    <p class="article-description">
-                                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labor...
-                                    </p>
-                                    <div class="blog-meta">
-                                        <span class="author"><span>Post by </span>Admin</span> / &nbsp;
-                                        <span class="comment_count"><a href="#">0 Comments</a></span>
-
-                                    </div>
-                                    <div class="readmore hidden">
-                                        <a class="btn-readmore font-title" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-item col-md-6 col-sm-6">
-                        <div class="blog-item-inner">
-                            <div class="itemBlogImg left-block ">
-                                <div class="article-image banners ">
-                                    <div>
-                                        <a class="popup-gallery" href="{{asset('frontend')}}/image/catalog/demo/blog/3.jpg"><img src="{{asset('frontend')}}/image/catalog/demo/blog/3.jpg" alt="Neque porro quisquam est"></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="itemBlogContent right-block ">
-                                <div class="blog-content">
-                                    <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="article-title font-title">
-                                        <h4><a href="blog-detail.html">Neque Porro Quisquam Est</a></h4>
-                                    </div>
-                                    <p class="article-description">
-                                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labor...
-                                    </p>
-                                    <div class="blog-meta">
-                                        <span class="author"><span>Post by </span>Admin</span> / &nbsp;
-                                        <span class="comment_count"><a href="#">0 Comments</a></span>
-
-                                    </div>
-                                    <div class="readmore hidden">
-                                        <a class="btn-readmore font-title" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-item col-md-6 col-sm-6">
-                        <div class="blog-item-inner">
-                            <div class="itemBlogImg left-block ">
-                                <div class="article-image banners ">
-                                    <div>
-                                        <a class="popup-gallery" href="{{asset('frontend')}}/image/catalog/demo/blog/7.jpg"><img src="{{asset('frontend')}}/image/catalog/demo/blog/7.jpg" alt="Commodo laoreet semper"></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="itemBlogContent right-block ">
-                                <div class="blog-content">
-                                    <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="article-title font-title">
-                                        <h4><a href="blog-detail.html">Commodo Laoreet Semper</a></h4>
-                                    </div>
-                                    <p class="article-description">
-                                        Commodo laoreet semper tincidunt lorem Vestibulum nunc at In Curabitur magna. Euismod euismod Suspendisse tortor ante adipiscing risus Aenean Lorem vi...
-                                    </p>
-                                    <div class="blog-meta">
-                                        <span class="author"><span>Post by </span>Admin</span> / &nbsp;
-                                        <span class="comment_count"><a href="#">0 Comments</a></span>
-
-                                    </div>
-                                    <div class="readmore hidden">
-                                        <a class="btn-readmore font-title" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-item col-md-6 col-sm-6">
-                        <div class="blog-item-inner">
-                            <div class="itemBlogImg left-block ">
-                                <div class="article-image banners ">
-                                    <div>
-                                        <a class="popup-gallery" href="{{asset('frontend')}}/image/catalog/demo/blog/2.jpg"><img src="{{asset('frontend')}}/image/catalog/demo/blog/2.jpg" alt="Biten demonstraverunt lector "></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="itemBlogContent right-block ">
-                                <div class="blog-content">
-                                    <div class="article-date">
-                                        <div class="date">
-                                            <span class="article-date">
-                                                <b>17</b> Oct
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="article-title font-title">
-                                        <h4><a href="blog-detail.html">Biten Demonstraverunt Lector</a></h4>
-                                    </div>
-                                    <p class="article-description">
-                                        Commodo laoreet semper tincidunt lorem Vestibulum nunc at In Curabitur magna. Euismod euismod Suspendisse tortor ante adipiscing risus Aenean Lorem vi...
-                                    </p>
-                                    <div class="blog-meta">
-                                        <span class="author"><span>Post by </span>Admin</span> / &nbsp;
-                                        <span class="comment_count"><a href="#">0 Comments</a></span>
-                                    </div>
-                                    <div class="readmore hidden">
-                                        <a class="btn-readmore font-title" href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+           
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+
 @endsection

@@ -77,8 +77,14 @@
                                                     @if($data->get_categories)
                                                     @foreach($data->get_categories as $category){{$category->name}}, @endforeach 
                                                     @endif
-                                                    @if($data->get_pages)
-                                                    @foreach($data->get_pages as $page){{$page->title}}, @endforeach
+
+                                                    @php
+                                                      $source_id = explode(',', $data->source_id);
+                                                      $get_pages =  \App\Models\Page::whereIn('id', $source_id)->get();
+                                                     
+                                                    @endphp
+                                                    @if($get_pages)
+                                                    @foreach($get_pages as $page){{$page->title}}, @endforeach
                                                     @endif
 
                                                 </td>

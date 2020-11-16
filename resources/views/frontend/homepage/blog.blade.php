@@ -3,7 +3,7 @@ $products = App\Models\Product::whereIn('id', explode(',', $section->product_id)
 
 ?>
 @if(count($products)>0)
-<section class="section" style="background:{{$section->background_color}}">
+<section style="background:{{$section->background_color}}">
   <div class="container">
 	<div class="row">
 	    <section>

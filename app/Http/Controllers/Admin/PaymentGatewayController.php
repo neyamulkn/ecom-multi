@@ -23,7 +23,6 @@ class PaymentGatewayController extends Controller
     {
         $request->validate([
             'method_name' => 'required|unique:payment_gateways',
-            'method_for' => 'required'
         ]);
 
         $data = new PaymentGateway();

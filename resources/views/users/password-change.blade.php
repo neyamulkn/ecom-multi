@@ -1,6 +1,5 @@
-      
 @extends('layouts.frontend')
-@section('title', 'My Account | '. Config::get('siteSetting.site_name') )
+@section('title', 'Change Password | '. Config::get('siteSetting.site_name') )
 @section('css')
 
 @endsection
@@ -8,8 +7,8 @@
 <div class="breadcrumbs">
 	<div class="container">
 		<ul class="breadcrumb-cate">
-		    <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-		    <li><a href="#">My account</a></li>
+		    <li><a href="{{url('/')}}"><i class="fa fa-home"></i> Home</a></li>
+		    <li><a href="#">Change Password</a></li>
 		 </ul>
 	</div>
 </div>

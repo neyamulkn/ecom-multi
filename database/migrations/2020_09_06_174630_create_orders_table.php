@@ -50,6 +50,7 @@ class CreateOrdersTable extends Migration
             $table->string('currency_value', 8)->nullable();
             $table->string('payment_method', 15)->default('pending');
             $table->string('tnx_id', 55)->nullable();
+            $table->string('payment_info')->nullable();
             $table->dateTime('order_date')->nullable();
             $table->string('payment_status', 10)->default('pending')->comment('pending,process,complete');;
             $table->string('order_status', 10)->default('pending')->comment('pending,process,shipped,reject');;

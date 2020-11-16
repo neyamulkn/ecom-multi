@@ -79,7 +79,7 @@ class CartController extends Controller
             'status' => 'success',
             'title' => $product->title,
             'image' => $product->feature_image,
-            'msg' => Config::get('siteSetting.cart_success')
+            'msg' => 'Product Added To Cart.'
         );
 
         return response()->json($output);
@@ -135,9 +135,7 @@ class CartController extends Controller
         }else{
             return response()->json(['status' => 'error', 'msg' => 'Out of stock']);
         }
-
     }
-
 
     public function itemRemove(Request $request, $id)
     {

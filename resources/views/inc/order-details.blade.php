@@ -6,13 +6,14 @@
                 <br>{{$order->shipping_email}}
                 <br>{{$order->shipping_phone}}
                 <br>
-                {{
+                {!!
                     $order->shipping_address. ', '.
                     $order->shipping_area. ', '.
                     $order->shipping_city. ', '.
                     $order->shipping_region
                 
-                }} 
+                !!}
+                @if($order->order_notes)<br><b style="font-weight: bold;">Notes: </b>{{$order->order_notes}}@endif
             </address>
         </div>
         <div class="pull-right text-right">

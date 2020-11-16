@@ -3,7 +3,7 @@
 	$cat = 2;
 ?>
 @if(count($products)>0)
-<section class="section" style="background:{{$section->background_color}}">
+<section style="background:{{$section->background_color}}">
   <div class="container">
 		<div class="row">
 		    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 col_hksd block">

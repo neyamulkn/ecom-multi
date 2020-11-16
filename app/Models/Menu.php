@@ -15,6 +15,6 @@ class Menu extends Model
     }
 
     public function get_pages(){
-        return $this->hasMany(Page::class, 'menu_id', 'id');
+        return $this->belongsTo(Page::class, 'source_id', 'id');
     }
 }

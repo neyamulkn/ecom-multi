@@ -45,7 +45,7 @@
                                 <div class="d-flex no-block align-items-center">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <div class="custom-control-label" for="customCheck1">Remember me</div>
+                                        <label class="custom-control-label" for="customCheck1">Remember me</label>
                                     </div> 
                                     <div class="ml-auto">
                                         <a href="javascript:void(0)" id="to-recover" class="text-muted"><i class="fas fa-lock m-r-5"></i> Forgot pwd?</a> 
@@ -58,19 +58,7 @@
                                 <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Log In</button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                                <div class="social">
-                                    <button class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fab fa-facebook-f"></i> </button>
-                                    <button class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fab fa-google-plus-g"></i> </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group m-b-0">
-                            <div class="col-sm-12 text-center">
-                                Don't have an account? <a href="{{route('register')}}" class="text-info m-l-5"><b>Sign Up</b></a>
-                            </div>
-                        </div>
+                        
                     </form>
                     <form class="form-horizontal" id="recoverform" action="index.html">
                         <div class="form-group ">

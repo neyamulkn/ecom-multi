@@ -58,9 +58,11 @@
   	</style>
 
 
+  @php
+  $avg_ratting = round($product->reviews->avg('ratting'), 1);
+  $total_review = count($product->reviews);
 
-
-  
+@endphp
     
 <div id="wraper">
     
@@ -77,7 +79,7 @@
                       <div class="so-loadeding"></div>
                       <div class="large-image  class-honizol">
                        
-                       <img class="product-image-zoom" src="{{asset('upload/images/product/zoom/'. $product->feature_image)}}" data-zoom-image="{{asset('upload/images/product/'. $product->feature_image)}}" title="image">
+                       <img class="product-image-zoom" src="{{asset('upload/images/product/'. $product->feature_image)}}" data-zoom-image="{{asset('upload/images/product/'. $product->feature_image)}}" title="image">
                       </div>
                       <div id="thumb-slider" class="full_slider category-slider-inner products-list yt-content-slider" data-rtl="no" data-autoplay="no" data-pagination="no" data-delay="4" data-speed="0.6" data-margin="10" data-items_column0="3" data-items_column1="3" data-items_column2="3" data-items_column3="3" data-items_column4="2" data-arrows="yes" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
                           <div class="owl2-item " >
@@ -109,11 +111,10 @@
                       </div>
                       <div class="box-review">
                         <div class="rating">
+                          <div class="rating">
                           <div class="rating-box">
-                            @for($i=1; $i<=5; $i++)
-                               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                            @endfor
-                            <a class="reviews_button" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">0 reviews</a> / <a class="write_review_button" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a review</a>
+                            {{\App\Http\Controllers\HelperController::ratting($avg_ratting)}}
+                            <a class="reviews_button" href="#tab-review">{{$total_review}} reviews</a> 
                           </div>
                         </div>
                        
@@ -121,57 +122,59 @@
                         <p>Brand: {{$product->get_brand->name}} | @endif <span class="availability in-stock"> Availability: <span> <i class="fa fa-check-square-o"></i> In Stock</span></span> </p>
                       </div>
                       <div class="product_page_price price">
-                     
-                        @if($product->discount)
-                          <span class="price-new"><span id="price-special">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price-($product->discount*$product->selling_price)/100 }}</span></span>
+                        @php
+                            $discount =  \App\Http\Controllers\OfferController::discount($product->id, Session::get('offerId'));
+                        @endphp
+                        @if($discount)
+                          <span class="price-new"><span id="price-special">{{Config::get('siteSetting.currency_symble')}}{{$discount['discount_price'] }}</span></span>
                             <span>
-                              <span class="price-old" id="price-old">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span> 
+                              <span class="price-old" id="price-old">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span>
                               <span class="discount">
-                                -{{$product->discount}}%
+                               -@if($discount['discount_type'] != '%'){{$discount['discount_type']}}@endif{{$discount['discount']}}@if($discount['discount_type'] == '%'){{$discount['discount_type']}}@endif
+
                                 <strong>OFF</strong>
                               </span>
                             </span>
                         @else
                             <span class="price-new"><span id="price-special">{{Config::get('siteSetting.currency_symble')}}{{$product->selling_price}}</span></span>
                         @endif
-                      
+
                       </div>
                       <form action="{{route('cart.add')}}" id="addToCart" method="get"> 
                       <div class="product-box-desc">
                        
-                        <!-- //get feature attribute-->
-                        @foreach ($product->get_features->where('attribute_id', '!=', null) as $feature)
+                        @foreach ($product->get_variations as $variation)
                           <!-- show attribute name -->
-                          <?php $i=1; $attribute_name = str_replace(' ', '', $feature->get_attribute->name); ?>
-                          @if($feature->get_attribute->display_type==2)
+                          <?php $i=1; $attribute_name = str_replace(' ', '', $variation->attribute_name); ?>
+                          @if($variation->in_display==2)
 
                           <div class="product-size attribute-select">
-                              <span class="attribute_title"> {{$feature->get_attribute->name}}: </span>
+                              <span class="attribute_title"> {{$variation->attribute_name}}: </span>
                               <select name="{{$attribute_name}}">
                                   <!-- get feature details -->
-                                  @foreach($feature->get_featureDetails as $featureDetail)
+                                  @foreach($variation->get_variationDetails as $variationDetail)
 
-                                    <option value="{{ $featureDetail->get_attributeValue->name}}">{{ $featureDetail->get_attributeValue->name}}</option>
-                                   
+                                    <option value="{{ $variationDetail->attributeValue_name}}">{{ $variationDetail->attributeValue_name}}</option>
+
                                   @endforeach
                               </select>
                           </div>
                           @else
                           <div class="product-size">
                             <ul>
-                                <li class="attribute_title">{{$feature->get_attribute->name}}: </li>
+                                <li class="attribute_title">{{$variation->attribute_name}}: </li>
                                 <li class="attributes {{$attribute_name}}">
                                 <!-- get feature details -->
-                                 @foreach($feature->get_featureDetails as $featureDetail)
+                                 @foreach($variation->get_variationDetails as $variationDetail)
                                   <!-- show feature attribute value name -->
-                                    
-                                    <label @if($featureDetail->color) style="background:{{$featureDetail->color}}; color:#ebebeb; " @endif class="attributes_value @if($i == 1) active @endif" for="{{$attribute_name.$featureDetail->get_attributeValue->id}}" >
+
+                                    <label @if($variationDetail->color) style="background:{{$variationDetail->color}}; color:#ebebeb; " @endif class="attributes_value @if($i == 1) active @endif" for="{{$attribute_name.$variationDetail->id}}" >
                                     <span class="selected"></span>
-                                    <input @if($i == 1) checked @endif onclick="changeColor('{{$attribute_name}}', {{$featureDetail->get_attributeValue->id}})" id="{{$attribute_name.$featureDetail->get_attributeValue->id}}" value="{{ $featureDetail->get_attributeValue->name}}" name="{{$attribute_name}}"  type="{{($feature->get_attribute->display_type==3) ? 'radio' : 'radio'}}" />
-                                      
-                                    {{ $featureDetail->get_attributeValue->name}}</label>
+                                    <input @if($i == 1) checked @endif onclick="changeColor('{{$attribute_name}}', {{$variationDetail->id}})" id="{{$attribute_name.$variationDetail->id}}" value="{{ $variationDetail->attributeValue_name}}" name="{{$attribute_name}}"  type="{{($variation->in_display==3) ? 'radio' : 'radio'}}" />
+
+                                    {{ $variationDetail->attributeValue_name}}</label>
                                     <?php $i++; ?>
-                                  
+
                                   @endforeach
                                 </li>
                               </ul>

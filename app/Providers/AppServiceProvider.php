@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\GeneralSetting;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,10 +28,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
-        $siteSetting = GeneralSetting::first();
 
-        Config::set('siteSetting', $siteSetting);
-
-        view()->share('site', $siteSetting);
+        if(!Session::has('siteSetting')){
+            Session::put('siteSetting', GeneralSetting::first());
+        }
+        Config::set('siteSetting', Session::get('siteSetting'));
+        view()->share('siteSetting', Session::get('siteSetting'));
     }
 }

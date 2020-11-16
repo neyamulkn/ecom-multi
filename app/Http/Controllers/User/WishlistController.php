@@ -32,12 +32,12 @@ class WishlistController extends Controller
 
             $output = array(
                 'status' => 'success',
-                'msg' => Config::get('siteSetting.wish_success')
+                'msg' => 'Product Added To Wishlist.'
             );
         }else{
             $output = array(
                 'status' => 'error',
-                'msg' => Config::get('siteSetting.wish_error')
+                'msg' => 'Already Added To Wishlist !!'
             );
         }
         return response()->json($output);
@@ -51,7 +51,7 @@ class WishlistController extends Controller
             $wishlist->delete();
             $output = array(
                 'status' => 'success',
-                'msg' => Config::get('siteSetting.wish_remove')
+                'msg' => 'Product Remove From Wishlist !!'
             );
         }else{
             $output = array(

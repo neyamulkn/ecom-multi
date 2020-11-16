@@ -24,7 +24,7 @@
         <nav style="background: #808080;" class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img width="150" height="40" src="{{asset('frontend/image/logo/'.Config::get('siteSetting.logo'))}}" alt="" />
+                    <img width="150" height="40" src="{{asset('upload/images/logo/'.Config::get('siteSetting.logo'))}}" alt="" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

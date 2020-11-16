@@ -208,12 +208,13 @@
                                                 @foreach($orders as $order)
                                                 <tr>
                                                     <td>{{$order->order_id}}</td>
-                                                   <td>{{\Carbon\Carbon::parse($order->created_at)->format('M d, Y')}}</td>
+                                                   <td>{{\Carbon\Carbon::parse($order->order_date)->format(Config::get('siteSetting.date_format'))}}
+                                                        <p style="font-size: 12px;margin: 0;padding: 0">{{\Carbon\Carbon::parse($order->order_date)->diffForHumans()}}</p></td>
                                                   
                                                     <td>{{$order->total_qty}}</td>
                                                     <td>{{$order->currency_sign . ($order->total_price + $order->shipping_cost - $order->coupon_discount)  }}</td>
                                                     
-                                                    <td> <span class="label label-primary font-weight-100">{{ str_replace( '-', ' ', $order->payment_method) }}</span></td>
+                                                    <td> <span class="label label-{{($order->payment_method=='pending') ? 'danger' : 'success' }}">{{ str_replace( '-', ' ', $order->payment_method) }}</span></td>
                                                      <td>
                                                         <select style="background: rgb(3 169 243);color: #fff" id="order_status" onchange="changeOrderStatus(this.value, '{{$order->order_id}}', 'payment_status')">
                                                             <option  value="pending" @if($order->payment_status == 'pending') selected @endif >Pending</option>
@@ -386,7 +387,8 @@
         <script>
     // responsive table
         $('#config-table').DataTable({
-            responsive: true
+            responsive: true,
+            ordering: false
         });
     </script>
 @endsection

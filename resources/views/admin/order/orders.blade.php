@@ -45,7 +45,7 @@
                         if($order_status->order_status == 'delivered'){ $delivered +=1 ; }
                         if($order_status->order_status == 'cancel'){ $cancel +=1 ; }
                     }
-                    $all = $pending+$accepted +$on_delivery+ $delivered;
+                    $all = $pending+$accepted +$on_delivery+ $delivered +$cancel;
 
                 ?>
                 <div class="row">
@@ -207,14 +207,19 @@
                                                     @foreach($orders as $order)
                                                     <tr>
                                                         <td>{{$order->order_id}}</td>
-                                                       <td>{{\Carbon\Carbon::parse($order->created_at)->format('M d, Y')}}
-                                                        <p style="font-size: 12px;margin: 0;padding: 0">{{\Carbon\Carbon::parse($order->created_at)->diffForHumans()}}</p>
+                                                       <td>{{\Carbon\Carbon::parse($order->order_date)->format(Config::get('siteSetting.date_format'))}}
+                                                        <p style="font-size: 12px;margin: 0;padding: 0">{{\Carbon\Carbon::parse($order->order_date)->diffForHumans()}}</p>
                                                        </td>
 
                                                         <td>{{$order->total_qty}}</td>
                                                         <td>{{$order->currency_sign . ($order->total_price + $order->shipping_cost - $order->coupon_discount)  }}</td>
 
-                                                        <td> <span class="label label-primary font-weight-100">{{ str_replace( '-', ' ', $order->payment_method) }}</span></td>
+                                                        <td> <span class="label label-{{($order->payment_method=='pending') ? 'danger' : 'success' }}">{{ str_replace( '-', ' ', $order->payment_method) }}</span>
+                                                        @if($order->payment_info)
+                                                        <br/><strong>Tnx_id:</strong> <span> {{$order->tnx_id}}</span><br/>
+                                                        <span><strong>Info:</strong> {{$order->payment_info}}</span>
+                                                        @endif
+                                                        </td>
                                                          <td>
                                                             <select style="background: rgb(3 169 243);color: #fff" id="order_status" onchange="changeOrderStatus(this.value, '{{$order->order_id}}', 'payment_status')">
                                                                 <option  value="pending" @if($order->payment_status == 'pending') selected @endif >Pending</option>
@@ -389,7 +394,8 @@
         <script>
     // responsive table
         $('#config-table').DataTable({
-            responsive: true
+            responsive: true,
+             ordering: false
         });
     </script>
 @endsection

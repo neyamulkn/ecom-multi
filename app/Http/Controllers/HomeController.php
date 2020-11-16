@@ -476,7 +476,7 @@ class HomeController extends Controller
         }
         //cookie set & retrive;
         setcookie('direct_checkout_product_id', $cart_user->product_id, time() + (86400), "/"); // 86400 = 1 day
-//      Session::has('direct_checkout_product_id') ? Session::get('direct_checkout_product_id') : '';
+            // Session::has('direct_checkout_product_id') ? Session::get('direct_checkout_product_id') : '';
         Session::put('direct_checkout_product_id' , $cart_user->product_id);
         $output = array(
             'status' => 'success',
@@ -495,7 +495,6 @@ class HomeController extends Controller
         }
         return view('frontend.404');
     }
-
 
 
     public function quickview($product_id){

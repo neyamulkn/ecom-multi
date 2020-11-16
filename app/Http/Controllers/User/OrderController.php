@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Models\ShippingAddress;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -122,7 +123,7 @@ class OrderController extends Controller
     //get all order by user id
     public function orderHistory()
     {
-        $orders = Order::with(['order_details.product:id,title,slug,feature_image'])->where('user_id', Auth::id())->get();
+        $orders = Order::with(['order_details.product:id,title,slug,feature_image'])->orderBy('id', 'desc')->where('user_id', Auth::id())->get();
         return view('users.order-history')->with(compact('orders'));
     }
 
@@ -157,6 +158,63 @@ class OrderController extends Controller
             ];
         }
         return response()->json($output);
+    }
+
+    public function orderTracking(Request $request){
+        if($request->order_id){
+            $order = Order::with(['order_details.product:id,title,slug,feature_image,childcategory_id,subcategory_id,category_id'])
+                ->where('order_id', $request->order_id)->first();
+            if($order) {
+
+                $category_id = $subcategory_id = $childcategory_id = $product_id = [];
+                foreach ($order->order_details as $order_detail){
+                    $product_id[] = $order_detail->product->id;
+                    if ($order_detail->product->childcategory_id) {
+                        $childcategory_id[] = $order_detail->product->childcategory_id;
+                    } elseif ($order_detail->product->subcategory_id) {
+                        $subcategory_id[] = $order_detail->product->subcategory_id;
+                    } else {
+                        $category_id[] = $order_detail->product->category_id;
+                    }
+                }
+
+//                foreach ($order->order_details as $order_detail){
+//                    if ($order_detail->product->childcategory_id != null) {
+//                        $related_products->where('childcategory_id', $order_detail->product->childcategory_id);
+//                    } elseif ($order_detail->product->subcategory_id != null) {
+//                        $related_products->where('subcategory_id', $order_detail->product->subcategory_id);
+//                    } else {
+//                        $related_products->where('category_id', $order_detail->product->category_id);
+//                    }
+//                    break;
+//                }
+
+                $related_products = Product::where('status', 'active')->whereNotIn('id', $product_id);
+                if(count($childcategory_id)>0){
+                    $related_products->whereIn('childcategory_id', $childcategory_id);
+                }if(count($subcategory_id)>0){
+                    $related_products->whereIn('subcategory_id', $subcategory_id);
+                }if(count($category_id)>0){
+                    $related_products->whereIn('category_id', $category_id);
+                }
+                $related_products = $related_products->where('status', 'active')->selectRaw('id,title,slug,feature_image,selling_price')->take(7)->get();
+
+                return view('users.order-tracking-details')->with(compact('order','related_products'));
+            }else{
+                return view('users.order-tracking');
+            }
+        }
+        return view('users.order-tracking');
+    }
+
+    public function orderTrackingDetails($order_id){
+        $order = Order::with(['order_details.product:id,title,slug,feature_image'])
+            ->where('order_id', $order_id)->first();
+        if($order){
+            return view('users.order-tracking-details')->with(compact('order'));
+        }
+        return view('404');
+
     }
 
 }

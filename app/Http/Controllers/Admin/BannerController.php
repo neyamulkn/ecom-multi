@@ -40,7 +40,7 @@ class BannerController extends Controller
             $new_image_name = rand(0000, 9999).$image->getClientOriginalName();
             $image_path = public_path('upload/images/banner/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(1170, 250);
+            $image_resize->resize($request->width, 250);
             $image_resize->save($image_path);
 
             $data->banner1 = $new_image_name;
@@ -106,7 +106,7 @@ class BannerController extends Controller
             $new_image_name = rand(0000, 9999).$image->getClientOriginalName();
             $image_path = public_path('upload/images/banner/' . $new_image_name);
             $image_resize = Image::make($image);
-            $image_resize->resize(1170, 250);
+            $image_resize->resize($request->width, 250);
             $image_resize->save($image_path);
             $data->banner1 = $new_image_name;
 

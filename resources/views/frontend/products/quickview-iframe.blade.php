@@ -112,7 +112,7 @@
                       <div class="so-loadeding"></div>
                       <div class="large-image  class-honizol">
                        
-                       <img class="product-image-zoom" src="{{asset('upload/images/product/zoom/'. $product->feature_image)}}" data-zoom-image="{{asset('upload/images/product/'. $product->feature_image)}}" title="image">
+                       <img class="product-image-zoom" src="{{asset('upload/images/product/'. $product->feature_image)}}" data-zoom-image="{{asset('upload/images/product/'. $product->feature_image)}}" title="image">
                       </div>
                       <div id="thumb-slider" class="full_slider category-slider-inner products-list yt-content-slider" data-rtl="no" data-autoplay="no" data-pagination="no" data-delay="4" data-speed="0.6" data-margin="10" data-items_column0="3" data-items_column1="3" data-items_column2="3" data-items_column3="3" data-items_column4="2" data-arrows="yes" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
                           <div class="owl2-item " >

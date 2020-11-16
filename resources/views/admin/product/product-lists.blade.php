@@ -82,7 +82,7 @@
                                                     <td>{{$product->get_category->name}}</td>
                                                     <td>{{($product->stock) ? $product->stock : 0 }}</td>
                                                     <td>{{ $product->sales }}</td>
-                                                    <td>{{$site['currency_symble']}}{{$product->purchase_price}}</td>
+                                                    <td>{{Config::get('siteSetting.currency_symble')}}{{$product->purchase_price}}</td>
                                                     <td>
                                                         <div class="bt-switch">
                                                             <input  onchange="approveUnapprove('products', '{{$product->id}}')" type="checkbox" {{($product->status != 'unapprove') ? 'checked' : ''}} data-on-color="success" data-off-color="danger" data-on-text="InApproved" data-off-text="UnApproved"> 

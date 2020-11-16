@@ -10,6 +10,7 @@ use App\Traits\CreateSlug;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class MenuController extends Controller
 {
@@ -57,6 +58,8 @@ class MenuController extends Controller
             }else{
                 echo '';
             }
+
+            Session::forget('menus');
             Toastr::success('Menu Create Successfully.');
         }else{
             Toastr::error('Menu Cannot Create.!');
@@ -113,6 +116,7 @@ class MenuController extends Controller
             }else{
                 echo '';
             }
+            Session::forget('menus');
             Toastr::success('Menu Update Successfully.');
         }else{
             Toastr::error('Menu Cannot Update.!');
@@ -124,7 +128,7 @@ class MenuController extends Controller
     public function delete($id)
     {
         $delete = Menu::where('id', $id)->delete();
-
+        Session::forget('menus');
         if($delete){
 
             $output = [

@@ -37,15 +37,18 @@ Route::get('order/paypal/payment/{orderId}', 'PaypalController@paypalPayment')->
 Route::get('paypal/payment/status/success', 'PaypalController@paymentSuccess')->name('paypalPaymentSuccess');
 Route::get('paypal/payment/status/cancel', 'PaypalController@paymentCancel')->name('paypalPaymentCancel');
 
+//order tracking
+Route::get('order/tracking', 'User\OrderController@orderTracking')->name('orderTracking');
+
+
 Route::get('check/unique/value', 'AjaxController@checkField')->name('checkField');
 //product quickview
 Route::get('quickview/product/{product_id}', 'HomeController@quickview')->name('quickview');
 
 Auth::routes();
 
-Route::get('blog', 'HomeController@blog')->name('blog');
-Route::get('contact-us', 'HomeController@contactUs')->name('contactUs');
-Route::get('about-us', 'HomeController@aboutUs')->name('contactUs');
+Route::get('blog', 'BlogController@blog')->name('blog');
+Route::get('blog/{slug}', 'BlogController@blog_details')->name('blog_details');
 
 Route::get('brand/{slug}', 'HomeController@brandProducts')->name('brandProducts');
 Route::get('more/{slug}', 'HomeController@moreProducts')->name('moreProducts');
